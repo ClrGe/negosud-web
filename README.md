@@ -1,17 +1,18 @@
-# create-svelte
+# Negosud Web
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Site e-commerce pour le négociant en vin NEGOSUD
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Stack technique
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
+NodeJS ^18.13.0
 
-# create a new project in my-app
-npm create svelte@latest my-app
+NPM ^8.19.3
+
+SvelteKit ^1.0.0
+
+TypeScript ^4.9.3
+
 ```
 
 ## Developing
