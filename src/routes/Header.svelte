@@ -12,11 +12,8 @@
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
 				<a href="/">Accueil</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
+			<li aria-current={$page.url.pathname === '/products' ? 'page' : undefined}>
 				<a href="/products">Nos produits</a>
-			</li>
-			<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-				<a href="/about">À propos de nous</a>
 			</li>
 			<li aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>
 				<a href="/about">À propos de nous</a>
@@ -31,6 +28,7 @@
 		</a>
 	</div>
 </header>
+<h1>NEGOSUD</h1>
 
 <style>
 	header {
