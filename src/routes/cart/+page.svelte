@@ -149,7 +149,7 @@
     <div class="product-list">
         {#each products as product}
             <div class="individualProduct">
-                <div><img  class="image"src="src/lib/images/pinard.jpg" alt="pinard"/></div>
+                <div><img class="image" src="../../lib/images/pinard.jpg" alt="pinard"/></div>
                 <h4>{product.name}</h4>
                 <p>{product.price}€</p>
                 <button on:click={() => addProductToCart(product)}>Acheter</button>
@@ -167,7 +167,7 @@
         align-content: space-around;
     }
     .individualProduct{
-        width: 300px;
+        width: 200px;
     }
 
     .product-list{
