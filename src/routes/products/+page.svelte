@@ -1,7 +1,9 @@
 <script>
+    import {Document, ShoppingCart, User} from "svelte-heros-v2";
+
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
-    import Details from "./Details.svelte";
     let isOpenModal = false;
+    import {Button, Dropdown, DropdownItem, Chevron, Checkbox, Search, Tabs, TabItem, List} from 'flowbite-svelte'
 
     function openModal() {
         isOpenModal = true;
@@ -50,38 +52,70 @@
     }
 
     $: total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-
 </script>
 
-<div class="select">
-    <select class="slct">
-        <option value="GFG">Tous les produits</option>
-        <option value="DBMS">Nouveautés</option>
-        <option value="OS">Vins rouges</option>
-        <option value="OS">Vins blancs</option>
-        <option value="OS">Vins pétillants</option>
-        <option value="OS">Spiritueux</option>
-        <option value="OS">Par région</option>
-        <option value="OS">Les producteurs</option>
-    </select>
-</div>
 
-<section class="products">
-    <div class="product-list">
-        {#each data.bottles as product}
-            <div class="individualProduct">
-                <img class="image" src="src/lib/images/pinard.jpg" alt="pinard"/>
-                <h4>{product.fullName}</h4>
-                <p>{product.wineType}</p>
-                <p>{product.yearProduced}</p>
-                <p><b>{product.currentPrice}€</b></p>
-                <button>Acheter</button>
-                <button  on:click={openModal}>Détails</button>
-                <Details isOpenModal={isOpenModal} on:closeModal={closeModal} />
+<Tabs style="full" defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700">
+    <TabItem class="w-full" open>
+        <span slot="title">Les vins</span>
+        <div class="select">
+            <Button  style="background :#5C1427"><Chevron>Afficher ...</Chevron></Button>
+            <Dropdown >
+                <DropdownItem>Tous les produits</DropdownItem>
+                <DropdownItem class="flex items-center justify-between"><Chevron placement="right">Type de produit</Chevron></DropdownItem>
+                <Dropdown placement="right-start">
+                    <DropdownItem>Vins rouges</DropdownItem>
+                    <DropdownItem>Vins blancs</DropdownItem>
+                    <DropdownItem>Pétillants</DropdownItem>
+                    <DropdownItem>Spiritueux</DropdownItem>
+                </Dropdown>
+                <DropdownItem>Nouveautés</DropdownItem>
+            </Dropdown>
+        </div>
+        <section class="products">
+            <div class="product-list">
+                {#each data.bottles as product}
+                    <div class="individualProduct">
+                        <img class="image" src="src/lib/images/pinard.png" alt="pinard"/>
+                        <h4>{product.fullName}</h4>
+                        <p>{product.wineType}</p>
+                        <p>{product.yearProduced}</p>
+                        <p><b>{product.currentPrice}€</b></p>
+                        <Button class="relative right-0 btn" style="background :#5C1427">
+                            <ShoppingCart /> Acheter
+                        </Button>
+                        <Button  class="relative right-0 btn" style="background :#5C1427" on:click={openModal} isOpenModal={isOpenModal} on:closeModal={closeModal}>
+                            <Document />Détails
+                        </Button>
+                    </div>
+                    <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}" on:click={closeModal}></div>
+                    <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
+                        <div class="content">
+                            <h2>Détails du produit</h2>
+                            <p>Appelation : {product.fullName}</p>
+                            <p>Description :  {product.description}</p>
+                            <p>Type de vin :  {product.wineType}</p>
+                            <p>Cépage :</p>
+                            <p>Volume :  {product.volume}</p>
+                            <p>Année :  {product.yearProduced}</p>
+                            <p>Prix :  {product.currentPrice}</p>
+                            <button>Acheter</button>
+                        </div>
+                    </div>
+                {/each}
             </div>
-        {/each}
-    </div>
-</section>
+        </section>
+    </TabItem>
+    <TabItem class="w-full">
+        <span slot="title">Les producteurs</span>
+        <p class="text-sm text-gray-500 dark:text-gray-400"><b>Commandes:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </TabItem>
+    <TabItem class="w-full">
+        <span slot="title">Les cépages</span>
+        <p class="text-sm text-gray-500 dark:text-gray-400"><b>Paramètres:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </TabItem>
+</Tabs>
+
 
 <style>
     .products {
@@ -108,26 +142,12 @@
         width: 150px;
     }
 
-    select {
-        ppearance: none;
-        background-color: transparent;
-        padding: 0 1em 0 0;
-        margin: 0;
-        width: 50%;
-        font-family: inherit;
-        font-size: inherit;
-        cursor: inherit;
-        line-height: inherit;
-        z-index: 1;
-        outline: none;}
-
     .select {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        justify-content: center;
         position: relative;
-        min-width: 15ch;
-       border-radius: 0.25em;
+        min-width: 25ch;
+        border-radius: 0.25em;
         padding: 0.25em 0.5em;
         font-size: 1.25rem;
         cursor: pointer;
@@ -150,17 +170,40 @@
         outline: none;
     }
 
-    .slct:after{
-        content: '';
-        display: inline-block;
-        float: right;
-        width: .5rem;
-        height: .5rem;
-        border-bottom: 1px solid currentColor;
-        border-left: 1px solid currentColor;
-        border-bottom-left-radius: 2px;
-        transform: rotate(45deg) translate(50%, 0%);
-        transform-origin: center center;
-        transition: transform ease-in-out 100ms
-        }
+
+    h2 {
+        text-align: center;
+        font-weight: bold;
+        font-size: large;
+        padding: 3rem;
+        text-transform: uppercase;
+    }
+    #background {
+        display: var(--display);
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #details {
+        display: var(--display);
+        position: fixed;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        filter: drop-shadow(0 0 1px rgba(138, 138, 138, 0.53));
+        width: 25%;
+        height: 50%;
+    }
+
+    .content {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+
 </style>

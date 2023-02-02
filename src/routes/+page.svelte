@@ -1,3 +1,4 @@
+
 <div class="container">
     <img class="image" width="300px" src="src/lib/images/pinard.jpg" alt="pinard"/>
 </div>
