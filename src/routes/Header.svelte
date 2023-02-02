@@ -31,6 +31,7 @@
 		</ul>
 
 	</nav>
+
 	<Button class="relative right-0 btn" style="background :#5C1427; height: fit-content; top: 1em;" on:click={() => formModal = true}>
 		<User /> Connexion
 	</Button>
@@ -49,20 +50,33 @@
 					<Checkbox>Se souvenir de moi</Checkbox>
 					<a href="/" class="ml-auto text-sm text-red-700 hover:underline dark:text-red-500">Mot de passe oublié ?</a>
 				</div>
-				<Button type="submit" class="w-full1 bg-red-600 ">Se connecter</Button>
+				<Button type="submit" class="w-full1" style="background :#670302">Se connecter</Button>
 				<div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-					Pas encore inscrit ? <a href="/" class="text-blue-700 hover:underline dark:text-red-500">S'inscrire</a>
+					Pas encore inscrit ? <a href="/" class="hover:underline dark:text-red-500" style="color :#670302">S'inscrire</a>
 				</div>
 			</form>
 		</Modal>
 </header>
+<div class="subheader">
+</div>
 
 <style>
+	@font-face {
+		font-family: 'Gelasio';
+		font-style: normal;
+		font-weight: 400;
+		src: local('Gelasio Regular'), local('Gelasio-Regular'), url(https://fonts.gstatic.com/s/gelasio/v1/cIf9MaFfvUQxTTqS9C6hYQ.woff2) format('woff2');
+		unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	}
+
 	header {
 		display: flex;
 		justify-content: space-between;
 		background: white;
 	}
+	.subheader {
+		height: 20px;
+		background: black;}
 
 	.corner {
 		width: 5em;
