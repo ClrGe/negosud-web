@@ -1,15 +1,5 @@
 <script>
-    /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
-    import Details from "./Details.svelte";
-    let isOpenModal = false;
-
-    function openModal() {
-        isOpenModal = true;
-    }
-
-    function closeModal() {
-        isOpenModal = false;
-    }
+    /** @type {import('../../../../../.svelte-kit/types/src/routes').PageData} */
     export let data;
 
     let cart = [];
@@ -53,6 +43,12 @@
 
 </script>
 
+<div id="background"></div>
+<div id="modal">
+    <p>This is a modal window.</p>
+</div>
+
+
 <div class="select">
     <select class="slct">
         <option value="GFG">Tous les produits</option>
@@ -68,22 +64,40 @@
 
 <section class="products">
     <div class="product-list">
-        {#each data.bottles as product}
+        {#each data.bottles as post}
             <div class="individualProduct">
-                <img class="image" src="src/lib/images/pinard.jpg" alt="pinard"/>
-                <h4>{product.fullName}</h4>
-                <p>{product.wineType}</p>
-                <p>{product.yearProduced}</p>
-                <p><b>{product.currentPrice}€</b></p>
+                <img class="image" src="../../../lib/images/pinard.jpg" alt="pinard"/>
+                <h4>{post.fullName}</h4>
+                <p>{post.wineType}</p>
+                <p>{post.yearProduced}</p>
+                <p><b>{post.currentPrice}€</b></p>
                 <button>Acheter</button>
-                <button  on:click={openModal}>Détails</button>
-                <Details isOpenModal={isOpenModal} on:closeModal={closeModal} />
+                <button>Détails</button>
             </div>
         {/each}
     </div>
 </section>
 
 <style>
+    #background {
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #modal {
+        position: fixed;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        filter: drop-shadow(0 0 20px #333);
+    }
+
     .products {
         display: flex;
         flex-wrap: inherit;
