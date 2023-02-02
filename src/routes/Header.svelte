@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import {User, Envelope, Star, HomeModern, QuestionMarkCircle} from 'svelte-heros-v2';
+	import {User, Envelope, Star, HomeModern, QuestionMarkCircle, ShoppingCart} from 'svelte-heros-v2';
 
 	import { Button, Modal, Label, Input, Checkbox } from 'flowbite-svelte'
 	let formModal = false;
@@ -31,7 +31,10 @@
 		</ul>
 
 	</nav>
-
+	<div class="right flex items-center space-x-4">
+	<Button class="relative right-0 btn" style="background :#5C1427; height: fit-content; top: 1em;" >
+		<ShoppingCart /> Panier
+	</Button>
 	<Button class="relative right-0 btn" style="background :#5C1427; height: fit-content; top: 1em;" on:click={() => formModal = true}>
 		<User /> Connexion
 	</Button>
@@ -56,6 +59,7 @@
 				</div>
 			</form>
 		</Modal>
+</div>
 </header>
 <div class="subheader">
 </div>
@@ -73,6 +77,7 @@
 		display: flex;
 		justify-content: space-between;
 		background: white;
+
 	}
 	.subheader {
 		height: 20px;
@@ -95,6 +100,8 @@
 		display: flex;
 		justify-content: center;
 		--background: rgba(255, 255, 255, 0.7);
+		position: relative;
+		top:1em;
 	}
 
 	path {
