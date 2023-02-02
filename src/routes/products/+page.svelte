@@ -1,6 +1,5 @@
 <script>
-    import {Document, ShoppingCart, User} from "svelte-heros-v2";
-
+    import {CircleStack, Document, ShoppingCart, User} from "svelte-heros-v2";
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
     let isOpenModal = false;
     import {Button, Dropdown, DropdownItem, Chevron, Checkbox, Search, Tabs, TabItem, List} from 'flowbite-svelte'
@@ -54,12 +53,27 @@
     $: total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 </script>
 
+<div class="cart-list">
+    {#each cart as item }
+        {#if item.quantity > 0}
+            <div class="cart-item">
+                <img width="50" src={item.image} alt={item.name}/>
+                <div>{item.quantity}
+                    <button on:click={() => incrementItem(item)}>+</button>
+                    <button on:click={() => removeFromCart(item)}>-</button>
+                </div>
+                <p>{item.price * item.quantity}€</p>
+            </div>
+        {/if}
+    {/each}
+</div>
+<p>{cart.length} articles dans le panier</p>
 
 <Tabs style="full" defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700">
     <TabItem class="w-full" open>
         <span slot="title">Les vins</span>
         <div class="select">
-            <Button  style="background :#5C1427"><Chevron>Afficher ...</Chevron></Button>
+            <Button  style="background :#670302"><Chevron>Afficher ...</Chevron></Button>
             <Dropdown >
                 <DropdownItem>Tous les produits</DropdownItem>
                 <DropdownItem class="flex items-center justify-between"><Chevron placement="right">Type de produit</Chevron></DropdownItem>
@@ -108,8 +122,20 @@
     </TabItem>
     <TabItem class="w-full">
         <span slot="title">Les producteurs</span>
-        <p class="text-sm text-gray-500 dark:text-gray-400"><b>Commandes:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </TabItem>
+        <section class="products">
+            <div class="producer-list">
+                {#each data.producers as producer}
+                    <div class="individualProducer">
+                        <img src="src/lib/images/wineyard.jpeg" alt="pinard"/>
+                        <h4>{producer.name}</h4>
+                        <p>{producer.details}</p>
+                        <Button class="relative right-0 btn" style="background :#5C1427">
+                             Produits
+                        </Button>
+                    </div>
+                {/each}
+            </div>
+        </section>    </TabItem>
     <TabItem class="w-full">
         <span slot="title">Les cépages</span>
         <p class="text-sm text-gray-500 dark:text-gray-400"><b>Paramètres:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -129,7 +155,15 @@
         width: 300px;
         margin-bottom: 5em;
     }
-
+    .individualProducer{
+        margin-bottom: 5em;
+        margin: 2em;
+    }
+    .producer-list{
+        padding: 2%;
+        display: flex;
+        justify-content: space-around;
+    }
     .product-list{
         padding: 2%;
         display: flex;
@@ -206,4 +240,20 @@
         padding-right: 5rem;
     }
 
+    .content button, .buyBtn, .detailsBtn:hover {
+        padding: 1em;
+        color: white;
+        background: #670302;
+        border: none;
+        font-weight: bold;
+        margin-bottom: 5rem;
+    }
+    .content button:hover, .detailsBtn, .buyBtn:hover {
+        padding: 1em;
+        background: #bd9494;
+        color: #670302;
+        border: none;
+        font-weight: bold;
+
+    }
 </style>

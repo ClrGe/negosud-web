@@ -52,21 +52,8 @@
 		  </div>
 		</div>
 	  </div>
-	<!-- <nav>	
-		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Accueil</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/products' ? 'page' : undefined}>
-				<a href="/products">Nos produits</a>
-			</li>
-			<li aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>
-				<a href="/about">À propos de nous</a>
-			</li>
-		</ul>
-
-	</nav> -->
 </header>
+
 <style>	
 
 	.Negosud {  
@@ -108,11 +95,19 @@
 		align-items: center;
 	}
 
+	@font-face {
+		font-family: 'Gelasio';
+		font-style: normal;
+		font-weight: 400;
+		src: local('Gelasio Regular'), local('Gelasio-Regular'), url(https://fonts.gstatic.com/s/gelasio/v1/cIf9MaFfvUQxTTqS9C6hYQ.woff2) format('woff2');
+		unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	}
+
 	.Title>span{
 		font-size: 1.4vw;
 		color: white;
 		font-weight: 900;
-		font-family: BlackList;
+		font-family: Gelasio;
 	}
 
 	.Nav {  
