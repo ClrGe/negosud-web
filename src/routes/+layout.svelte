@@ -1,4 +1,5 @@
 <script>
+	import '../app.postcss';
 	import Header from './Header.svelte';
 	import './styles.css';
 </script>
@@ -11,7 +12,7 @@
 	</main>
 
 	<footer>
-		<p>Négociant en pinard depuis 2023</p>
+		<p>N&#xe9;gociant en pinard depuis 2023</p>
 	</footer>
 </div>
 
@@ -20,6 +21,8 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
+		background: #5C1427;
+
 	}
 
 	main {
