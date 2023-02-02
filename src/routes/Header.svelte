@@ -73,6 +73,7 @@
 		display: flex;
 		justify-content: space-between;
 		background: white;
+
 	}
 	.subheader {
 		height: 20px;
@@ -95,6 +96,8 @@
 		display: flex;
 		justify-content: center;
 		--background: rgba(255, 255, 255, 0.7);
+		position: relative;
+		top:1em;
 	}
 
 	path {
