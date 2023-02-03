@@ -30,9 +30,14 @@
 
 <style>
     .cards{
+        flex: 1;
         display: flex;
-        align-items: center;
-        justify-content: space-around;
+        flex-direction: column;
+        padding: 1rem;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+        max-width: 100rem;
     }
 
     .item{
