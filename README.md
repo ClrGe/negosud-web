@@ -25,4 +25,4 @@ npm install
 npm run dev
 ```
 
-**_The server is now running on port 8000 !_**
+**_The server is now running on port 5173 !_**

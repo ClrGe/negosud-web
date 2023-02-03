@@ -38,6 +38,7 @@
 	main {
 		flex: 1;
 		margin: 0 auto;
+
 		box-sizing: border-box;
 
 	}

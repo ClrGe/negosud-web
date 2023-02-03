@@ -81,4 +81,5 @@
         border-top: var(--size) solid white;
         color: white;
     }
+
 </style>
