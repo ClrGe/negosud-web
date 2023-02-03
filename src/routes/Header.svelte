@@ -4,6 +4,7 @@
 	import {Button, Checkbox, Input, Label, Modal} from 'flowbite-svelte'
 
 	let formModal = false;
+    let session;
 </script>
 
 <header class="flex justify-between">
@@ -27,9 +28,15 @@
         <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em;">
             <ShoppingCart/>Panier
         </Button>
-        <Button class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" on:click={() => formModal = true} style="height: fit-content; top: 1em;"><User/>
+        {#if session}
+            <Button class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em;"><User/>
+                Mon compte
+            </Button>
+        {:else if !session}
+        <Button class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em;"><User/>
             Connexion
         </Button>
+           {/if}
         <Modal autoclose={false} bind:open={formModal} class="w-full" size="xs">
             <form action="#" class="flex flex-col space-y-6">
                 <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Merci de vous identifier</h3>
