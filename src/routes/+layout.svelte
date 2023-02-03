@@ -5,7 +5,9 @@
 </script>
 
 <div class="app">
-	<Header />
+	<div class="header">
+		<Header />
+	</div>	
 
 	<main>
 		<slot />
@@ -17,6 +19,14 @@
 </div>
 
 <style>
+
+	.header{
+		box-shadow: 1px 1px 10px 5px black;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 999;
+	}
 	.app {
 		display: flex;
 		flex-direction: column;
@@ -30,7 +40,7 @@
 		padding: 1rem;
 		width: 100%;
 		max-width: 100rem;
-		margin: 0 auto;
+		margin: 10% auto 0 auto;
 		box-sizing: border-box;
 	}
 
