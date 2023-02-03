@@ -1,8 +1,48 @@
 <script>
+	/** @type {import('../../../../.svelte-kit/types/src/routes').PageLoad} */
+	import { env } from '$env/dynamic/public';
 	import { page } from '$app/stores';
 	import {User, Envelope, Star, HomeModern, QuestionMarkCircle, ShoppingCart} from 'svelte-heros-v2';
 	import { Button, Modal, Label, Input, Checkbox } from 'flowbite-svelte'
+	import { createEventDispatcher } from 'svelte';	
+	import * as cookie from 'cookie';
+
 	let formModal = false;
+
+	let email = "";
+	let password = "";
+	let error;
+
+	const dispatch = createEventDispatcher();
+
+	function submit() {
+		dispatch('submit', {
+		email,
+		password
+		});
+		login();
+	}
+
+	
+async function login() {
+    let url = env.PUBLIC_API_URL + "/api/Authentication/Login";
+	let model = JSON.stringify({email, password});
+    const response = await fetch(url, {
+    method: 'POST',
+    body: model,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+	credentials: 'include',
+    });
+	if (!response.ok) {
+    error = (await response.json()).message;
+    return;
+    }
+    const data = await response.json();
+
+	const token = document.cookie.split("=")[1];	
+}
 </script>
 
 <header>
@@ -35,15 +75,15 @@
 					<span>Connexion</span>
 				</Button>
 				<Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
-					<form class="flex flex-col space-y-6" action="#">
+					<form on:submit={submit} class="flex flex-col space-y-6">
 						<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Merci de vous identifier</h3>
 						<Label class="space-y-2">
 							<span>Email</span>
-							<Input type="email" name="email" placeholder="exemple@negosud.fr" required />
+							<Input type="email" name="email" placeholder="exemple@negosud.fr" bind:value={email} required />
 						</Label>
 						<Label class="space-y-2">
 							<span>Mot de passe</span>
-							<Input type="password" name="password" placeholder="•••••" required />
+							<Input type="password" name="password" placeholder="•••••" bind:value={password} required />
 						</Label>
 						<div class="flex items-start">
 							<Checkbox>Se souvenir de moi</Checkbox>
