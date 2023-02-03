@@ -1,5 +1,9 @@
 <script>
-	import { page } from '$app/stores';	
+	import { page } from '$app/stores';
+	import {User, Envelope, Star, HomeModern, QuestionMarkCircle, ShoppingCart} from 'svelte-heros-v2';
+
+	import { Button, Modal, Label, Input, Checkbox } from 'flowbite-svelte'
+	let formModal = false;
 </script>
 
 <header>

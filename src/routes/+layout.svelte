@@ -31,8 +31,6 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		background: #5C1427;
-
 	}
 
 	main {

@@ -1,8 +1,9 @@
 <script>
-    import {CircleStack, Document, ShoppingCart, User} from "svelte-heros-v2";
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
-    let isOpenModal = false;
+
+    import {CircleStack, Document, HomeModern, Minus, Plus, ShoppingCart, User} from "svelte-heros-v2";
     import {Button, Dropdown, DropdownItem, Chevron, Checkbox, Search, Tabs, TabItem, List} from 'flowbite-svelte'
+    let isOpenModal = false;
 
     function openModal() {
         isOpenModal = true;
@@ -17,6 +18,7 @@
 
     const addProductToCart = (product) => {
         for (let item of cart) {
+            item.quantity = 1;
             if (item.id === product.id) {
                 product.quantity += 1
                 cart = cart;
@@ -49,29 +51,12 @@
             }
         }
     }
+    $: total = cart.reduce((sum, item) => sum + item.currentPrice * item.quantity, 0)
 
-    $: total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 </script>
-
-<div class="cart-list">
-    {#each cart as item }
-        {#if item.quantity > 0}
-            <div class="cart-item">
-                <img width="50" src={item.image} alt={item.name}/>
-                <div>{item.quantity}
-                    <button on:click={() => incrementItem(item)}>+</button>
-                    <button on:click={() => removeFromCart(item)}>-</button>
-                </div>
-                <p>{item.price * item.quantity}€</p>
-            </div>
-        {/if}
-    {/each}
-</div>
-<p>{cart.length} articles dans le panier</p>
 
 <Tabs style="full" defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700">
     <TabItem class="w-full" open>
-        <span slot="title">Les vins</span>
         <div class="select">
             <Button  style="background :#670302"><Chevron>Afficher ...</Chevron></Button>
             <Dropdown >
@@ -86,6 +71,30 @@
                 <DropdownItem>Nouveautés</DropdownItem>
             </Dropdown>
         </div>
+        <span slot="title">Les vins</span>
+        <div class="cart-list">
+
+            {#each cart as item }
+                {#if item.quantity > 0}
+
+                <div class="cart-item">
+                    <p>{item.fullName}</p>
+                    <p>{item.currentPrice * item.quantity}€</p>
+                    <div>{item.quantity}
+
+                                <Button on:click={() => incrementItem(item)}><Plus /></Button>
+                                <Button on:click={() => removeFromCart(item)}><Minus /></Button>
+                            </div>
+
+                    </div>
+                {/if}
+
+            {/each}
+            <div class="total">
+                <h4>Total: {total}€ </h4>
+            </div>
+        </div>
+        <p>{cart.length} articles dans le panier</p>
         <section class="products">
             <div class="product-list">
                 {#each data.bottles as product}
@@ -95,7 +104,7 @@
                         <p>{product.wineType}</p>
                         <p>{product.yearProduced}</p>
                         <p><b>{product.currentPrice}€</b></p>
-                        <Button class="relative right-0 btn" style="background :#5C1427">
+                        <Button class="relative right-0 btn" on:click={() => addProductToCart(product)} style="background :#5C1427">
                             <ShoppingCart /> Acheter
                         </Button>
                         <Button  class="relative right-0 btn" style="background :#5C1427" on:click={openModal} isOpenModal={isOpenModal} on:closeModal={closeModal}>
@@ -254,6 +263,15 @@
         color: #670302;
         border: none;
         font-weight: bold;
-
+    }
+    .cart-list {
+        border: 2px solid;
+        padding: 10px;
+    }
+    .cart-item {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 1rem;
     }
 </style>
