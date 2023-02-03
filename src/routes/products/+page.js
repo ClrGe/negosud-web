@@ -1,22 +1,23 @@
 /** @type {import('../../../../.svelte-kit/types/src/routes').PageLoad} */
-import { env } from '$env/dynamic/public';
-export async function load({ fetch }) {
+import {env} from '$env/dynamic/public';
+
+export async function load({fetch}) {
     let token = `Bearer ` + env.PUBLIC_API_KEY
     let url = env.PUBLIC_API_URL + "/api/bottle"
     let prod = env.PUBLIC_API_URL + "/api/producer"
     const res = await fetch(url, {
-        headers : {
+        headers: {
             'Authorization': token
         }
     });
-    const bottles = await res.json() ;
+    const bottles = await res.json();
 
     const resProd = await fetch(prod, {
-        headers : {
+        headers: {
             'Authorization': token
         }
     });
-    const producers = await resProd.json() ;
+    const producers = await resProd.json();
     console.log(producers)
-    return { bottles, producers };
+    return {bottles, producers};
 }
