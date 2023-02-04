@@ -1,6 +1,6 @@
 <script>
 	import {page} from '$app/stores';
-    import {ArrowRightCircle, Briefcase, Envelope, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
+    import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
     import {Button, Checkbox, Chevron, Dropdown, DropdownItem, Input, Label, Modal} from 'flowbite-svelte'
 
 	let formModal = false;
@@ -13,11 +13,11 @@
     </a>
     <nav class="text-white flex justify-center relative mt-1">
         <ul class="relative flex justify-center items-center bg-contain list-none">
-            <li class="hover:text-white relative h-14 pr-10" aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-                <a href="/" class="flex items-center font-black tracking-wider pl-6 pt-4 text-lg"><HomeModern/> Accueil</a></li>
-            <li class="hover:text-white relative h-14 pr-10" aria-current={$page.url.pathname === '/products' ? 'page' : undefined}>
-                <a href="/products" class="flex items-center font-black tracking-wider pl-6 pt-4 text-lg"><Star/> Tous les produits</a></li>
-            <li class="hover:text-white relative h-14 pr-8"><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 text-[18px]">
+            <li class="hover:text-white relative h-14 pr-auto  " aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+                <a href="/" class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]"><HomeModern/> Accueil</a></li>
+            <li class="hover:text-white relative h-14 pr-auto !text-[18px]" aria-current={$page.url.pathname === '/products' ? 'page' : undefined}>
+                <a href="/products" class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]"><Star/> Tous les produits</a></li>
+            <li class="hover:text-white relative h-14 pr-auto"><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
                 <Chevron><ArrowRightCircle/> Type de produits</Chevron>
             </Button></li>
             <Dropdown>
@@ -27,7 +27,7 @@
                 <DropdownItem><a href="/products">Vins Pétillants</a></DropdownItem>
                 <DropdownItem><a href="/products">Spiritueux</a></DropdownItem>
             </Dropdown>
-            <li class="hover:text-white relative h-14 pr-8 "><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 text-[18px]">
+            <li class="hover:text-white relative h-14 pr-8 "><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
                 <Chevron><Briefcase/>Pour les professionnels</Chevron>
             </Button></li>
             <Dropdown>
@@ -47,7 +47,7 @@
             <ShoppingCart/><a href="/cart">Panier</a>
         </Button>
         {#if session}
-            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; color: #670302; background:white;"><User/>
+            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em; color: #670302; background:white;"><User/>
                 <Chevron>Mon compte</Chevron>
             </Button>
             <Dropdown>
@@ -57,7 +57,7 @@
                 <DropdownItem>Deconnexion</DropdownItem>
             </Dropdown>
         {:else if !session}
-        <Button on:click={() => formModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
+        <Button on:click={() => formModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
             Connexion
         </Button>
            {/if}
@@ -110,7 +110,7 @@
         left: calc(60% - var(--size));
         border: var(--size) solid transparent;
         border-top: var(--size) solid white;
-        color: white;
+       color: #5C1427 !important;
     }
 
 </style>

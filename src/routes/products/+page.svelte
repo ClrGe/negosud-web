@@ -59,9 +59,9 @@
 
 
 <div class="content rounded-md shadow-md p-12 ">
-    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9]"  style="full">
+    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] w-1/2 ml-auto mr-auto "  style="full">
         <TabItem class="w-full" open>
-            <div class="w-full flex justify-center mb-10 h-12">
+            <div class="w-full flex justify-center mb-10 h-12 ">
                 <Button style="background :#670302">
                     <Chevron>Afficher ...</Chevron>
                 </Button>
@@ -83,11 +83,11 @@
 
             {#if data.bottles}
 
-            <section class="products">
-                <div class="product-list shadow-sm bg-transparent ">
+            <section class="products !bg-[#ededed]">
+                <div class="product-list shadow-sm ">
 
                         {#each data.bottles as product}
-                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg  hover:!scale-110 ">
+                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg  !bg-[#ededed] hover:!scale-110 ">
 
                                 <img class="image" src="src/lib/images/pinard.png" alt="pinard"/>
                                 <h4 class="font-extrabold uppercase p-6 ">{product.fullName}</h4>
@@ -99,12 +99,12 @@
 
                                     <div id="price" class="mb-5 text-black p-6 bg-gray-100 rounded-lg shadow-lg ">
                                         <h2>{product.currentPrice}€</h2></div>
-                                    <Button class="!bg-red-900 hover:!bg-[#CAB089F9] shadow-lg hover:!text-red-900 !text-[#CAB089F9]"
+                                    <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white"
                                             on:click={() => addProductToCart(product)}>
                                         <ShoppingCart/>
                                         Acheter
                                     </Button>
-                                    <Button class="relative shadow-lg right-0 !bg-[#CAB089F9] !text-red-900 border-black hover:!bg-red-900 hover:!text-[#CAB089F9]"
+                                    <Button class="relative shadow-lg right-0 !bg-white !border-red-900 !text-red-900 border-black hover:!bg-red-900 hover:!text-white"
                                             on:click={openModal}
                                             isOpenModal={isOpenModal} on:closeModal={closeModal}>
                                         <Document/>
@@ -154,7 +154,7 @@
             <section class="products">
 
                 {#if data.producers}
-                    <div class="product-list shadow-sm bg-transparent ">
+                    <div class="product-list shadow-sm ">
                     {#each data.producers as producer}
                         <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
                               style="width: fit-content;">
@@ -211,7 +211,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        background: rgba(202, 176, 137, 0.98);
+        background: rgb(36 2 1 / 64%);
         box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.5);
         box-shadow: inset 0px 0px 30px rgba(0, 0, 0, 0.5);
 
