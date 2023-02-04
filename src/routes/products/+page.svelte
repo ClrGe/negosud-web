@@ -85,12 +85,9 @@
 
             <section class="products">
                 <div class="product-list shadow-sm bg-transparent ">
-                        <div class="flex justify-center items-center">
-                            <h1 class="text-4xl font-bold">Chargement...</h1>
-                        </div>
 
                         {#each data.bottles as product}
-                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg ">
+                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg  hover:!scale-110 ">
 
                                 <img class="image" src="src/lib/images/pinard.png" alt="pinard"/>
                                 <h4 class="font-extrabold uppercase p-6 ">{product.fullName}</h4>
@@ -102,12 +99,12 @@
 
                                     <div id="price" class="mb-5 text-black p-6 bg-gray-100 rounded-lg shadow-lg ">
                                         <h2>{product.currentPrice}€</h2></div>
-                                    <Button class="btn bg-red-900 hover:bg-[#CAB089F9] shadow-lg hover:text-red-900 text-[#CAB089F9]"
+                                    <Button class="!bg-red-900 hover:!bg-[#CAB089F9] shadow-lg hover:!text-red-900 !text-[#CAB089F9]"
                                             on:click={() => addProductToCart(product)}>
                                         <ShoppingCart/>
                                         Acheter
                                     </Button>
-                                    <Button class="btn relative shadow-lg right-0 bg-[#CAB089F9] text-red-900 border-black hover:bg-red-900 hover:text-[#CAB089F9]"
+                                    <Button class="relative shadow-lg right-0 !bg-[#CAB089F9] !text-red-900 border-black hover:!bg-red-900 hover:!text-[#CAB089F9]"
                                             on:click={openModal}
                                             isOpenModal={isOpenModal} on:closeModal={closeModal}>
                                         <Document/>
@@ -119,7 +116,7 @@
                             <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
                                  on:click={closeModal}></div>
                             <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
-                                <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg ">
+                                <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg hover:!scale-110 ">
                                     <h2>Détails du produit</h2>
                                     <div class="text">
                                         <p>Appelation : {product.fullName}</p>
