@@ -19,9 +19,6 @@
                 <a href="/products" class="flex items-center font-black tracking-wider pl-6 pt-4"><Star/>Nos produits</a></li>
             <li class="hover:text-white relative h-14" aria-current={$page.url.pathname === '/contact' ? 'page' : undefined}>
                 <a href="/contact" class="flex items-center font-black  tracking-wider pl-6 pt-4"><Envelope/>Contact</a></li>
-            <li class="hover:text-white relative h-14" aria-current={$page.url.pathname === '/account' ? 'page' : undefined}>
-                <a href="/account" class="flex items-center font-black tracking-wider pl-6 pt-4"><User/>Mon compte</a>
-            </li>
         </ul>
     </nav>
     <div class="right flex items-center space-x-4">
@@ -29,11 +26,11 @@
             <ShoppingCart/>Panier
         </Button>
         {#if session}
-            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; background: #670302;"><User/>
+            <a href="/account"><Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; color: #670302; background:white;"><User/>
                 Mon compte
-            </Button>
+            </Button></a>
         {:else if !session}
-        <Button class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
+        <Button on:click={() => formModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
             Connexion
         </Button>
            {/if}
