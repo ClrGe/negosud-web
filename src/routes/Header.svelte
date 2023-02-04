@@ -8,8 +8,8 @@
 </script>
 
 <header class="flex justify-between">
-    <a  href="/" class="corner flex">
-        <img alt="pinard" class="w-20 ml-6" src="./src/lib/images/logo.png" width="300px"/><span class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
+    <a  href="/" class="corner flex ">
+        <img alt="pinard" class="w-24 ml-6 hover:!scale-110" src="./src/lib/images/logo.png" width="300px"/><span class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
     </a>
     <nav class="text-white flex justify-center relative mt-1">
         <ul class="relative flex justify-center items-center bg-contain list-none">
@@ -17,7 +17,7 @@
                 <a href="/" class="flex items-center font-black tracking-wider pl-6 pt-4 text-lg"><HomeModern/> Accueil</a></li>
             <li class="hover:text-white relative h-14 pr-10" aria-current={$page.url.pathname === '/products' ? 'page' : undefined}>
                 <a href="/products" class="flex items-center font-black tracking-wider pl-6 pt-4 text-lg"><Star/> Tous les produits</a></li>
-            <li class="hover:text-white relative h-14 pr-8"><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 text-lg">
+            <li class="hover:text-white relative h-14 pr-8"><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 text-[18px]">
                 <Chevron><ArrowRightCircle/> Type de produits</Chevron>
             </Button></li>
             <Dropdown>
@@ -27,7 +27,7 @@
                 <DropdownItem><a href="/products">Vins Pétillants</a></DropdownItem>
                 <DropdownItem><a href="/products">Spiritueux</a></DropdownItem>
             </Dropdown>
-            <li class="hover:text-white relative h-14 pr-8"><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 text-lg">
+            <li class="hover:text-white relative h-14 pr-8 "><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 text-[18px]">
                 <Chevron><Briefcase/>Pour les professionnels</Chevron>
             </Button></li>
             <Dropdown>
