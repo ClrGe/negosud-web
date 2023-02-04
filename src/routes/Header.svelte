@@ -25,15 +25,15 @@
         </ul>
     </nav>
     <div class="right flex items-center space-x-4">
-        <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em;">
+        <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
             <ShoppingCart/>Panier
         </Button>
         {#if session}
-            <Button class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em;"><User/>
+            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; background: #670302;"><User/>
                 Mon compte
             </Button>
         {:else if !session}
-        <Button class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em;"><User/>
+        <Button class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
             Connexion
         </Button>
            {/if}
