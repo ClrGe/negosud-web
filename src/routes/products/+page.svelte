@@ -59,8 +59,7 @@
 
 
 <div class="content rounded-md shadow-md p-12 ">
-    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9]"
-          style="full">
+    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9]"  style="full">
         <TabItem class="w-full" open>
             <div class="w-full flex justify-center mb-10 h-12">
                 <Button style="background :#670302">
@@ -81,93 +80,84 @@
                 </Dropdown>
             </div>
             <span slot="title">Les vins</span>
-            <!--        <div class="cart-list">-->
 
-            <!--            {#each cart as item }-->
-            <!--                {#if item.quantity > 0}-->
+            {#if data.bottles}
 
-            <!--                    <div class="cart-item">-->
-            <!--                        <p>{item.fullName}</p>-->
-            <!--                        <p>{item.currentPrice * item.quantity}€</p>-->
-            <!--                        <div>{item.quantity}-->
-
-            <!--                            <Button on:click={() => incrementItem(item)}>-->
-            <!--                                <Plus/>-->
-            <!--                            </Button>-->
-            <!--                            <Button on:click={() => removeFromCart(item)}>-->
-            <!--                                <Minus/>-->
-            <!--                            </Button>-->
-            <!--                        </div>-->
-
-            <!--                    </div>-->
-            <!--                {/if}-->
-
-            <!--            {/each}-->
-            <!--            <div class="total">-->
-            <!--                <h4>Total: {total}€ </h4>-->
-            <!--            </div>-->
-            <!--        </div>-->
-            <!--        <p>{cart.length} articles dans le panier</p>-->
             <section class="products">
-                <div class="product-list shadow-sm ">
-                    {#each data.bottles as product}
-                        <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg ">
+                <div class="product-list shadow-sm bg-transparent ">
+                        <div class="flex justify-center items-center">
+                            <h1 class="text-4xl font-bold">Chargement...</h1>
+                        </div>
 
-                            <img class="image" src="src/lib/images/pinard.png" alt="pinard"/>
-                            <h4 class="font-extrabold uppercase p-6 ">{product.fullName}</h4>
-                            <div class="pb-8">
+                        {#each data.bottles as product}
+                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg ">
+
+                                <img class="image" src="src/lib/images/pinard.png" alt="pinard"/>
+                                <h4 class="font-extrabold uppercase p-6 ">{product.fullName}</h4>
                                 <div class="pb-8">
-                                    <p>{product.wineType}</p>
-                                    <p>{product.yearProduced}</p>
+                                    <div class="pb-8">
+                                        <p>{product.wineType}</p>
+                                        <p>{product.yearProduced}</p>
+                                    </div>
+
+                                    <div id="price" class="mb-5 text-black p-6 bg-gray-100 rounded-lg shadow-lg ">
+                                        <h2>{product.currentPrice}€</h2></div>
+                                    <Button class="btn bg-red-900 hover:bg-[#CAB089F9] shadow-lg hover:text-red-900 text-[#CAB089F9]"
+                                            on:click={() => addProductToCart(product)}>
+                                        <ShoppingCart/>
+                                        Acheter
+                                    </Button>
+                                    <Button class="btn relative shadow-lg right-0 bg-[#CAB089F9] text-red-900 border-black hover:bg-red-900 hover:text-[#CAB089F9]"
+                                            on:click={openModal}
+                                            isOpenModal={isOpenModal} on:closeModal={closeModal}>
+                                        <Document/>
+                                        Détails
+                                    </Button>
                                 </div>
 
-                                <div id="price" class="mb-5 text-black p-6 bg-gray-100 rounded-lg shadow-lg ">
-                                    <h2>{product.currentPrice}€</h2></div>
-                                <Button class="btn bg-red-900 hover:bg-[#CAB089F9] shadow-lg hover:text-red-900 text-[#CAB089F9]"
-                                        on:click={() => addProductToCart(product)}>
-                                    <ShoppingCart/>
-                                    Acheter
-                                </Button>
-                                <Button class="btn relative shadow-lg right-0 bg-[#CAB089F9] text-red-900 border-black hover:bg-red-900 hover:text-[#CAB089F9]"
-                                        on:click={openModal}
-                                        isOpenModal={isOpenModal} on:closeModal={closeModal}>
-                                    <Document/>
-                                    Détails
-                                </Button>
+                            </Card>
+                            <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
+                                 on:click={closeModal}></div>
+                            <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
+                                <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg ">
+                                    <h2>Détails du produit</h2>
+                                    <div class="text">
+                                        <p>Appelation : {product.fullName}</p>
+                                        <p>Description :  {product.description}</p>
+                                        <p>Type de vin :  {product.wineType}</p>
+                                        <p>Cépage :</p>
+                                        <p>Volume :  {product.volume}</p>
+                                        <p>Année :  {product.yearProduced}</p>
+                                        <p>Prix :  {product.currentPrice}</p>
+                                    </div>
+                                    <Button class="relative right-0 btn" on:click={() => addProductToCart(product)}
+                                            style="background :#5C1427">
+                                        <ShoppingCart/>
+                                        Acheter
+                                    </Button>
+                                </Card>
                             </div>
 
-                        </Card>
-                        <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
-                             on:click={closeModal}></div>
-                        <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
-                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg ">
-                                <h2>Détails du produit</h2>
-                                <div class="text">
-                                    <p>Appelation : {product.fullName}</p>
-                                    <p>Description :  {product.description}</p>
-                                    <p>Type de vin :  {product.wineType}</p>
-                                    <p>Cépage :</p>
-                                    <p>Volume :  {product.volume}</p>
-                                    <p>Année :  {product.yearProduced}</p>
-                                    <p>Prix :  {product.currentPrice}</p>
-                                </div>
-                                <Button class="relative right-0 btn" on:click={() => addProductToCart(product)}
-                                        style="background :#5C1427">
-                                    <ShoppingCart/>
-                                    Acheter
-                                </Button>
-                            </Card>
-                        </div>
-                    {/each}
+                        {/each}
                 </div>
             </section>
+                    {:else}
+                        <div class="bg-gray-200 w-full px-16 md:px-0 h-screen flex items-center justify-center">
+                            <div class="bg-white border border-gray-200 flex flex-col items-center justify-center px-4 md:px-8 lg:px-24 py-8 rounded-lg shadow-2xl">
+                                <p class="text-6xl md:text-7xl lg:text-9xl font-bold tracking-wider text-gray-300">404</p>
+                                <p class="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">OOOPS</p>
+                                <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">Nos services sont temporairement indisponibles</p>
+                            </div>
+                        </div>
+                    {/if}
         </TabItem>
 
         <TabItem class="w-full">
             <span slot="title">Les producteurs</span>
-            <section class="content">
+            <section class="products">
 
-                <div class="product-list w-full">
+                {#if data.producers}
+                    <div class="product-list shadow-sm bg-transparent ">
                     {#each data.producers as producer}
                         <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
                               style="width: fit-content;">
@@ -182,6 +172,15 @@
                         </Card>
                     {/each}
                 </div>
+                {:else}
+                    <div class="bg-gray-200 w-full px-16 md:px-0 h-screen flex items-center justify-center">
+                        <div class="bg-white border border-gray-200 flex flex-col items-center justify-center px-4 md:px-8 lg:px-24 py-8 rounded-lg shadow-2xl">
+                            <p class="text-6xl md:text-7xl lg:text-9xl font-bold tracking-wider text-gray-300">404</p>
+                            <p class="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">OOOPS</p>
+                            <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">Nos services sont temporairement indisponibles</p>
+                        </div>
+                    </div>
+                {/if}
             </section>
         </TabItem>
         <TabItem class="w-full">

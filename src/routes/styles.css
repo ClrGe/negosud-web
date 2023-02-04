@@ -11,6 +11,11 @@
     --column-margin-top: 4rem;
     font-family: var(--font-body);
     color: var(--color-text);
+    background-color: black;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/images/hero.png");
+    background-size: cover;
+    background-position: center;
+
 }
 
 body {
