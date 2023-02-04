@@ -1,28 +1,70 @@
 # Negosud Web
 
-Site e-commerce SvelteKit du négociant en vin NEGOSUD
+### *Site e-commerce du négociant en vin NEGOSUD*
+
+---
 
 ## Stack technique
 
-```bash
-NodeJS ^18.13.0
 
-NPM ^8.19.3
+- **NodeJS ^18.13.0**
 
-SvelteKit ^1.0.0
 
-TypeScript ^4.9.3
+- **NPM ^8.19.3**
 
-```
+
+- **SvelteKit ^1.0.0**
+
+
+- **Tailwind CSS ^2.2.19**
+
+
+- **TypeScript ^4.9.3**
+
+
+---
 
 ## Installation
 
- - Cloner ce dépôt
+
+```bash
+git clone <repo>
+```
 
 ```bash
 npm install
-
-npm run dev
 ```
 
-**_The server is now running on port 5173 !_**
+```bash
+npm run dev || npm run build
+```
+
+**_Le site est disponible sur le port 5173 !_**
+
+---
+## Présentation
+
+Ce site est un site e-commerce de vente de vin. Il est développé en SvelteKit, un framework de développement web basé sur Svelte, un framework JavaScript qui permet de développer des applications web réactives.
+
+**Fonctionnalités :**
+
+    
+- Authentification
+
+
+- Gestion des comptes clients
+
+
+- Gestion de paniers
+
+
+- Gestion des commandes
+
+
+### Page d'accueil :
+
+![login.png](static/homepage.png)
+
+### Liste des produits :
+
+![login.png](static/products.png)

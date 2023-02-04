@@ -1,39 +1,63 @@
 <script>
 	import {page} from '$app/stores';
-	import {Envelope, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
-	import {Button, Checkbox, Input, Label, Modal} from 'flowbite-svelte'
+    import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
+    import {Button, Checkbox, Chevron, Dropdown, DropdownItem, Input, Label, Modal} from 'flowbite-svelte'
 
 	let formModal = false;
-    let session;
+    let session = true;
 </script>
 
 <header class="flex justify-between">
-    <a  href="/" class="corner">
-        <img alt="pinard" class="w-20 ml-6" src="./src/lib/images/logo.png" width="300px"/>
+    <a  href="/" class="corner flex ">
+        <img alt="pinard" class="w-24 ml-6 hover:!scale-110" src="./src/lib/images/logo.png" width="300px"/><span class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
     </a>
     <nav class="text-white flex justify-center relative mt-1">
         <ul class="relative flex justify-center items-center bg-contain list-none">
-            <li class="hover:text-white relative h-14" aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-                <a href="/" class="flex items-center font-black tracking-wider pl-6 pt-4"><HomeModern/>Accueil</a></li>
-            <li class="hover:text-white relative h-14" aria-current={$page.url.pathname === '/products' ? 'page' : undefined}>
-                <a href="/products" class="flex items-center font-black tracking-wider pl-6 pt-4"><Star/>Nos produits</a></li>
-            <li class="hover:text-white relative h-14" aria-current={$page.url.pathname === '/contact' ? 'page' : undefined}>
-                <a href="/contact" class="flex items-center font-black  tracking-wider pl-6 pt-4"><Envelope/>Contact</a></li>
-            <li class="hover:text-white relative h-14" aria-current={$page.url.pathname === '/account' ? 'page' : undefined}>
-                <a href="/account" class="flex items-center font-black tracking-wider pl-6 pt-4"><User/>Mon compte</a>
-            </li>
+            <li class="hover:text-white relative h-14 pr-auto  " aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+                <a href="/" class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]"><HomeModern/> Accueil</a></li>
+            <li class="hover:text-white relative h-14 pr-auto !text-[18px]" aria-current={$page.url.pathname === '/products' ? 'page' : undefined}>
+                <a href="/products" class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]"><Star/> Tous les produits</a></li>
+            <li class="hover:text-white relative h-14 pr-auto"><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
+                <Chevron><ArrowRightCircle/> Type de produits</Chevron>
+            </Button></li>
+            <Dropdown>
+                <DropdownItem><a href="/products">Nouveautés</a></DropdownItem>
+                <DropdownItem><a href="/products">Vins rouges</a></DropdownItem>
+                <DropdownItem><a href="/products">Vins blancs</a></DropdownItem>
+                <DropdownItem><a href="/products">Vins Pétillants</a></DropdownItem>
+                <DropdownItem><a href="/products">Spiritueux</a></DropdownItem>
+            </Dropdown>
+            <li class="hover:text-white relative h-14 pr-8 "><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
+                <Chevron><Briefcase/>Pour les professionnels</Chevron>
+            </Button></li>
+            <Dropdown>
+                <DropdownItem><a href="/contact">Hotellerie</a></DropdownItem>
+                <DropdownItem><a href="/contact">Vente</a></DropdownItem>
+                <DropdownItem class="flex items-center justify-between">
+                    <Chevron placement="right">Producteurs</Chevron>
+                </DropdownItem>
+                <Dropdown placement="right-start">
+                    <DropdownItem><a href="/contact">Vendre votre vin</a></DropdownItem>
+                </Dropdown>
+            </Dropdown>
         </ul>
     </nav>
     <div class="right flex items-center space-x-4">
         <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
-            <ShoppingCart/>Panier
+            <ShoppingCart/><a href="/cart">Panier</a>
         </Button>
         {#if session}
-            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; background: #670302;"><User/>
-                Mon compte
+            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em; color: #670302; background:white;"><User/>
+                <Chevron>Mon compte</Chevron>
             </Button>
+            <Dropdown>
+                <DropdownItem><a href="/account"> Mon compte</a></DropdownItem>
+                <DropdownItem><a href="/cart">Mon panier</a></DropdownItem>
+                <DropdownItem><a href="/account">Commandes</a></DropdownItem>
+                <DropdownItem>Deconnexion</DropdownItem>
+            </Dropdown>
         {:else if !session}
-        <Button class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9]" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
+        <Button on:click={() => formModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
             Connexion
         </Button>
            {/if}
@@ -86,7 +110,7 @@
         left: calc(60% - var(--size));
         border: var(--size) solid transparent;
         border-top: var(--size) solid white;
-        color: white;
+       color: #5C1427 !important;
     }
 
 </style>

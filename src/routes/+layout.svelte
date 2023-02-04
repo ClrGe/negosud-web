@@ -2,7 +2,7 @@
 	import '../app.postcss';
 	import Header from './Header.svelte';
 	import './styles.css';
-	import {QuestionMarkCircle} from "svelte-heros-v2";
+	import {Envelope, QuestionMarkCircle} from "svelte-heros-v2";
 	import {page} from "$app/stores";
 </script>
 
@@ -12,17 +12,28 @@
 	<main class="flex flex-col w-full">
 		<slot />
 	</main>
-
-	<footer class="flex flex-col items-center justify-center text-white">
-		<ul class="relative  bg-contain list-none">
-			<li class="hover:text-red-200 relative h-14" aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>
-				<a href="/about" class="flex items-center justify-center font-black tracking-wider"><QuestionMarkCircle/>À propos de Negosud</a>
+	<div class="flex justify-center items-center">
+	<a target="_blank" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006688014" class="text-[#CAB089F9]">L'ABUS D'ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</a>
+</div>
+	<footer class="flex flex-col  text-white">
+		<ul class="relative  bg-contain list-none flex justify-center ">
+			<li class=" p-3 o" aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>
+				<a href="/about" class="font-black tracking-wider">À propos de Negosud</a>
 			</li>
-			<li>
-				<p class="text-[#CAB089F9]">L'ABUS D'ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</p>
+			<li class="p-3">
+				<a href="/contact" class="font-black  tracking-wider ">Nous contacter</a>
+			</li>
+			<li class="p-3">
+				<a href="" class="font-black  tracking-wider ">Mentions légales</a>
+			</li>
+			<li class="p-3">
+				<a href="" class="font-black  tracking-wider ">FAQ</a>
+			</li>
+			<li flex items-center justify-center>
 				<!--<img src="src/lib/images/bandeau_legal.jpg">-->
 			</li>
 		</ul>
+
 	</footer>
 </div>
 
