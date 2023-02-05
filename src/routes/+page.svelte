@@ -1,7 +1,5 @@
-<script>import Header from "./Header.svelte"
 import {ArrowUturnRight} from "svelte-heros-v2";</script>
 <section class="hero bg-center bg-no-repeat bg-cover absolute top-0 w-full h-full">
-    <Header />
     <div class="text-white">
         <div class=" mx-auto flex flex-col md:flex-row items-center my-12  md:my-24 ml-56 pl-56">
             <div class="flex flex-col w-full lg:w-1/3 justify-center items-start p-8">
