@@ -110,7 +110,7 @@ async function login() {
                 <DropdownItem><a href="/cart">Mon panier</a></DropdownItem>
                 <DropdownItem><a href="/account">Commandes</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a href="" class="font-bold">Deconnexion</a></DropdownItem>
+                <DropdownItem><a href="" class="font-bold text-red-900">Deconnexion</a></DropdownItem>
             </Dropdown>
         {:else if !session}
         <Button on:click={() => formModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
