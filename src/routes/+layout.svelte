@@ -2,59 +2,61 @@
 	import '../app.postcss';
 	import Header from './Header.svelte';
 	import './styles.css';
+	import {Envelope, QuestionMarkCircle} from "svelte-heros-v2";
+	import {page} from "$app/stores";
 </script>
 
-<div class="app">
-	<div class="header">
-		<Header />
-	</div>	
+<div class="app flex flex-col bg-center repeat absolute top-0 w-full h-screen bg-black">
+	<Header />
 
-	<main>
+	<main class="flex flex-col w-full">
 		<slot />
 	</main>
+	<div class="flex justify-center items-center">
+	<a target="_blank" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006688014" class="text-[#CAB089F9]">L'ABUS D'ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</a>
+</div>
+	<footer class="flex flex-col  text-white">
+		<ul class="relative  bg-contain list-none flex justify-center ">
+			<li class=" p-3 o" aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>
+				<a href="/about" class="font-black tracking-wider">À propos de Negosud</a>
+			</li>
+			<li class="p-3">
+				<a href="/contact" class="font-black  tracking-wider ">Nous contacter</a>
+			</li>
+			<li class="p-3">
+				<a href="" class="font-black  tracking-wider ">Mentions légales</a>
+			</li>
+			<li class="p-3">
+				<a href="" class="font-black  tracking-wider ">FAQ</a>
+			</li>
+			<li flex items-center justify-center>
+				<!--<img src="src/lib/images/bandeau_legal.jpg">-->
+			</li>
+		</ul>
 
-	<footer>
-		<p>N&#xe9;gociant en pinard depuis 2023</p>
 	</footer>
 </div>
 
 <style>
-
-	.header{
-		box-shadow: 1px 1px 10px 5px black;
-		position: fixed;
-		top: 0;
-		width: 100%;
-		z-index: 999;
+	html {
+		background: black;
 	}
 	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
+		background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/images/hero.png");
+		background-attachment: scroll;
 	}
 
 	main {
 		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 100rem;
-		margin: 10% auto 0 auto;
+		margin: 0 auto;
+
 		box-sizing: border-box;
-	}
 
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
 	}
+footer {
+	background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0));
 
-	footer a {
-		font-weight: bold;
-	}
+}
 
 	@media (min-width: 480px) {
 		footer {

@@ -1,54 +1,14 @@
-<style>
-    /* The hero image */
-    .hero-image {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://brilliantpos.com/wp-content/uploads/2018/03/retail-wine-hero_img.jpg");
-        height: 50%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: relative;
-    }
-    /* Place text in the middle of the image */
-    .hero-text {
-        text-align: center;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: white;}
-    .cards{
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-    }
-
-    .item{
-        background-color: #f1f1f1;
-        border-radius: 10px;
-        box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-    }
-</style>
-<div class="hero-image">
-
-</div>
-<div class="cards">
-    <div width="100em" class="item">
-        <img class="image"  src="src/lib/images/pinard.png" alt="pinard"/>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus sit amet luctus venenatis. Nibh praesent tristique magna sit amet purus. Ultrices neque ornare aenean euismod elementum. Augue lacus viverra vitae congue. In iaculis nunc sed augue lacus viverra vitae congue eu. Cum sociis natoque penatibus et. Iaculis urna id volutpat lacus laoreet. Enim facilisis gravida neque convallis. Imperdiet dui accumsan sit amet. Enim ut tellus elementum sagittis vitae et leo duis. Tortor at risus viverra adipiscing at. Velit aliquet sagittis id consectetur purus ut faucibus. Neque sodales ut etiam sit amet. Eget nulla facilisi etiam dignissim. Ultricies lacus sed turpis tincidunt id aliquet. Mauris pellentesque pulvinar pellentesque habitant morbi. Ut aliquam purus sit amet luctus venenatis lectus magna. Quis enim lobortis scelerisque fermentum dui.
-
-            Ante metus dictum at tempor commodo ullamcorper. Amet consectetur adipiscing elit ut aliquam purus sit amet luctus. Arcu non odio euismod lacinia at quis risus sed vulputate. Orci sagittis eu volutpat odio. Velit ut tortor pretium viverra. Donec adipiscing tristique risus nec feugiat in fermentum posuere. Quam adipiscing vitae proin sagittis nisl rhoncus. Molestie nunc non blandit massa enim. Id eu nisl nunc mi ipsum faucibus vitae. Posuere ac ut consequat semper viverra.
-
-            In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Tincidunt eget nullam non nisi est sit amet facilisis. At imperdiet dui accumsan sit amet nulla. Mattis vulputate enim nulla aliquet. Velit sed ullamcorper morbi tincidunt ornare massa eget. Malesuada fames ac turpis egestas sed tempus urna. Hac habitasse platea dictumst quisque sagittis purus sit amet. In cursus turpis massa tincidunt. Velit scelerisque in dictum non consectetur a erat nam at. Sed nisi lacus sed viverra. Euismod nisi porta lorem mollis aliquam ut porttitor leo. Pharetra et ultrices neque ornare aenean euismod. Accumsan sit amet nulla facilisi morbi tempus iaculis urna id. Vulputate dignissim suspendisse in est ante in nibh mauris cursus. Egestas diam in arcu cursus euismod quis viverra nibh cras. Posuere lorem ipsum dolor sit amet. Elit duis tristique sollicitudin nibh. Mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Nullam vehicula ipsum a arcu cursus vitae congue mauris.
-
-            Nec nam aliquam sem et tortor. Tempus egestas sed sed risus pretium quam. Diam maecenas sed enim ut sem viverra aliquet eget. Semper eget duis at tellus. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus. Pulvinar proin gravida hendrerit lectus a. Scelerisque eu ultrices vitae auctor eu. Sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium. Blandit libero volutpat sed cras ornare arcu dui vivamus. Arcu dictum varius duis at consectetur lorem donec massa sapien.
-
-            Venenatis a condimentum vitae sapien. Laoreet non curabitur gravida arcu ac tortor dignissim. Egestas dui id ornare arcu odio. Sed turpis tincidunt id aliquet risus feugiat in. Tempor orci dapibus ultrices in iaculis. Est ullamcorper eget nulla facilisi etiam dignissim diam quis enim. Amet consectetur adipiscing elit ut. Proin sagittis nisl rhoncus mattis rhoncus. Faucibus nisl tincidunt eget nullam non nisi est sit. Dignissim diam quis enim lobortis scelerisque fermentum dui. Eget duis at tellus at urna condimentum. Integer malesuada nunc vel risus commodo viverra maecenas accumsan. Fermentum leo vel orci porta non pulvinar neque laoreet suspendisse. Vitae tempus quam pellentesque nec nam aliquam sem et tortor.</p>
+<script>import Header from "./Header.svelte"
+import {ArrowUturnRight} from "svelte-heros-v2";</script>
+<section class="hero bg-center bg-no-repeat bg-cover absolute top-0 w-full h-full">
+    <Header />
+    <div class="text-white">
+        <div class=" mx-auto flex flex-col md:flex-row items-center my-12  md:my-24 ml-56 pl-56">
+            <div class="flex flex-col w-full lg:w-1/3 justify-center items-start p-8">
+                <h1 class="mb-4 text-3xl font-extrabold md:text-5xl text-shadow lg:text-9xl"><span class="text-[#ffffff]/80 bg-clip-text italic shadow-md font-serif ">Negosud</span> </h1>
+                <h2 class="xl:text-4xl md:text-3xl leading-relaxed md:leading-snug mb-2 italic text-[#CAB089F9] ml-12">Vins d'exception</h2>
+                <a class="bg-transparent flex pt-3 pb-3 pl-10 pr-10 ml-10 mt-5 hover:bg-white hover:text-red-900 rounded shadow hover:shadow-lg py-2 px-4 bg-[#5C1427]/50 border border-white hover:border-red-900" href="/products"><ArrowUturnRight />Découvrir nos produits</a>
+            </div>
+        </div>
     </div>
-</div>
-
+</section>

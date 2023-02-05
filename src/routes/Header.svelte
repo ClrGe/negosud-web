@@ -1,13 +1,24 @@
 <script>
 	/** @type {import('../../../../.svelte-kit/types/src/routes').PageLoad} */
 	import { env } from '$env/dynamic/public';
-	import { page } from '$app/stores';
-	import {User, Envelope, Star, HomeModern, QuestionMarkCircle, ShoppingCart} from 'svelte-heros-v2';
-	import { Button, Modal, Label, Input, Checkbox } from 'flowbite-svelte'
+	import {page} from '$app/stores';
+    import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
+    import {
+        Button,
+        Checkbox,
+        Chevron,
+        Dropdown,
+        DropdownDivider,
+        DropdownItem,
+        Input,
+        Label,
+        Modal
+    } from 'flowbite-svelte'
+
 	import { createEventDispatcher } from 'svelte';	
-	import * as cookie from 'cookie';
 
 	let formModal = false;
+	let session = false;
 
 	let email = "";
 	let password = "";
@@ -26,10 +37,9 @@
 	
 async function login() {
     let url = env.PUBLIC_API_URL + "/api/Authentication/Login";
-	let model = JSON.stringify({email, password});
     const response = await fetch(url, {
     method: 'POST',
-    body: model,
+    body: JSON.stringify({email, password}),
     headers: {
         'Content-Type': 'application/json',
     },
@@ -39,254 +49,121 @@ async function login() {
     error = (await response.json()).message;
     return;
     }
+	session = true;
+	formModal = false;
     const data = await response.json();
 
 	const token = document.cookie.split("=")[1];	
+	env.PUBLIC_API_KEY = token;
 }
 </script>
 
-<header>
-	<div class="Negosud">
-		<div class="Logo">
-		  <div class="Img">
-			<a href="/">
-				<img src="src\lib\images\logo.png" alt="Negosud">
-			</a>	
-		  </div>
-		  <div class="Title">
-			<span>NEGOSUD</span>
-		  </div>
-		</div>
-		<div class="Nav">
-		  <div class="Utilities">
-			<div class="Search flex items-center">
-				<span>Recherchez un produit !</span>
-				<div class="searchbar flex justify-between items-center w-1/2 h-2/6 bg-white">
-					<input class="border-transparent focus:border-transparent focus:ring-0 border-none h-5/6 w-4/5 placeholder:italic " type="text" placeholder="Ecrivez le nom d'un produit">
-					<button class="flex items-center border-none bg-transparent cursor-pointer p-1">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-							<path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/>
-						</svg>
-					</button>
-				</div>				
-			</div>
-			<div class="Account">
-				<Button style="background: transparent" on:click={() => formModal = true}>
-					<span>Connexion</span>
-				</Button>
-				<Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
-					<form on:submit={submit} class="flex flex-col space-y-6">
-						<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Merci de vous identifier</h3>
-						<Label class="space-y-2">
-							<span>Email</span>
-							<Input type="email" name="email" placeholder="exemple@negosud.fr" bind:value={email} required />
-						</Label>
-						<Label class="space-y-2">
-							<span>Mot de passe</span>
-							<Input type="password" name="password" placeholder="•••••" bind:value={password} required />
-						</Label>
-						<div class="flex items-start">
-							<Checkbox>Se souvenir de moi</Checkbox>
-							<a href="/" class="ml-auto text-sm text-red-700 hover:underline dark:text-red-500">Mot de passe oublié ?</a>
-						</div>
-						<Button type="submit" class="w-full1" style="background :#670302">Se connecter</Button>
-						<div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-							Pas encore inscrit ? <a href="/" class="hover:underline dark:text-red-500" style="color :#670302">S'inscrire</a>
-						</div>
-					</form>
-				</Modal>
-				<img src="src\lib\images\icon-user.png" alt="Avatar">
-			</div>			
-		  </div>
-		  <div class="NavButtons">
-			<ul>
-				<li>
-					<a href="/" class="navButton"><HomeModern class="px-2 w-2/4"/>Accueil</a>
-					<a href="#news" class="navButton"><Star class="px-2 w-2/4"/>Nos nouveautés</a>
-					<a href="/products" class="navButton">Nos produits</a>
-					<a href="/about" class="navButton"><QuestionMarkCircle class="px-2 w-1/4"/>A propos de nous</a>
-					<a href="#contact" class="navButton"><Envelope class="px-2 w-1/4"/>A propos de nous</a>
-				</li>
-				<a href="/cart" class="navButton">
-					<ShoppingCart/>
-					<span>Votre panier</span>
-				</a>
-			</ul>
-		  </div>
-		</div>
-	  </div>
+<header class="flex justify-between">
+    <a  href="/" class="corner flex ">
+        <img alt="pinard" class="w-24 ml-6 hover:!scale-110" src="./src/lib/images/logo.png" width="300px"/><span class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
+    </a>
+    <nav class="text-white flex justify-center relative mt-1">
+        <ul class="relative flex justify-center items-center bg-contain list-none">
+            <li class="hover:text-white relative h-14 pr-auto  " aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+                <a href="/" class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]"><HomeModern/> Accueil</a></li>
+            <li class="hover:text-white relative h-14 pr-auto !text-[18px]" aria-current={$page.url.pathname === '/products' ? 'page' : undefined}>
+                <a href="/products" class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]"><Star/> Tous les produits</a></li>
+            <li class="hover:text-white relative h-14 pr-auto"><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
+                <Chevron><ArrowRightCircle/> Type de produits</Chevron>
+            </Button></li>
+            <Dropdown >
+                <DropdownItem><a class="font-bold text-red-900 inline" href="/products"><Star />Nouveautés</a></DropdownItem>
+                <DropdownDivider/>
+                <DropdownItem><a class="font-bold" href="/products">Vins rouges</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products">Vins blancs</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products">Vins Pétillants</a></DropdownItem>
+                <DropdownDivider/>
+                <DropdownItem><a class="font-bold" href="/products">Spiritueux</a></DropdownItem>
+            </Dropdown>
+            <li class="hover:text-white relative h-14 pr-8 "><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
+                <Chevron><Briefcase/>Pour les professionnels</Chevron>
+            </Button></li>
+            <Dropdown>
+                <DropdownItem><a class="font-bold" href="/contact">Hotellerie</a></DropdownItem>
+                <DropdownDivider/>
+                <DropdownItem><a class="font-bold" href="/contact">Vente</a></DropdownItem>
+                <DropdownDivider/>
+                <DropdownItem class="flex items-center justify-between">
+                    <Chevron placement="right"><span class="font-bold text-red-900">Producteurs</span></Chevron>
+                </DropdownItem>
+                <Dropdown placement="right-start">
+                    <DropdownItem><a class="font-bold" href="/contact">Vendre votre vin</a></DropdownItem>
+                </Dropdown>
+            </Dropdown>
+        </ul>
+    </nav>
+    <div class="right flex items-center space-x-4">
+        <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
+            <ShoppingCart/><a href="/cart">0</a>
+        </Button>
+        {#if session}
+            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em; color: #670302; background:white;"><User/>
+                <Chevron></Chevron>
+            </Button>
+            <Dropdown>
+                <DropdownItem><a href="/account"> Mon compte</a></DropdownItem>
+                <DropdownItem><a href="/cart">Mon panier</a></DropdownItem>
+                <DropdownItem><a href="/account">Commandes</a></DropdownItem>
+                <DropdownDivider/>
+                <DropdownItem><a href="" class="font-bold">Deconnexion</a></DropdownItem>
+            </Dropdown>
+        {:else if !session}
+        <Button on:click={() => formModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
+            Connexion
+        </Button>
+           {/if}
+        <Modal autoclose={false} bind:open={formModal} class="w-full" size="xs">
+            <form  action="" on:submit={submit} class="flex flex-col space-y-6">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Merci de vous identifier</h3>
+                <Label class="space-y-2">
+                    <span>Email</span>
+                    <Input name="email" placeholder="exemple@negosud.fr" required type="email" bind:value={email}/>
+                </Label>
+                <Label class="space-y-2">
+                    <span>Mot de passe</span>
+                    <Input name="password" placeholder="•••••" required type="password" bind:value={password}/>
+                </Label>
+                <div class="flex items-start">
+                    <Checkbox>Se souvenir de moi</Checkbox>
+                    <a class="ml-auto text-sm text-red-700 hover:underline dark:text-red-500" href="/">Mot de passe oublié ?</a>
+                </div>
+                <Button class="w-full1" style="background :#670302" type="submit">Se connecter</Button>
+                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                    Pas encore inscrit ? <a class="hover:underline dark:text-red-500" href="/register" style="color :#670302">S'inscrire</a>
+                </div>
+            </form>
+        </Modal>
+    </div>
 </header>
 
-<style>	
+<style>
+    @font-face {
+        font-family: 'Gelasio';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Gelasio Regular'), local('Gelasio-Regular'), url(https://fonts.gstatic.com/s/gelasio/v1/cIf9MaFfvUQxTTqS9C6hYQ.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
 
-	@font-face {
-		font-family: 'Gelasio';
-		font-style: normal;
-		font-weight: 400;
-		src: local('Gelasio Regular'), local('Gelasio-Regular'), url(https://fonts.gstatic.com/s/gelasio/v1/cIf9MaFfvUQxTTqS9C6hYQ.woff2) format('woff2');
-		unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-	}
+    header {
+        background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0%));
+    }
 
-	.Negosud {  
-		display: grid;
-		grid-template-columns: 0.4fr 1.6fr;
-		grid-template-rows: 1.4fr;
-		gap: 0px 0px;
-		grid-auto-flow: row;
-		grid-template-areas: "Logo Nav";
-		background-color: #6D071A;
-	}
-
-	.Logo {  
-		display: grid;
-		grid-template-columns: 0.8fr 1.2fr;
-		grid-template-rows: 1fr;
-		gap: 0px 0px;
-		grid-auto-flow: row;
-		grid-template-areas: "Img Title";
-		grid-area: Logo;
-	}
-
-	.Img { 
-		grid-area: Img; 
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 10% 0 10% 10%;
-	}
-
-	.Img>a>img{
-		max-width: 80%;
-		max-height: 80%;
-	}
-
-	.Title { 
-		grid-area: Title; 
-		display: flex;
-		align-items: center;
-	}
-
-	.Title>span{
-		font-size: 1.4vw;
-		color: white;
-		font-weight: 900;
-		font-family: Gelasio;
-	}
-
-	.Nav {  
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1.2fr 0.8fr;
-		gap: 0px 0px;
-		grid-auto-flow: row;
-		grid-template-areas: "Utilities" "NavButtons";
-		grid-area: Nav;
-	}
-
-	.Utilities {  
-		display: grid;
-		grid-template-columns: 1.7fr 0.3fr;
-		grid-template-rows: 1fr;
-		gap: 0px 0px;
-		grid-auto-flow: row;
-		grid-template-areas: "Search Account";
-		grid-area: Utilities;
-	}
-
-	.Account { 
-		grid-area: Account; 
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.Account>img{
-		margin-left: 7%;
-		border-radius: 50%;
-		max-height: 40%;
-		max-width: 40%;
-		background-color: lightgray;
-		border: 1px solid white;
-		display: inline-block;
-	}
-
-	.Search { 
-		grid-area: Search; 
-	}
-
-	.Search>span{
-		color: white;
-		font-size: 1.3vw;
-		padding: 0 2rem 0 4rem;
-		font-weight: 900;
-		font-family: Gelasio;
-	}	
-
-	.searchbar{
-		padding: 0.2% 1%;
-		border-radius: 0.5rem;
-	}
-
-	.searchbar>input{	
-		caret-color: #6D071A;
-	}
-
-	.searchbar>button>svg:hover{
-		fill: #490310;
-	}
-
-	.searchbar>button{	
-		width: 5%;
-	}
-
-	.searchbar>input::placeholder{
-		color: #9c9c9c;
-	}
-
-	.NavButtons { 
-		grid-area: NavButtons; 
-		padding: 0 0 0 2rem;		
-	}
-
-	.NavButtons>ul{
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		overflow: hidden;	
-		border-left: 1px solid white;
-		border-top: 1px solid white;	
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.NavButtons>ul>a{
-		display: flex;
-		align-items: center;
-	}
-
-	.NavButtons>ul>a>span{
-		white-space:nowrap;
-		margin-left: 5%;
-	}
-
-	.NavButtons>ul>li{
-		float: left;
-		display: flex;
-	}
-
-	.navButton{
-		display: flex;
-		align-items: center;
-		color: white;
-		text-align: center;
-		padding: 1rem 2rem;
-		text-decoration: none;
-		font-size: 0.8vw;
-		white-space: nowrap	;
-	}	
-	
-	.navButton:hover{
-		background-color:#490310;
-	}
-
+    li[aria-current='page']::before {
+        --size: 6px;
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 0;
+        left: calc(60% - var(--size));
+        border: var(--size) solid transparent;
+        border-top: var(--size) solid white;
+       color: #5C1427 !important;
+    }
 </style>

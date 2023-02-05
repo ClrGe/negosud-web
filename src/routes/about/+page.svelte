@@ -1,6 +1,7 @@
-<div class="cards">
-    <div width="100em" class="item">
-        <img class="image"  src="src/lib/images/wineyard.jpeg" alt="pinard"/>
+<div class="max-w-8xl flex justify-center items-center flex-col mt-16">
+    <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-center text-white">Qui sommes nous ?</h2>
+
+    <div class="bg-white flex ml-auto mr-auto font-bold item w-1/2 p-10 text-justify">
 
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus sit amet luctus venenatis. Nibh praesent tristique magna sit amet purus. Ultrices neque ornare aenean euismod elementum. Augue lacus viverra vitae congue. In iaculis nunc sed augue lacus viverra vitae congue eu. Cum sociis natoque penatibus et. Iaculis urna id volutpat lacus laoreet. Enim facilisis gravida neque convallis. Imperdiet dui accumsan sit amet. Enim ut tellus elementum sagittis vitae et leo duis. Tortor at risus viverra adipiscing at. Velit aliquet sagittis id consectetur purus ut faucibus. Neque sodales ut etiam sit amet. Eget nulla facilisi etiam dignissim. Ultricies lacus sed turpis tincidunt id aliquet. Mauris pellentesque pulvinar pellentesque habitant morbi. Ut aliquam purus sit amet luctus venenatis lectus magna. Quis enim lobortis scelerisque fermentum dui.
 
@@ -16,19 +17,12 @@
 
 <style>
     .cards{
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
+        max-width: 100rem;
     }
 
     .item{
         background-color: #f1f1f1;
         border-radius: 10px;
         box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
     }
 </style>
