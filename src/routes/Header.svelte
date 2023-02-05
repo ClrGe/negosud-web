@@ -110,7 +110,7 @@ async function login() {
                 <DropdownItem><a href="/cart">Mon panier</a></DropdownItem>
                 <DropdownItem><a href="/account">Commandes</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a href="" class="font-bold text-red-900">Deconnexion</a></DropdownItem>
+                <DropdownItem><a href="/logout" class="font-bold text-red-900">Deconnexion</a></DropdownItem>
             </Dropdown>
         {:else if !session}
         <Button on:click={() => formModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
@@ -118,7 +118,7 @@ async function login() {
         </Button>
            {/if}
         <Modal autoclose={false} bind:open={formModal} class="w-full" size="xs">
-            <form  action="" on:submit={submit} class="flex flex-col space-y-6">
+            <form  action="" on:submit|preventDefault={submit} class="flex flex-col space-y-6">
                 <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Merci de vous identifier</h3>
                 <Label class="space-y-2">
                     <span>Email</span>
@@ -134,7 +134,7 @@ async function login() {
                 </div>
                 <Button class="w-full1" style="background :#670302" type="submit">Se connecter</Button>
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    Pas encore inscrit ? <a class="hover:underline dark:text-red-500" href="/register" style="color :#670302">S'inscrire</a>
+                    Pas encore inscrit ? <a on:click={() => formModal = false} class="hover:underline dark:text-red-500" href="/register" style="color :#670302">S'inscrire</a>
                 </div>
             </form>
         </Modal>

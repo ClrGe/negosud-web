@@ -51,7 +51,7 @@
     {#if error}
         <span class="text-red-500 mb-2">{errorMsg}</span>
     {/if}
-    <form on:submit={submit} class="flex flex-col space-y-6" action="">
+    <form on:submit|preventDefault={submit} class="flex flex-col space-y-6">
         <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Merci de vous identifier</h3>
         <Label class="space-y-2">
             <span>Prénom</span>

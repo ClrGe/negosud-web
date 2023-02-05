@@ -7,7 +7,9 @@
 </script>
 
 <div class="app flex flex-col bg-center repeat absolute top-0 w-full h-screen bg-black">
-	<Header />
+	<div class="z-50">
+		<Header />
+	</div>
 
 	<main class="flex flex-col w-full">
 		<slot />
@@ -29,7 +31,7 @@
 			<li class="p-3">
 				<a href="" class="font-black  tracking-wider ">FAQ</a>
 			</li>
-			<li flex items-center justify-center>
+			<li class = "flex items-center justify-center">
 				<!--<img src="src/lib/images/bandeau_legal.jpg">-->
 			</li>
 		</ul>
