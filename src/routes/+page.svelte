@@ -1,4 +1,3 @@
-<script>import {ArrowUturnRight} from "svelte-heros-v2";</script>
 <section class="hero bg-center bg-no-repeat bg-cover absolute top-0 w-full h-full">
     <div class="text-white">
         <div class=" mx-auto flex flex-col md:flex-row items-center my-12  md:my-24 ml-56 pl-56">
