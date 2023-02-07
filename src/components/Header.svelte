@@ -12,14 +12,16 @@
         Label,
         Modal
     } from 'flowbite-svelte'
+        import Cart from "../components/Cart.svelte";
 
-	let formModal = false;
+	let loginModal = false;
+    let cartModal = false;
     let session = true;
 </script>
 
 <header class="flex justify-between">
-    <a  href="/" class="corner flex ">
-        <img alt="pinard" class="w-24 ml-6 hover:!scale-110" src="./src/lib/images/logo.png" width="300px"/><span class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
+    <a href="/" class="corner flex ">
+        <img alt="pinard" class="w-24 ml-6 hover:!scale-110" src="src/lib/images/logo.png" width="300px"/><span class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
     </a>
     <nav class="text-white flex justify-center relative mt-1">
         <ul class="relative flex justify-center items-center bg-contain list-none">
@@ -57,8 +59,8 @@
         </ul>
     </nav>
     <div class="right flex items-center space-x-4">
-        <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
-            <ShoppingCart/><a href="/cart">0</a>
+       <Button on:click={() => cartModal = true} class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
+            <ShoppingCart/>0
         </Button>
         {#if session}
             <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em; color: #670302; background:white;"><User/>
@@ -72,11 +74,11 @@
                 <DropdownItem><a href="" class="font-bold text-red-900">Deconnexion</a></DropdownItem>
             </Dropdown>
         {:else if !session}
-        <Button on:click={() => formModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
+        <Button on:click={() => loginModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
             Connexion
         </Button>
            {/if}
-        <Modal autoclose={false} bind:open={formModal} class="w-full" size="xs">
+        <Modal autoclose={false} bind:open={loginModal} class="w-full" size="xs">
             <form action="#" class="flex flex-col space-y-6">
                 <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Merci de vous identifier</h3>
                 <Label class="space-y-2">
@@ -89,13 +91,16 @@
                 </Label>
                 <div class="flex items-start">
                     <Checkbox>Se souvenir de moi</Checkbox>
-                    <a class="ml-auto text-sm text-red-700 hover:underline dark:text-red-500" href="/">Mot de passe oublié ?</a>
+                    <a class="ml-auto text-sm text-red-700 hover:underline dark:text-red-500" href="/static">Mot de passe oublié ?</a>
                 </div>
                 <Button class="w-full1" style="background :#670302" type="submit">Se connecter</Button>
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    Pas encore inscrit ? <a class="hover:underline dark:text-red-500" href="/" style="color :#670302">S'inscrire</a>
+                    Pas encore inscrit ? <a class="hover:underline dark:text-red-500" href="/static" style="color :#670302">S'inscrire</a>
                 </div>
             </form>
+        </Modal>
+        <Modal autoclose={false} bind:open={cartModal} class="w-full" size="xs">
+            <Cart />
         </Modal>
     </div>
 </header>

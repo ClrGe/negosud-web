@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
 
     import {Document, ShoppingCart} from "svelte-heros-v2";
