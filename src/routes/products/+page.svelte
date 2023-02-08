@@ -1,67 +1,34 @@
 <script>
-// @ts-nocheck
-
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
 
-    import {Document, ShoppingCart} from "svelte-heros-v2";
+    import {ShoppingCart} from "svelte-heros-v2";
     import {Button, Card, Chevron, Dropdown, DropdownItem, TabItem, Tabs} from 'flowbite-svelte'
+    import {get} from "svelte/store";
+    import {cart} from "../../Stores/stores.js";
+    import ProductCard from "../../Components/Products/ProductCard.svelte";
 
     let isOpenModal = false;
-
-    function openModal() {
-        isOpenModal = true;
-    }
-
     function closeModal() {
         isOpenModal = false;
     }
 
     export let data;
+    export let item;
 
-    let cart = [];
+    const cartItems = get(cart);
+    let inCart = cartItems[data.bottles.fullName] ? cartItems[data.bottles.fullName].count : 0;
 
-    const addProductToCart = (product) => {
-        for (let item of cart) {
-            item.quantity = 1;
-            if (item.id === product.id) {
-                product.quantity += 1
-                cart = cart;
-                return;
-            }
-        }
-        cart = [...cart, product];
+    function addToCart() {
+        inCart++;
+        cart.update(n => {
+            return {...n, [data.bottles.fullName]: {...item, count: inCart}};
+        });
     }
-
-    const removeFromCart = (product) => {
-        for (let item of cart) {
-            if (item.id === product.id) {
-                if (product.quantity > 1) {
-                    product.quantity -= 1
-                    cart = cart
-                } else {
-                    cart = cart.filter((cartItem) => cartItem != product)
-                }
-                return;
-            }
-        }
-    }
-
-    const incrementItem = (product) => {
-        for (let item of cart) {
-            if (item.id === product.id) {
-                item.quantity += 1
-                cart = cart;
-                return;
-            }
-        }
-    }
-    $: total = cart.reduce((sum, item) => sum + item.currentPrice * item.quantity, 0)
-
 </script>
 
-
 <div class="content rounded-md shadow-md p-12 ">
-    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] w-1/2 ml-auto mr-auto "  style="full">
+    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] w-1/2 ml-auto mr-auto "
+          style="full">
         <TabItem class="w-full" open>
             <div class="w-full flex justify-center mb-10 h-12 ">
                 <Button style="background :#670302">
@@ -85,51 +52,27 @@
 
             {#if data.bottles}
 
-            <section class="products !bg-[#ededed]">
-                <div class="product-list shadow-sm ">
+                <section class="products !bg-[#ededed]">
+                    <div class="product-list shadow-sm ">
 
-                        {#each data.bottles as product}
-                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg  !bg-[#ededed] hover:!scale-110 ">
+                        {#each data.bottles as item}
 
-                                <img class="image" src="src/lib/images/pinard.png" alt="pinard"/>
-                                <h4 class="font-extrabold uppercase p-6 ">{product.fullName}</h4>
-                                <div class="pb-8">
-                                    <div class="pb-8">
-                                        <p>{product.wineType}</p>
-                                        <p>{product.yearProduced}</p>
-                                    </div>
-
-                                    <div id="price" class="mb-5 text-black p-6 bg-gray-100 rounded-lg shadow-lg ">
-                                        <h2>{product.currentPrice}€</h2></div>
-                                    <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white"
-                                            on:click={() => addProductToCart(product)}>
-                                        <ShoppingCart/>
-                                        Acheter
-                                    </Button>
-                                    <Button class="relative shadow-lg right-0 !bg-white !border-red-900 !text-red-900 border-black hover:!bg-red-900 hover:!text-white"
-                                            on:click={openModal}
-                                            isOpenModal={isOpenModal} on:closeModal={closeModal}>
-                                        <Document/>
-                                        Détails
-                                    </Button>
-                                </div>
-
-                            </Card>
+                            <ProductCard {item}/>
                             <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
                                  on:click={closeModal}></div>
                             <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
                                 <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg hover:!scale-110 ">
                                     <h2>Détails du produit</h2>
                                     <div class="text">
-                                        <p>Appelation : {product.fullName}</p>
-                                        <p>Description :  {product.description}</p>
-                                        <p>Type de vin :  {product.wineType}</p>
+                                        <p>Appelation : {item.fullName}</p>
+                                        <p>Description :  {item.description}</p>
+                                        <p>Type de vin :  {item.wineType}</p>
                                         <p>Cépage :</p>
-                                        <p>Volume :  {product.volume}</p>
-                                        <p>Année :  {product.yearProduced}</p>
-                                        <p>Prix :  {product.currentPrice}</p>
+                                        <p>Volume :  {item.volume}</p>
+                                        <p>Année :  {item.yearProduced}</p>
+                                        <p>Prix :  {item.currentPrice}</p>
                                     </div>
-                                    <Button class="relative right-0 btn" on:click={() => addProductToCart(product)}
+                                    <Button class="relative right-0 btn" on:click={() => addToCart()}
                                             style="background :#5C1427">
                                         <ShoppingCart/>
                                         Acheter
@@ -138,17 +81,19 @@
                             </div>
 
                         {/each}
+                    </div>
+                </section>
+            {:else}
+                <div class="bg-gray-200 w-full px-16 md:px-0 h-screen flex items-center justify-center">
+                    <div class="bg-white border border-gray-200 flex flex-col items-center justify-center px-4 md:px-8 lg:px-24 py-8 rounded-lg shadow-2xl">
+                        <p class="text-6xl md:text-7xl lg:text-9xl font-bold tracking-wider text-gray-300">404</p>
+                        <p class="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">
+                            OOOPS</p>
+                        <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">Nos services sont temporairement
+                            indisponibles</p>
+                    </div>
                 </div>
-            </section>
-                    {:else}
-                        <div class="bg-gray-200 w-full px-16 md:px-0 h-screen flex items-center justify-center">
-                            <div class="bg-white border border-gray-200 flex flex-col items-center justify-center px-4 md:px-8 lg:px-24 py-8 rounded-lg shadow-2xl">
-                                <p class="text-6xl md:text-7xl lg:text-9xl font-bold tracking-wider text-gray-300">404</p>
-                                <p class="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">OOOPS</p>
-                                <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">Nos services sont temporairement indisponibles</p>
-                            </div>
-                        </div>
-                    {/if}
+            {/if}
         </TabItem>
 
         <TabItem class="w-full">
@@ -157,26 +102,28 @@
 
                 {#if data.producers}
                     <div class="product-list shadow-sm ">
-                    {#each data.producers as producer}
-                        <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
-                              style="width: fit-content;">
-                            <img src="src/lib/images/wineyard.jpeg" alt="pinard"/>
-                            <h4 class="font-extrabold uppercase p-6">{producer.name}</h4>
-                            <div class="pb-8">
-                                <p>{producer.details}</p>
-                            </div>
-                            <Button class="relative right-0 btn" style="background :#5C1427">
-                                Produits
-                            </Button>
-                        </Card>
-                    {/each}
-                </div>
+                        {#each data.producers as producer}
+                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
+                                  style="width: fit-content;">
+                                <img src="src/lib/images/wineyard.jpeg" alt="pinard"/>
+                                <h4 class="font-extrabold uppercase p-6">{producer.name}</h4>
+                                <div class="pb-8">
+                                    <p>{producer.details}</p>
+                                </div>
+                                <Button class="relative right-0 btn" style="background :#5C1427">
+                                    Produits
+                                </Button>
+                            </Card>
+                        {/each}
+                    </div>
                 {:else}
                     <div class="bg-gray-200 w-full px-16 md:px-0 h-screen flex items-center justify-center">
                         <div class="bg-white border border-gray-200 flex flex-col items-center justify-center px-4 md:px-8 lg:px-24 py-8 rounded-lg shadow-2xl">
                             <p class="text-6xl md:text-7xl lg:text-9xl font-bold tracking-wider text-gray-300">404</p>
-                            <p class="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">OOOPS</p>
-                            <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">Nos services sont temporairement indisponibles</p>
+                            <p class="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">
+                                OOOPS</p>
+                            <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">Nos services sont temporairement
+                                indisponibles</p>
                         </div>
                     </div>
                 {/if}

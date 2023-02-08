@@ -1,39 +1,57 @@
 <script>
-	import {page} from '$app/stores';
+    import {page} from '$app/stores';
     import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
-    import {
-        Button,
-        Checkbox,
-        Chevron,
-        Dropdown,
-        DropdownDivider,
-        DropdownItem,
-        Input,
-        Label,
-        Modal
-    } from 'flowbite-svelte'
-    import Checkout from "./Cart/Cart.svelte";
+    import {Button, Chevron, Dropdown, DropdownDivider, DropdownItem, Modal} from 'flowbite-svelte'
+    import Cart from "./Cart/Cart.svelte";
+    import {cart} from "../Stores/stores.js";
+    import Login from "./Forms/Login.svelte";
 
-	let loginModal = false;
+    let loginModal = false;
     let cartModal = false;
     let session = true;
+
+    let cart_sum = 0;
+
+    const unsubscribe = cart.subscribe(items => {
+        const itemValues = Object.values(items);
+        cart_sum = 0;
+        itemValues.forEach(item => {
+            cart_sum += item.count;
+        });
+    });
+
+
 </script>
 
 <header class="flex justify-between">
-    <a href="/" class="corner flex ">
-        <img alt="pinard" class="w-24 ml-6 hover:!scale-110" src="src/lib/images/logo.png" width="300px"/><span class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
+    <a class="corner flex " href="/">
+        <img alt="pinard" class="w-24 ml-6 hover:!scale-110" src="src/lib/images/logo.png" width="300px"/><span
+            class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
     </a>
     <nav class="text-white flex justify-center relative mt-1">
         <ul class="relative flex justify-center items-center bg-contain list-none">
-            <li class="hover:text-white relative h-14 pr-auto  " aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-                <a href="/" class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]"><HomeModern/> Accueil</a></li>
-            <li class="hover:text-white relative h-14 pr-auto !text-[18px]" aria-current={$page.url.pathname === '/products' ? 'page' : undefined}>
-                <a href="/products" class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]"><Star/> Tous les produits</a></li>
-            <li class="hover:text-white relative h-14 pr-auto"><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
-                <Chevron><ArrowRightCircle/> Type de produits</Chevron>
-            </Button></li>
-            <Dropdown >
-                <DropdownItem><a class="font-bold text-red-900 inline" href="/products"><Star />Nouveautés</a></DropdownItem>
+            <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}
+                class="hover:text-white relative h-14 pr-auto  ">
+                <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/">
+                    <HomeModern/>
+                    Accueil</a></li>
+            <li aria-current={$page.url.pathname === '/products' ? 'page' : undefined}
+                class="hover:text-white relative h-14 pr-auto !text-[18px]">
+                <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/products">
+                    <Star/>
+                    Tous les produits</a></li>
+            <li class="hover:text-white relative h-14 pr-auto">
+                <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
+                    <Chevron>
+                        <ArrowRightCircle/>
+                        Type de produits
+                    </Chevron>
+                </Button>
+            </li>
+            <Dropdown>
+                <DropdownItem><a class="font-bold text-red-900 inline" href="/products">
+                    <Star/>
+                    Nouveautés</a></DropdownItem>
                 <DropdownDivider/>
                 <DropdownItem><a class="font-bold" href="/products">Vins rouges</a></DropdownItem>
                 <DropdownItem><a class="font-bold" href="/products">Vins blancs</a></DropdownItem>
@@ -41,9 +59,14 @@
                 <DropdownDivider/>
                 <DropdownItem><a class="font-bold" href="/products">Spiritueux</a></DropdownItem>
             </Dropdown>
-            <li class="hover:text-white relative h-14 pr-8 "><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
-                <Chevron><Briefcase/>Pour les professionnels</Chevron>
-            </Button></li>
+            <li class="hover:text-white relative h-14 pr-8 ">
+                <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
+                    <Chevron>
+                        <Briefcase/>
+                        Pour les professionnels
+                    </Chevron>
+                </Button>
+            </li>
             <Dropdown>
                 <DropdownItem><a class="font-bold" href="/contact">Hotellerie</a></DropdownItem>
                 <DropdownDivider/>
@@ -59,11 +82,15 @@
         </ul>
     </nav>
     <div class="right flex items-center space-x-4">
-       <Button on:click={() => cartModal = true} class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
-            <ShoppingCart/>0
+        <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold"
+                on:click={() => cartModal = true}
+                style="height: fit-content; top: 1em; color: white; background: #670302;">
+            <ShoppingCart/>{cart_sum}
         </Button>
         {#if session}
-            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em; color: #670302; background:white;"><User/>
+            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9"
+                    style="height: fit-content; top: 1em; color: #670302; background:white;">
+                <User/>
                 <Chevron></Chevron>
             </Button>
             <Dropdown>
@@ -74,33 +101,25 @@
                 <DropdownItem><a href="" class="font-bold text-red-900">Deconnexion</a></DropdownItem>
             </Dropdown>
         {:else if !session}
-        <Button on:click={() => loginModal = true} class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10" style="height: fit-content; top: 1em; color: #670302; background: white;"><User/>
-            Connexion
-        </Button>
-           {/if}
+            <Button on:click={() => loginModal = true}
+                    class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10"
+                    style="height: fit-content; top: 1em; color: #670302; background: white;">
+                <User/>
+                Connexion
+            </Button>
+        {/if}
         <Modal autoclose={false} bind:open={loginModal} class="w-full" size="xs">
-            <form action="#" class="flex flex-col space-y-6">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Merci de vous identifier</h3>
-                <Label class="space-y-2">
-                    <span>Email</span>
-                    <Input name="email" placeholder="exemple@negosud.fr" required type="email"/>
-                </Label>
-                <Label class="space-y-2">
-                    <span>Mot de passe</span>
-                    <Input name="password" placeholder="•••••" required type="password"/>
-                </Label>
-                <div class="flex items-start">
-                    <Checkbox>Se souvenir de moi</Checkbox>
-                    <a class="ml-auto text-sm text-red-700 hover:underline dark:text-red-500" href="/static">Mot de passe oublié ?</a>
-                </div>
-                <Button class="w-full1" style="background :#670302" type="submit">Se connecter</Button>
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    Pas encore inscrit ? <a class="hover:underline dark:text-red-500" href="/static" style="color :#670302">S'inscrire</a>
-                </div>
-            </form>
+            <Login/>
         </Modal>
         <Modal autoclose={false} bind:open={cartModal} class="w-full" size="xs">
-            <Checkout />
+            <Cart/>
+
+            <div class="mt-4 flex justify-center items-center">
+                <Button bind:close={cartModal} class="w-1/2 ml-auto mr-auto px-6 py-2 !text-white !bg-red-900 hover:!bg-black">
+                    Procéder au paiement
+                </Button>
+            </div>
+
         </Modal>
     </div>
 </header>
@@ -128,6 +147,6 @@
         left: calc(60% - var(--size));
         border: var(--size) solid transparent;
         border-top: var(--size) solid white;
-       color: #5C1427 !important;
+        color: #5C1427 !important;
     }
 </style>

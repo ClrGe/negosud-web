@@ -22,6 +22,6 @@ export async function load({fetch}) {
         return {bottles, producers};
 
     } catch (e) {
-      return null;
+        return null;
     }
 }
