@@ -1,8 +1,8 @@
 <script>
 	import '../app.postcss';
 	import './styles.css';
-	import Header from '../components/Header.svelte';
-	import Footer from '../components/Footer.svelte';
+	import Header from '../Components/Header.svelte';
+	import Footer from '../Components/Footer.svelte';
 </script>
 
 <div class="app flex flex-col bg-center repeat absolute top-0 w-full h-screen bg-black">
