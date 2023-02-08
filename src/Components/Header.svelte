@@ -12,7 +12,7 @@
         Label,
         Modal
     } from 'flowbite-svelte'
-        import Cart from "../components/Cart.svelte";
+    import Checkout from "./Cart/Cart.svelte";
 
 	let loginModal = false;
     let cartModal = false;
@@ -100,7 +100,7 @@
             </form>
         </Modal>
         <Modal autoclose={false} bind:open={cartModal} class="w-full" size="xs">
-            <Cart />
+            <Checkout />
         </Modal>
     </div>
 </header>
