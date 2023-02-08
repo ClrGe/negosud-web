@@ -31,14 +31,11 @@
     main {
         flex: 1;
         margin: 0 auto;
-
         box-sizing: border-box;
-
     }
 
     footer {
         background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0));
-
     }
 
     @media (min-width: 480px) {

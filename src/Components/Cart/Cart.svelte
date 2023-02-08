@@ -2,6 +2,7 @@
 
     import ManageItems from "./ManageItems.svelte";
     import {cart} from "../../Stores/stores.js";
+    import {Button} from "flowbite-svelte";
 
     let checkedOut = false;
     let cartItems = [];
@@ -38,13 +39,18 @@
                 <a href="/products" class="font-bold text-red-900">Explorer nos produits</a>
             {/if}
         {:else}
-            <div class="row">
+            <div class="row flex justify-center items-center">
                 {#each cartItems as item (item.fullName)}
                     <ManageItems {item}/>
                 {/each}
-                <h2 class="font-extrabold text-3xl text-red-900 pt-8 text-center">Total : {orderTotal}€</h2>
-
             </div>
+            <h2 class="font-extrabold text-3xl text-red-900 pt-8 text-center">Total : {orderTotal}€</h2>
+
+            <a href="/checkout">
+                <Button class="mt-6 w-full !bg-red-900 text-white hover:!bg-black">
+                    Commander
+                </Button>
+            </a>
             <br>
         {/if}
     </div>
