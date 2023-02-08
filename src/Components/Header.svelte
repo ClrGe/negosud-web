@@ -19,8 +19,6 @@
             cart_sum += item.count;
         });
     });
-
-
 </script>
 
 <header class="flex justify-between">
@@ -34,12 +32,14 @@
                 class="hover:text-white relative h-14 pr-auto  ">
                 <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/">
                     <HomeModern/>
-                    Accueil</a></li>
+                    Accueil</a>
+            </li>
             <li aria-current={$page.url.pathname === '/products' ? 'page' : undefined}
                 class="hover:text-white relative h-14 pr-auto !text-[18px]">
                 <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/products">
                     <Star/>
-                    Tous les produits</a></li>
+                    Tous les produits</a>
+            </li>
             <li class="hover:text-white relative h-14 pr-auto">
                 <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
                     <Chevron>
@@ -82,11 +82,13 @@
         </ul>
     </nav>
     <div class="right flex items-center space-x-4">
-        <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold"
-                on:click={() => cartModal = true}
-                style="height: fit-content; top: 1em; color: white; background: #670302;">
-            <ShoppingCart/>{cart_sum}
-        </Button>
+        <a href="/cart">
+            <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold"
+                    style="height: fit-content; top: 1em; color: white; background: #670302;">
+                <!--on:click={() => cartModal = true}-->
+                <ShoppingCart/>{cart_sum}
+            </Button>
+        </a>
         {#if session}
             <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9"
                     style="height: fit-content; top: 1em; color: #670302; background:white;">
@@ -111,15 +113,14 @@
         <Modal autoclose={false} bind:open={loginModal} class="w-full" size="xs">
             <Login/>
         </Modal>
-        <Modal autoclose={false} bind:open={cartModal} class="w-full" size="xs">
+        <Modal autoclose={true} bind:open={cartModal} class="w-full" size="xs">
             <Cart/>
-
             <div class="mt-4 flex justify-center items-center">
-                <Button bind:close={cartModal} class="w-1/2 ml-auto mr-auto px-6 py-2 !text-white !bg-red-900 hover:!bg-black">
-                    Procéder au paiement
+                <Button class="w-1/2 ml-auto mr-auto px-6 py-2 !text-white !bg-red-900 hover:!bg-black"
+                        on:click={cartModal === false}>
+                    <a href="/payment" on:click={cartModal === false}>Procéder au paiement</a>
                 </Button>
             </div>
-
         </Modal>
     </div>
 </header>
