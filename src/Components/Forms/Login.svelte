@@ -14,7 +14,8 @@
     </Label>
     <div class="flex items-start">
         <Checkbox>Se souvenir de moi</Checkbox>
-        <a class="ml-auto text-sm text-red-700 hover:underline dark:text-red-500" href="/static">Mot de passe oublié ?</a>
+        <a class="ml-auto text-sm text-red-700 hover:underline dark:text-red-500" href="/static">Mot de passe oublié
+            ?</a>
     </div>
     <Button class="w-full1" style="background :#670302" type="submit">Se connecter</Button>
     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
