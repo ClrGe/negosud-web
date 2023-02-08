@@ -57,9 +57,7 @@
                                                     class="flex items-center w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
                                                     rows="4" placeholder="Complément d'adresse"></textarea>
                     </div>
-                    <div class="mt-4">
-                        <Button class="w-full px-6 py-2 text-white bg-red-900 hover:bg-black">Valider</Button>
-                    </div>
+
                 </div>
             </form>
         </div>

@@ -14,18 +14,7 @@
 </script>
 
 <div class="bg-white">
-    <div class="bg-white !mt-24 top-6 ">
         <div class="container">
-            <div id="links">
-                <ul>
-                    <li>
-                        <a href="#"> Vins</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Vins</a>
-                    </li>
-                </ul>
-            </div>
             <ul>
                 <li class="nav-item active"><a class="nav-link" href="/cart" >Voir mon panier
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart-dash-fill" viewBox="0 0 16 16">
@@ -36,6 +25,5 @@
                 {/if} </li>
             </ul>
         </div>
-    </div>
     <CardWrapper />
 </div>

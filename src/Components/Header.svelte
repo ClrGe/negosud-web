@@ -3,20 +3,35 @@
     import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
     import {
         Button,
-        Checkbox,
         Chevron,
         Dropdown,
         DropdownDivider,
         DropdownItem,
-        Input,
-        Label,
         Modal
     } from 'flowbite-svelte'
-    import Checkout from "./Cart/Cart.svelte";
+    import Cart from "./Cart/Cart.svelte";
+    import {get} from "svelte/store";
+    import {cart} from "../Stores/stores.js";
+    import Login from "./Forms/Login.svelte";
+import item from "./Cart/items";
 
-	let loginModal = false;
+    let loginModal = false;
     let cartModal = false;
     let session = true;
+
+
+    let { name } = item;
+    const cartItems = get(cart);
+    let inCart = cartItems[name] ? cartItems[name].count : 0;
+    let cart_sum = 0;
+    const unsubscribe = cart.subscribe(items => {
+        const itemValues = Object.values(items);
+        cart_sum = 0;
+        itemValues.forEach(item => {
+            cart_sum += item.count;
+        });
+    });
+
 </script>
 
 <header class="flex justify-between">
@@ -60,7 +75,7 @@
     </nav>
     <div class="right flex items-center space-x-4">
        <Button on:click={() => cartModal = true} class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
-            <ShoppingCart/>0
+            <ShoppingCart/>{cart_sum}
         </Button>
         {#if session}
             <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em; color: #670302; background:white;"><User/>
@@ -79,28 +94,14 @@
         </Button>
            {/if}
         <Modal autoclose={false} bind:open={loginModal} class="w-full" size="xs">
-            <form action="#" class="flex flex-col space-y-6">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Merci de vous identifier</h3>
-                <Label class="space-y-2">
-                    <span>Email</span>
-                    <Input name="email" placeholder="exemple@negosud.fr" required type="email"/>
-                </Label>
-                <Label class="space-y-2">
-                    <span>Mot de passe</span>
-                    <Input name="password" placeholder="•••••" required type="password"/>
-                </Label>
-                <div class="flex items-start">
-                    <Checkbox>Se souvenir de moi</Checkbox>
-                    <a class="ml-auto text-sm text-red-700 hover:underline dark:text-red-500" href="/static">Mot de passe oublié ?</a>
-                </div>
-                <Button class="w-full1" style="background :#670302" type="submit">Se connecter</Button>
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    Pas encore inscrit ? <a class="hover:underline dark:text-red-500" href="/static" style="color :#670302">S'inscrire</a>
-                </div>
-            </form>
+            <Login />
         </Modal>
         <Modal autoclose={false} bind:open={cartModal} class="w-full" size="xs">
-            <Checkout />
+            <Cart />
+            <div class="mt-4 flex justify-center items-center">
+                <Button class="w-1/2 ml-auto mr-auto px-6 py-2 text-white bg-red-900 hover:bg-black" bind:close={cartModal}>Procéder au paiement</Button>
+            </div>
+
         </Modal>
     </div>
 </header>

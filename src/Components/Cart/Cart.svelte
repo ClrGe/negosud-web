@@ -18,7 +18,6 @@
 </script>
 
 
-<div class="bg-white ml-auto mr-auto font-bold  p-10 text-justify rounded-lg flex justify-center flex-col">
     <h1>Panier</h1>
     <div class="row">
         <div class="col-sm">
@@ -36,8 +35,7 @@
                     {/each}
                 </div>
                 <br>
-                <Button class="bg-red-900 text-white hover:!bg-red-200 hover:!text-red-900 hover:!border-red-900"><a href="/payment">Commander</a></Button>
             {/if}
         </div>
     </div>
-</div>
+
