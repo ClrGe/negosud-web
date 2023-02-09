@@ -34,20 +34,21 @@
         });
     };
 </script>
+<Card class="item-meta-data">
 
-<div class="row">
-    <Card class="item-meta-data">
+<div class="flex  justify-center items-center flex-rox">
+        <img src="src/lib/images/pinard.jpg" class="h-24">
         <h3 class="font-bold text-2xl text-black">{fullName}</h3>
-        <p class="font-bold">{currentPrice} € / unité</p>
-        <div class="col">
-            <Button class="!bg-red-900 !text-white hover:!bg-black add" on:click={countButtonHandler}>+
+        <p class="font-bold ml-4">{currentPrice} € </p>
+    </div>
+        <div class="col mt-4">
+            <Button class="!bg-red-900 !text-white hover:!bg-black !pt-0.5 !pb-0.5 ml-1" on:click={countButtonHandler}>-
             </Button> {' '}
-            <span>{count}</span> {' '}
-            <Button class="!bg-red-900 !text-white hover:!bg-black" on:click={countButtonHandler}>-
+            <span class="text-2xl">{count}</span> {' '}
+            <Button class="!bg-red-900 !text-white hover:!bg-black pt-0.5 !pb-0.5 mr-1 add" on:click={countButtonHandler}>+
             </Button> {' '}
-            <Button class="!bg-red-900 !text-white hover:!bg-black" on:click={removeItem}>
+            <Button class="!bg-transparent !text-red-900 hover:!text-black !pt-1 !pb-1" on:click={removeItem}>
                 Retirer
             </Button>
         </div>
-    </Card>
-</div>
+</Card>
