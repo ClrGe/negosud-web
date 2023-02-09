@@ -1,7 +1,6 @@
 <script>
-
     import ManageItems from "./ManageItems.svelte";
-    import {cart} from "../../Stores/stores.js";
+    import {cart} from "../../stores/stores.js";
     import {Button} from "flowbite-svelte";
 
     let checkedOut = false;
@@ -23,10 +22,7 @@
             orderTotal += totalPrice;
         });
     });
-
-
 </script>
-
 
 <h1>Panier</h1>
 <div class="row">

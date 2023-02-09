@@ -2,18 +2,32 @@
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
 
     import {Button, Card, TabItem, Tabs} from 'flowbite-svelte'
-    import ProductCard from "../../Components/Products/ProductCard.svelte";
-    import ProductDetails from "../../Components/Products/ProductDetails.svelte";
-    import Error404 from "../../Components/Errors/Error404.svelte";
-    import SelectProducts from "../../Components/Products/SelectProducts.svelte";
+    import Error404 from "$lib/Errors/Error404.svelte";
+    import addToCart from "$lib/Products/ProductsList.svelte";
+    import {Document, MagnifyingGlass, ShoppingCart} from "svelte-heros-v2";
+    import ProductsList from "$lib/Products/ProductsList.svelte";
 
-    let isOpenModal = false;
-
-    function closeModal() {
-        isOpenModal = false;
-    }
 
     export let data;
+    let products = data.bottles;
+
+    let searchWord = '';
+
+    function searchProducts(products, searchWord) {
+        if (searchWord) {
+            return products.filter(product => {
+                console.log(searchWord);
+
+                return product.fullName.toLowerCase().includes(searchWord.toLowerCase());
+            });
+        } else {
+            console.log(searchWord);
+
+            return products
+
+        }
+    }
+
 </script>
 
 <div class="content rounded-md shadow-md p-12 ">
@@ -21,23 +35,52 @@
           style="full">
 
         <TabItem class="w-full" open>
-            <SelectProducts/>
             <span slot="title">Les vins</span>
-            {#if data.bottles}
-                <section class="products !bg-[#ededed]">
-                    <div class="product-list shadow-sm ">
-                        {#each data.bottles as item}
-                            <ProductCard {item}/>
-                            <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
-                                 on:click={closeModal}></div>
-                            <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
-                                <ProductDetails {item}/>
+            <form on:submit={searchProducts(products, searchWord)} class="flex justify-center" >
+            <input type="text" class="w-3/4 mt-4 h-12 rounded-r-none rounded-l shadow-sm focus:ring-red-900 focus:border-red-900 border-gray-300"
+                   placeholder="Rechercher un produit" bind:value={searchWord}/>
+                <Button class="!w-1/2 h-12 !bg-red-900 hover:!bg-black border-red-900 focus:ring-red-900 focus:border-red-900 rounded-r rounded-l-none" style="width: fit-content; margin-top: 1rem; margin-bottom: 1rem;"
+                        on:click={() => products = searchProducts(products, searchWord)}><MagnifyingGlass />Rechercher</Button>
+            </form>
+            {#if searchWord}
+                <h1>Recherche : {searchWord}</h1>
+                <div class="flex justify-center !w-full">
+                    {#each searchProducts(products, searchWord) as product}
+<!--                        <Card class="flex justify-center items-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 w-56 ">-->
+<!--                            <img src="src/lib/img/pinard.png" alt="pinard"/>-->
+<!--                            <h4 class="font-extrabold uppercase p-6">{product.fullName}</h4>-->
+<!--                            <div class="pb-8">-->
+<!--                                <p>{product.details}</p>-->
+<!--                            </div>-->
+<!--                            <Button class="relative right-0 btn" style="background :#5C1427">-->
+<!--                                Détails-->
+<!--                            </Button>-->
+<!--                        </Card>-->
+                        <Card class="flex justify-center items-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 ">
+                            <img alt="pinard" class="image max-h-56 w-24" src="src/lib/img/pinard.png"/>
+                            <h4 class="font-extrabold uppercase p-6 ">{product.fullName}</h4>
+                            <div class="pb-8">
+                                <p>{product.wineType}</p>
+                                <p>{product.yearProduced}</p>
                             </div>
-                        {/each}
-                    </div>
-                </section>
-            {:else}
-                <Error404/>
+                            <div class=" !w-full text-black mb-6 !p-6 bg-gray-100 rounded-lg shadow-lg " id="price">
+                                <h2>{product.currentPrice}€</h2>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white" on:click={addToCart}>
+                                    <ShoppingCart/>
+                                    Acheter
+                                </Button>
+                                <Button class="relative shadow-lg right-0 !bg-white !border-red-900 !text-red-900 border-black hover:!bg-red-900 hover:!text-white">
+                                    <Document/>
+                                    Détails
+                                </Button>
+                            </div>
+                        </Card>
+                    {/each}
+                </div>
+                {:else}
+                <ProductsList products={products} {data} />
             {/if}
         </TabItem>
 
@@ -49,7 +92,7 @@
                         {#each data.producers as producer}
                             <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
                                   style="width: fit-content;">
-                                <img src="src/lib/images/wineyard.jpeg" alt="pinard"/>
+                                <img src="src/lib/img/wineyard.jpeg" alt="pinard"/>
                                 <h4 class="font-extrabold uppercase p-6">{producer.name}</h4>
                                 <div class="pb-8">
                                     <p>{producer.details}</p>
@@ -91,17 +134,10 @@
         flex-wrap: wrap;
         justify-content: center;
         background: rgb(36 2 1 / 64%);
-        box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.5);
-        box-shadow: inset 0px 0px 30px rgba(0, 0, 0, 0.5);
+        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
 
     }
 
-    h2 {
-        text-align: center;
-        font-weight: bold;
-        font-size: large;
-        text-transform: uppercase;
-    }
 
     #background {
         display: var(--display);
@@ -130,21 +166,5 @@
         padding-right: 5rem;
     }
 
-    .content button {
-        padding: 1em;
-        color: white;
-        background: #670302;
-        border: none;
-        font-weight: bold;
-        margin-bottom: 5rem;
-    }
-
-    .content button:hover {
-        padding: 1em;
-        background: #bd9494;
-        color: #670302;
-        border: none;
-        font-weight: bold;
-    }
 
 </style>

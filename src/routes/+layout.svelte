@@ -1,8 +1,8 @@
 <script>
     import '../app.postcss';
     import './styles.css';
-    import Header from '../Components/Header.svelte';
-    import Footer from '../Components/Footer.svelte';
+    import Header from '$lib/Header.svelte';
+    import Footer from '$lib/Footer.svelte';
 </script>
 
 <div class="app flex flex-col bg-center repeat absolute top-0 w-full h-screen bg-black">
@@ -24,7 +24,7 @@
     }
 
     .app {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/images/hero.png");
+        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/img/hero.png");
         background-attachment: scroll;
     }
 
