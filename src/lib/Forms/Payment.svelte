@@ -1,7 +1,7 @@
 <div class=" card rounded-lg h-auto bg-white">
     <div class="flex h-full w-full ">
         <div class="left_side truncate relative rounded-l-lg h-auto w-full truncate">
-            <img class="h-full w-full" src="https://imgur.com/cOwXXFq.jpg">
+            <img class="h-full w-full" src="https://imgur.com/cOwXXFq.jpg" alt="payment">
             <div class="h-48 w-72 opacity-70 rounded-lg  bg-blue-300 absolute top-28 left-8 ">
                 <div class="p-2 mt-3 text-black font-semibold">
                     <p>Numéro de carte</p>

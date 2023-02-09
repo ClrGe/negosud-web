@@ -3,7 +3,6 @@
     import {cart} from "../../stores/stores.js";
     import {Button, Card} from "flowbite-svelte";
     import {Document, ShoppingCart} from "svelte-heros-v2";
-    import {each} from "svelte/internal";
 
     let isOpenModal = false;
     export let item;
@@ -19,7 +18,7 @@
         isOpenModal = false;
     }
 
-    function addToCart() {
+    export function addToCart() {
         inCart++;
         cart.update(n => {
             return {...n, [fullName]: {...item, count: inCart}};

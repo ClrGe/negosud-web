@@ -37,7 +37,7 @@
 <Card class="item-meta-data">
 
 <div class="flex  justify-center items-center flex-rox">
-        <img src="src/lib/img/pinard.jpg" class="h-24">
+        <img src="src/lib/img/pinard.jpg" alt="wine" class="h-24">
         <h3 class="font-bold text-2xl text-black">{fullName}</h3>
         <p class="font-bold ml-4">{currentPrice} € </p>
     </div>

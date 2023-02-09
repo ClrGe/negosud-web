@@ -1,5 +1,5 @@
 <script>
-    import {page} from '$app/stores';
+import {page} from '$app/stores';
     import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
     import {Button, Chevron, Dropdown, DropdownDivider, DropdownItem, Modal} from 'flowbite-svelte'
     import Cart from "./Cart/Cart.svelte";
@@ -11,7 +11,6 @@
         cart_sum    = 0,
         appTitle    = "negosud",
         src         = "src/lib/img/logo.png";
-
 
     let user = { loggedIn: false }
 
@@ -60,11 +59,11 @@
                     <Star/>
                     Nouveautés</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a class="font-bold" href="/products">Vins rouges</a></DropdownItem>
-                <DropdownItem><a class="font-bold" href="/products">Vins blancs</a></DropdownItem>
-                <DropdownItem><a class="font-bold" href="/products">Vins Pétillants</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=Red">Vins rouges</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=White">Vins blancs</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=sparkling">Vins Pétillants</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a class="font-bold" href="/products">Spiritueux</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=spirits">Spiritueux</a></DropdownItem>
             </Dropdown>
             <li class="hover:text-white relative h-14 pr-8 ">
                 <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
@@ -88,17 +87,15 @@
             </Dropdown>
         </ul>
 
-
-        <form class="mt-6">
-            <div class="relative">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg aria-hidden="true" class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </div>
-                <input type="search" id="search" class="block text-white w-full p-2 pl-10 text-sm border !border-gray-300 rounded-lg !bg-black/50 focus:!ring-red-980 focus:!border-red-980" placeholder="Rechercher" required>
-                <button type="submit" class="text-xs absolute right-2.5 bottom-1.5 bg-red-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-1 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">OK</button>
-            </div>
-        </form>
-
+<!--        <form class="mt-6">-->
+<!--            <div class="relative">-->
+<!--                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">-->
+<!--                    <svg aria-hidden="true" class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>-->
+<!--                </div>-->
+<!--                <input type="search" id="search" class="block text-white w-full p-2 pl-10 text-sm border !border-gray-300 rounded-lg !bg-black/50 focus:!ring-red-980 focus:!border-red-980" placeholder="Rechercher" required>-->
+<!--                <button type="submit" class="text-xs absolute right-2.5 bottom-1.5 bg-red-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-1 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">OK</button>-->
+<!--            </div>-->
+<!--        </form>-->
 
     </nav>
     <div class="right flex items-center space-x-4">
@@ -148,15 +145,7 @@
 </header>
 
 <style>
-    @font-face {
-        font-family: 'Gelasio';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Gelasio Regular'), local('Gelasio-Regular'), url(https://fonts.gstatic.com/s/gelasio/v1/cIf9MaFfvUQxTTqS9C6hYQ.woff2) format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-
-    header {
+     header {
         background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0%));
     }
 
