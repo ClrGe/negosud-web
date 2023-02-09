@@ -1,11 +1,11 @@
 <script>
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
 
-    import {Button, Card, TabItem, Tabs} from 'flowbite-svelte'
-    import ProductCard from "../../Components/Products/ProductCard.svelte";
-    import ProductDetails from "../../Components/Products/ProductDetails.svelte";
-    import Error404 from "../../Components/Errors/Error404.svelte";
-    import SelectProducts from "../../Components/Products/SelectProducts.svelte";
+    import {Button, Card, Chevron, Dropdown, DropdownItem, TabItem, Tabs} from 'flowbite-svelte'
+    import ProductCard from "../../lib/Products/ProductCard.svelte";
+    import ProductDetails from "../../lib/Products/ProductDetails.svelte";
+    import Error404 from "../../lib/Errors/Error404.svelte";
+
 
     let isOpenModal = false;
 
@@ -14,6 +14,31 @@
     }
 
     export let data;
+    let products = data.bottles;
+    let selected;
+    let wineType = '';
+
+    let options = [
+        {value: '', label: 'Tous les produits'},
+        {value: 'Red', label: 'Vins rouges'},
+        {value: 'White', label: 'Vins blancs'},
+        {value: 'Sparkling', label: 'Pétillants'},
+        {value: 'Spirits', label: 'Spiritueux'}
+    ];
+
+    function filterByType(products, wineType)  {
+        if(wineType){
+            return products.filter(product => {
+                let filtered = product.wineType.toLowerCase().includes(wineType.toLowerCase());
+                console.log(filtered);
+
+                return product.wineType.toLowerCase().includes(wineType.toLowerCase());
+            });
+        } else {
+            return products
+        }
+    }
+
 </script>
 
 <div class="content rounded-md shadow-md p-12 ">
@@ -21,19 +46,72 @@
           style="full">
 
         <TabItem class="w-full" open>
-            <SelectProducts/>
-            <span slot="title">Les vins</span>
-            {#if data.bottles}
+            <select bind:value={selected} on:change="{() => wineType === selected.value}"   placement="right-start">
+                {#each options as option}
+                 <option value={option}>
+                        {option.label}
+                    </option>
+                {/each}
+            </select>
+            <span slot="title">{selected ? selected.label : 'Les vins'}</span>
+            {#if data.bottles }
                 <section class="products !bg-[#ededed]">
                     <div class="product-list shadow-sm ">
-                        {#each data.bottles as item}
-                            <ProductCard {item}/>
-                            <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
-                                 on:click={closeModal}></div>
-                            <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
-                                <ProductDetails {item}/>
-                            </div>
-                        {/each}
+                        {#if selected && selected.value === ''}
+                            {#each filterByType(products, selected.value) as item}
+                                <ProductCard {item}/>
+                                <div id="bg" style="--display: {isOpenModal ? 'block' : 'none'}"
+                                     on:click={closeModal}></div>
+                                <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
+                                    <ProductDetails {item}/>
+                                </div>
+                            {/each}
+                        {:else if selected && selected.value === 'Red'}
+                            {#each filterByType(products, selected.value) as item}
+                                <ProductCard {item}/>
+                                <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
+                                     on:click={closeModal}></div>
+                                <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
+                                    <ProductDetails {item}/>
+                                </div>
+                            {/each}
+                            {:else if selected && selected.value === 'White'}
+                            {#each filterByType(products, selected.value) as item}
+                                <ProductCard {item}/>
+                                <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
+                                     on:click={closeModal}></div>
+                                <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
+                                    <ProductDetails {item}/>
+                                </div>
+                            {/each}
+                            {:else if selected && selected.value === 'Sparkling'}
+                            {#each filterByType(products, selected.value) as item}
+                                <ProductCard {item}/>
+                                <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
+                                     on:click={closeModal}></div>
+                                <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
+                                    <ProductDetails {item}/>
+                                </div>
+                            {/each}
+                            {:else if selected && selected.value === 'Spirits'}
+                            {#each filterByType(products, selected.value) as item}
+                                <ProductCard {item}/>
+                                <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
+                                     on:click={closeModal}></div>
+                                <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
+                                    <ProductDetails {item}/>
+                                </div>
+                            {/each}
+                        {:else}
+                            {#each products as item}
+                                <ProductCard {item}/>
+                                <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
+                                     on:click={closeModal}></div>
+                                <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
+                                    <ProductDetails {item}/>
+                                </div>
+                            {/each}
+                        {/if}
                     </div>
                 </section>
             {:else}
@@ -49,7 +127,7 @@
                         {#each data.producers as producer}
                             <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
                                   style="width: fit-content;">
-                                <img src="src/lib/images/wineyard.jpeg" alt="pinard"/>
+                                <img src="src/lib/img/wineyard.jpeg" alt="pinard"/>
                                 <h4 class="font-extrabold uppercase p-6">{producer.name}</h4>
                                 <div class="pb-8">
                                     <p>{producer.details}</p>
@@ -96,12 +174,6 @@
 
     }
 
-    h2 {
-        text-align: center;
-        font-weight: bold;
-        font-size: large;
-        text-transform: uppercase;
-    }
 
     #background {
         display: var(--display);
@@ -130,21 +202,5 @@
         padding-right: 5rem;
     }
 
-    .content button {
-        padding: 1em;
-        color: white;
-        background: #670302;
-        border: none;
-        font-weight: bold;
-        margin-bottom: 5rem;
-    }
-
-    .content button:hover {
-        padding: 1em;
-        background: #bd9494;
-        color: #670302;
-        border: none;
-        font-weight: bold;
-    }
 
 </style>

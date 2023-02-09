@@ -3,14 +3,21 @@
     import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
     import {Button, Chevron, Dropdown, DropdownDivider, DropdownItem, Modal} from 'flowbite-svelte'
     import Cart from "./Cart/Cart.svelte";
-    import {cart} from "../Stores/stores.js";
+    import {cart} from "../stores/stores.js";
     import Login from "./Forms/Login.svelte";
 
-    let loginModal = false;
-    let cartModal = false;
-    let session = true;
+    let loginModal  = false,
+        cartModal   = false,
+        cart_sum    = 0,
+        appTitle    = "negosud",
+        src         = "src/lib/img/logo.png";
 
-    let cart_sum = 0;
+
+    let user = { loggedIn: false }
+
+    function toggle() {
+        user.loggedIn = !user.loggedIn;
+    }
 
     const unsubscribe = cart.subscribe(items => {
         const itemValues = Object.values(items);
@@ -23,8 +30,8 @@
 
 <header class="flex justify-between">
     <a class="corner flex " href="/">
-        <img alt="pinard" class="w-24 ml-6 hover:!scale-110" src="src/lib/images/logo.png" width="300px"/><span
-            class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
+        <img {src} alt={appTitle} class="w-24 ml-6 hover:!scale-110"  width="300px"/>
+        <span class="text-white h-14 mt-8 font-serif italic">{appTitle.toUpperCase()}</span>
     </a>
     <nav class="text-white flex justify-center relative mt-1">
         <ul class="relative flex justify-center items-center bg-contain list-none">
@@ -80,6 +87,19 @@
                 </Dropdown>
             </Dropdown>
         </ul>
+
+
+        <form class="mt-6">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg aria-hidden="true" class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <input type="search" id="search" class="block text-white w-full p-2 pl-10 text-sm border !border-gray-300 rounded-lg !bg-black/50 focus:!ring-red-980 focus:!border-red-980" placeholder="Rechercher" required>
+                <button type="submit" class="text-xs absolute right-2.5 bottom-1.5 bg-red-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-1 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">OK</button>
+            </div>
+        </form>
+
+
     </nav>
     <div class="right flex items-center space-x-4">
         <a href="/cart">
@@ -89,7 +109,7 @@
                 <ShoppingCart/>{cart_sum}
             </Button>
         </a>
-        {#if session}
+        {#if user.loggedIn}
             <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9"
                     style="height: fit-content; top: 1em; color: #670302; background:white;">
                 <User/>
@@ -100,9 +120,9 @@
                 <DropdownItem><a href="/cart">Mon panier</a></DropdownItem>
                 <DropdownItem><a href="/account">Commandes</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a href="" class="font-bold text-red-900">Deconnexion</a></DropdownItem>
+                <DropdownItem><Button href="" class="font-bold text-red-900 !bg-transparent" on:click={toggle} >Deconnexion</Button></DropdownItem>
             </Dropdown>
-        {:else if !session}
+        {:else}
             <Button on:click={() => loginModal = true}
                     class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10"
                     style="height: fit-content; top: 1em; color: #670302; background: white;">
@@ -111,7 +131,9 @@
             </Button>
         {/if}
         <Modal autoclose={false} bind:open={loginModal} class="w-full" size="xs">
-            <Login/>
+            <form  on:submit|preventDefault={toggle} action="#" class="flex flex-col space-y-6">
+                 <Login/>
+            </form>
         </Modal>
         <Modal autoclose={true} bind:open={cartModal} class="w-full" size="xs">
             <Cart/>

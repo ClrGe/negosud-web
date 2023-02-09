@@ -1,6 +1,6 @@
 <script>
     import {Button, TabItem, Tabs} from 'flowbite-svelte';
-    import UserData from "../../Components/Forms/UserData.svelte";
+    import UserData from "../../lib/Forms/UserData.svelte";
 </script>
 
 <div class="content">

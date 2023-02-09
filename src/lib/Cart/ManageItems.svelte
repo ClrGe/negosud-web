@@ -1,5 +1,5 @@
 <script>
-    import {cart} from "../../Stores/stores.js";
+    import {cart} from "../../stores/stores.js";
     import {Button, Card} from "flowbite-svelte";
 
     export let item;
@@ -37,7 +37,7 @@
 <Card class="item-meta-data">
 
 <div class="flex  justify-center items-center flex-rox">
-        <img src="src/lib/images/pinard.jpg" class="h-24">
+        <img src="src/lib/img/pinard.jpg" class="h-24">
         <h3 class="font-bold text-2xl text-black">{fullName}</h3>
         <p class="font-bold ml-4">{currentPrice} € </p>
     </div>

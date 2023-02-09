@@ -13,7 +13,7 @@
             <a class="font-black  tracking-wider " href="">FAQ</a>
         </li>
         <li flex items-center justify-center>
-            <!--<img src="src/lib/images/bandeau_legal.jpg">-->
+            <!--<img src="src/lib/img/bandeau_legal.jpg">-->
         </li>
     </ul>
 </footer>

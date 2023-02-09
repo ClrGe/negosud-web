@@ -1,8 +1,9 @@
 <script>
     import {get} from "svelte/store";
-    import {cart} from "../../Stores/stores.js";
+    import {cart} from "../../stores/stores.js";
     import {Button, Card} from "flowbite-svelte";
     import {Document, ShoppingCart} from "svelte-heros-v2";
+    import {each} from "svelte/internal";
 
     let isOpenModal = false;
     export let item;
@@ -26,8 +27,9 @@
     }
 </script>
 
+
 <Card class="flex justify-center items-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 ">
-    <img alt="pinard" class="image max-h-56 w-24" src="src/lib/images/pinard.png"/>
+    <img alt="pinard" class="image max-h-56 w-24" src="src/lib/img/pinard.png"/>
     <h4 class="font-extrabold uppercase p-6 ">{fullName}</h4>
     <div class="pb-8">
         <p>{wineType}</p>
