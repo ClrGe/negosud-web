@@ -41,12 +41,15 @@
 		"@fontsource/fira-mono": "^4.5.10",
 		"@neoconfetti/svelte": "^1.0.0",
 		"axios": "^1.3.0",
+		"cookie": "^0.5.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"node-sass": "^8.0.0",
 		"sass": "^1.58.0",
 		"svelte-credit-cards": "^1.0.16",
 		"svelte-heros-v2": "^0.3.15",
-		"svelte-icons": "^2.1.0"
+		"svelte-icons": "^2.1.0",
+		"svelte-kit-cookie-session": "^3.3.2",
+		"uuid": "^9.0.0"
 	}
 }

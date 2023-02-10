@@ -2,15 +2,17 @@
     import {page} from '$app/stores';
     import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
     import {Button, Chevron, Dropdown, DropdownDivider, DropdownItem, Modal} from 'flowbite-svelte'
-    import Cart from "./Cart/Cart.svelte";
-    import {cart} from "../Stores/stores.js";
-    import Login from "./Forms/Login.svelte";
+    import Cart from "$lib/Cart/Cart.svelte";
+    import {cart, session} from "../stores/stores.js";
+    import Login from "$lib/Forms/Login.svelte";
 
-    let loginModal = false;
-    let cartModal = false;
-    let session = true;
+    let loginModal  = false,
+            cartModal   = false,
+            cart_sum    = 0,
+            appTitle    = "negosud",
+            src         = "src/lib/img/logo.png";
 
-    let cart_sum = 0;
+    let sessionValue;
 
     const unsubscribe = cart.subscribe(items => {
         const itemValues = Object.values(items);
@@ -18,13 +20,20 @@
         itemValues.forEach(item => {
             cart_sum += item.count;
         });
+        session.subscribe(value => {
+            sessionValue = value;
+        });
     });
+
+    function disconnectUser() {
+        session.set('false');
+    }
 </script>
 
 <header class="flex justify-between">
     <a class="corner flex " href="/">
-        <img alt="pinard" class="w-24 ml-6 hover:!scale-110" src="src/lib/images/logo.png" width="300px"/><span
-            class="text-white h-14 mt-8 font-serif italic">NEGOSUD</span>
+        <img {src} alt={appTitle} class="w-24 ml-6 hover:!scale-110"  width="300px"/>
+        <span class="text-white h-14 mt-8 font-serif italic">{appTitle.toUpperCase()}</span>
     </a>
     <nav class="text-white flex justify-center relative mt-1">
         <ul class="relative flex justify-center items-center bg-contain list-none">
@@ -32,13 +41,15 @@
                 class="hover:text-white relative h-14 pr-auto  ">
                 <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/">
                     <HomeModern/>
-                    Accueil</a>
+                    Accueil
+                </a>
             </li>
             <li aria-current={$page.url.pathname === '/products' ? 'page' : undefined}
                 class="hover:text-white relative h-14 pr-auto !text-[18px]">
                 <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/products">
                     <Star/>
-                    Tous les produits</a>
+                    Tous les produits
+                </a>
             </li>
             <li class="hover:text-white relative h-14 pr-auto">
                 <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
@@ -53,11 +64,11 @@
                     <Star/>
                     Nouveautés</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a class="font-bold" href="/products">Vins rouges</a></DropdownItem>
-                <DropdownItem><a class="font-bold" href="/products">Vins blancs</a></DropdownItem>
-                <DropdownItem><a class="font-bold" href="/products">Vins Pétillants</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=Red">Vins rouges</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=White">Vins blancs</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=sparkling">Vins Pétillants</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a class="font-bold" href="/products">Spiritueux</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=spirits">Spiritueux</a></DropdownItem>
             </Dropdown>
             <li class="hover:text-white relative h-14 pr-8 ">
                 <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
@@ -80,18 +91,25 @@
                 </Dropdown>
             </Dropdown>
         </ul>
+<!--        <form class="mt-6">-->
+<!--            <div class="relative">-->
+<!--                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">-->
+<!--                    <svg aria-hidden="true" class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>-->
+<!--                </div>-->
+<!--                <input type="search" id="search" class="block text-white w-full p-2 pl-10 text-sm border !border-gray-300 rounded-lg !bg-black/50 focus:!ring-red-980 focus:!border-red-980" placeholder="Rechercher" required>-->
+<!--                <button type="submit" class="text-xs absolute right-2.5 bottom-1.5 bg-red-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-1 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">OK</button>-->
+<!--            </div>-->
+<!--        </form>-->
     </nav>
     <div class="right flex items-center space-x-4">
         <a href="/cart">
-            <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold"
-                    style="height: fit-content; top: 1em; color: white; background: #670302;">
+            <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
                 <!--on:click={() => cartModal = true}-->
                 <ShoppingCart/>{cart_sum}
             </Button>
         </a>
-        {#if session}
-            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9"
-                    style="height: fit-content; top: 1em; color: #670302; background:white;">
+        {#if sessionValue === 'true' }
+            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em; color: #670302; background:white;">
                 <User/>
                 <Chevron></Chevron>
             </Button>
@@ -100,24 +118,24 @@
                 <DropdownItem><a href="/cart">Mon panier</a></DropdownItem>
                 <DropdownItem><a href="/account">Commandes</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a href="" class="font-bold text-red-900">Deconnexion</a></DropdownItem>
+                <DropdownItem><Button href="" class="font-bold text-red-900 !bg-transparent" on:click={disconnectUser}>Deconnexion</Button></DropdownItem>
             </Dropdown>
-        {:else if !session}
-            <Button on:click={() => loginModal = true}
-                    class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10"
-                    style="height: fit-content; top: 1em; color: #670302; background: white;">
+        {:else}
+<!--            <Button on:click={() => loginModal = true}-->
+            <a href="/login"><Button  class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] " style="height: fit-content; top: 1em; color: #670302; background: white;">
                 <User/>
                 Connexion
-            </Button>
+            </Button></a>
         {/if}
         <Modal autoclose={false} bind:open={loginModal} class="w-full" size="xs">
-            <Login/>
+            <form  action="#" class="flex flex-col space-y-6">
+                 <Login/>
+            </form>
         </Modal>
         <Modal autoclose={true} bind:open={cartModal} class="w-full" size="xs">
             <Cart/>
             <div class="mt-4 flex justify-center items-center">
-                <Button class="w-1/2 ml-auto mr-auto px-6 py-2 !text-white !bg-red-900 hover:!bg-black"
-                        on:click={cartModal === false}>
+                <Button class="w-1/2 ml-auto mr-auto px-6 py-2 !text-white !bg-red-900 hover:!bg-black" on:click={cartModal === false}>
                     <a href="/payment" on:click={cartModal === false}>Procéder au paiement</a>
                 </Button>
             </div>
@@ -126,15 +144,7 @@
 </header>
 
 <style>
-    @font-face {
-        font-family: 'Gelasio';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Gelasio Regular'), local('Gelasio-Regular'), url(https://fonts.gstatic.com/s/gelasio/v1/cIf9MaFfvUQxTTqS9C6hYQ.woff2) format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-
-    header {
+     header {
         background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0%));
     }
 
