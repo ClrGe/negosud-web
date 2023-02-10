@@ -36,9 +36,8 @@
             return products
         }
     }
-
-
 </script>
+
             <select bind:value={selected} on:change="{() => wineType === selected.value}"   placement="right-start">
                 {#each options as option}
                     <option value={option}>

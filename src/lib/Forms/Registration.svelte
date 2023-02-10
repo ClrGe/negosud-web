@@ -1,14 +1,31 @@
 <script>
     import {Button, Checkbox, Input, Label} from "flowbite-svelte";
+    import {env} from "$env/dynamic/public";
+    import {goto} from "$app/navigation";
 
-    function post(url, data) {
-        return fetch(url, {
-            body: JSON.stringify(data),
+    async function register() {
+        let token = `Bearer ` + env.PUBLIC_API_KEY
+        let url = env.PUBLIC_API_URL + "/api/authentication/register"
+        const res = await fetch(url, {
+            credentials: 'include',
+            method: 'post',
             headers: {
+                'Authorization': token,
                 'Content-Type': 'application/json'
             },
-            method: 'POST'
-        }).then(response => response.json())
+
+            body: JSON.stringify(
+                {
+                    email: document.querySelector("input[name='email']").value,
+                    password: document.querySelector("input[name='password']").value
+                }
+            )
+        })
+        if (res.ok) {
+            goto('/login')
+        } else {
+            alert("Échec")
+        }
     }
 </script>
 
@@ -67,4 +84,4 @@
     Déjà inscrit ?
     <a class="hover:underline dark:text-red-500" href="/registration" style="color :#670302">Se connecter</a>
 </div>
-<Button class="w-full1" style="background :#670302" type="submit">S'inscrire</Button>
+<Button class="w-full1" style="background :#670302" type="submit" on:click={register}>S'inscrire</Button>

@@ -4,8 +4,6 @@
 
     export let data;
     let orders = data.orders;
-
-
 </script>
 
 <div class="content">

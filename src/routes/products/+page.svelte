@@ -12,22 +12,27 @@
     let products = data.bottles;
 
     let searchWord = '';
+    let selected;
+    let searchParam = 'fullName';
 
-    function searchProducts(products, searchWord) {
-        if (searchWord) {
+    let options = [
+        {value: 'fullName', label: 'Par nom'},
+        {value: 'yearProduced', label: 'Par année'},
+        {value: 'wineType', label: 'Par type de vin'},
+    ];
+
+    function searchMultiParameters(products, searchWord) {
+        if (searchWord || searchWord !== '') {
             return products.filter(product => {
-                console.log(searchWord);
-
-                return product.fullName.toLowerCase().includes(searchWord.toLowerCase());
+                return product.fullName.toLowerCase().includes(searchWord.toLowerCase()) ||
+                    product.yearProduced.toString().toLowerCase().includes(searchWord.toLowerCase()) ||
+                    product.wineType.toLowerCase().includes(searchWord.toLowerCase());
             });
         } else {
             console.log(searchWord);
-
             return products
-
         }
     }
-
 </script>
 
 <div class="content rounded-md shadow-md p-12 ">
@@ -36,26 +41,18 @@
 
         <TabItem class="w-full" open>
             <span slot="title">Les vins</span>
-            <form on:submit={searchProducts(products, searchWord)} class="flex justify-center" >
+            <form on:submit={searchMultiParameters(products, searchWord)} class="flex justify-center" >
             <input type="text" class="w-3/4 mt-4 h-12 rounded-r-none rounded-l shadow-sm focus:ring-red-900 focus:border-red-900 border-gray-300"
-                   placeholder="Rechercher un produit" bind:value={searchWord}/>
+                   placeholder='Rechercher un produit ' bind:value={searchWord}/>
                 <Button class="!w-1/2 h-12 !bg-red-900 hover:!bg-black border-red-900 focus:ring-red-900 focus:border-red-900 rounded-r rounded-l-none" style="width: fit-content; margin-top: 1rem; margin-bottom: 1rem;"
-                        on:click={() => products = searchProducts(products, searchWord)}><MagnifyingGlass />Rechercher</Button>
+                        on:click={() => products = searchMultiParameters(products, searchParam, searchWord)}><MagnifyingGlass />Rechercher</Button>
             </form>
             {#if searchWord}
                 <h1>Recherche : {searchWord}</h1>
+                <h1>Recherche : {searchParam}</h1>
+
                 <div class="flex justify-center !w-full">
-                    {#each searchProducts(products, searchWord) as product}
-<!--                        <Card class="flex justify-center items-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 w-56 ">-->
-<!--                            <img src="src/lib/img/pinard.png" alt="pinard"/>-->
-<!--                            <h4 class="font-extrabold uppercase p-6">{product.fullName}</h4>-->
-<!--                            <div class="pb-8">-->
-<!--                                <p>{product.details}</p>-->
-<!--                            </div>-->
-<!--                            <Button class="relative right-0 btn" style="background :#5C1427">-->
-<!--                                Détails-->
-<!--                            </Button>-->
-<!--                        </Card>-->
+                    {#each searchMultiParameters(products, searchWord) as product}
                         <Card class="flex justify-center items-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 ">
                             <img alt="pinard" class="image max-h-56 w-24" src="src/lib/img/pinard.png"/>
                             <h4 class="font-extrabold uppercase p-6 ">{product.fullName}</h4>

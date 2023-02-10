@@ -4,7 +4,6 @@
     import {env} from "$env/dynamic/public";
     import { goto } from '$app/navigation';
 
-
     let sessionValue;
     const unsubscribe = session.subscribe(value => {
         sessionValue = value;
@@ -33,10 +32,9 @@
         } else {
             alert("Identifiants incorrects")
         }
-
     }
-
 </script>
+
 <div class="!px-24">
     <img class="!w-1/2 !h-1/2 !ml-auto !mr-auto !w-32" src="src/lib/img/logo.png" alt="logo_negosud">
     <Label class="!left-8 py-4 !ml-auto mr-auto space-y-2">
