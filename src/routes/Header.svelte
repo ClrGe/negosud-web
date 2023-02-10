@@ -2,27 +2,32 @@
 import {page} from '$app/stores';
     import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
     import {Button, Chevron, Dropdown, DropdownDivider, DropdownItem, Modal} from 'flowbite-svelte'
-    import Cart from "./Cart/Cart.svelte";
-    import {cart} from "../stores/stores.js";
-    import Login from "./Forms/Login.svelte";
+    import Cart from "$lib/Cart/Cart.svelte";
+import {cart, session} from "../stores/stores.js";
+    import Login from "$lib/Forms/Login.svelte";
+
 
     let loginModal  = false,
-        cartModal   = false,
-        cart_sum    = 0,
-        appTitle    = "negosud",
-        src         = "src/lib/img/logo.png";
+            cartModal   = false,
+            cart_sum    = 0,
+            appTitle    = "negosud",
+            src         = "src/lib/img/logo.png";
 
-    let user = { loggedIn: false }
 
-    function toggle() {
-        user.loggedIn = !user.loggedIn;
-    }
+        function disconnectUser() {
+            session.set('false');
+        }
+    let sessionValue;
+
 
     const unsubscribe = cart.subscribe(items => {
         const itemValues = Object.values(items);
         cart_sum = 0;
         itemValues.forEach(item => {
             cart_sum += item.count;
+        });
+        session.subscribe(value => {
+            sessionValue = value;
         });
     });
 </script>
@@ -106,7 +111,7 @@ import {page} from '$app/stores';
                 <ShoppingCart/>{cart_sum}
             </Button>
         </a>
-        {#if user.loggedIn}
+        {#if sessionValue === 'true' }
             <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9"
                     style="height: fit-content; top: 1em; color: #670302; background:white;">
                 <User/>
@@ -117,18 +122,18 @@ import {page} from '$app/stores';
                 <DropdownItem><a href="/cart">Mon panier</a></DropdownItem>
                 <DropdownItem><a href="/account">Commandes</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><Button href="" class="font-bold text-red-900 !bg-transparent" on:click={toggle} >Deconnexion</Button></DropdownItem>
+                <DropdownItem><Button href="" class="font-bold text-red-900 !bg-transparent" on:click={disconnectUser}>Deconnexion</Button></DropdownItem>
             </Dropdown>
         {:else}
-            <Button on:click={() => loginModal = true}
-                    class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] ml-10"
+<!--            <Button on:click={() => loginModal = true}-->
+            <a href="/login"><Button  class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] "
                     style="height: fit-content; top: 1em; color: #670302; background: white;">
                 <User/>
                 Connexion
-            </Button>
+            </Button></a>
         {/if}
         <Modal autoclose={false} bind:open={loginModal} class="w-full" size="xs">
-            <form  on:submit|preventDefault={toggle} action="#" class="flex flex-col space-y-6">
+            <form  action="#" class="flex flex-col space-y-6">
                  <Login/>
             </form>
         </Modal>
