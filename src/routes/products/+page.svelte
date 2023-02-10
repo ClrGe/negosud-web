@@ -38,7 +38,7 @@
 <div class="content rounded-md shadow-md p-12 ">
     <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] w-1/2 ml-auto mr-auto "
           style="full">
-
+git p
         <TabItem class="w-full" open>
             <span slot="title">Les vins</span>
             <form on:submit={searchMultiParameters(products, searchWord)} class="flex justify-center" >
@@ -49,7 +49,6 @@
             </form>
             {#if searchWord}
                 <h1>Recherche : {searchWord}</h1>
-                <h1>Recherche : {searchParam}</h1>
 
                 <div class="flex justify-center !w-full">
                     {#each searchMultiParameters(products, searchWord) as product}
