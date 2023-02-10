@@ -1,7 +1,10 @@
 <script>
     import ManageItems from "./ManageItems.svelte";
-    import {cart} from "../../stores/stores.js";
+    import {cart, session} from "../../stores/stores.js";
     import {Button} from "flowbite-svelte";
+    import {ShoppingCart} from "svelte-heros-v2";
+    import {env} from "$env/dynamic/public";
+    import {goto} from "$app/navigation";
 
     let checkedOut = false;
     let cartItems = [];
@@ -22,9 +25,37 @@
             orderTotal += totalPrice;
         });
     });
+
+    let orderStatus ='';
+
+    async function postOrder() {
+        let token = `Bearer ` + env.PUBLIC_API_KEY
+        let url = env.PUBLIC_API_URL + "/api/customerorder/addcustomerorder"
+        const res = await fetch(url, {
+            credentials: 'include',
+            method: 'post',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(
+                {
+                    "id": 50,
+                    "reference": "toto",
+                    "description": "toto",
+                }
+            )
+        })
+        if (res.ok) {
+            orderStatus = "Votre commandé a bien été prise en compte !"
+        } else {
+            alert("Identifiants incorrects")
+        }
+    }
 </script>
 
-<h1>Panier</h1>
+<h1>{orderStatus}</h1>
 <div class="row">
     <div class="col-sm">
         {#if cartItems.length === 0}
@@ -43,7 +74,7 @@
             <h2 class="font-extrabold text-3xl text-red-900 pt-8 text-center">Total : {orderTotal}€</h2>
 
             <a href="/checkout">
-                <Button class="mt-6 w-full !bg-red-900 text-white hover:!bg-black">
+                <Button class="mt-6 w-full !bg-red-900 text-white hover:!bg-black" on:click={postOrder}>
                     Commander
                 </Button>
             </a>

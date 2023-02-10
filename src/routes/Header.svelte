@@ -1,11 +1,10 @@
 <script>
-import {page} from '$app/stores';
+    import {page} from '$app/stores';
     import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
     import {Button, Chevron, Dropdown, DropdownDivider, DropdownItem, Modal} from 'flowbite-svelte'
     import Cart from "$lib/Cart/Cart.svelte";
-import {cart, session} from "../stores/stores.js";
+    import {cart, session} from "../stores/stores.js";
     import Login from "$lib/Forms/Login.svelte";
-
 
     let loginModal  = false,
             cartModal   = false,
@@ -13,12 +12,7 @@ import {cart, session} from "../stores/stores.js";
             appTitle    = "negosud",
             src         = "src/lib/img/logo.png";
 
-
-        function disconnectUser() {
-            session.set('false');
-        }
     let sessionValue;
-
 
     const unsubscribe = cart.subscribe(items => {
         const itemValues = Object.values(items);
@@ -30,6 +24,10 @@ import {cart, session} from "../stores/stores.js";
             sessionValue = value;
         });
     });
+
+    function disconnectUser() {
+        session.set('false');
+    }
 </script>
 
 <header class="flex justify-between">
@@ -43,13 +41,15 @@ import {cart, session} from "../stores/stores.js";
                 class="hover:text-white relative h-14 pr-auto  ">
                 <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/">
                     <HomeModern/>
-                    Accueil</a>
+                    Accueil
+                </a>
             </li>
             <li aria-current={$page.url.pathname === '/products' ? 'page' : undefined}
                 class="hover:text-white relative h-14 pr-auto !text-[18px]">
                 <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/products">
                     <Star/>
-                    Tous les produits</a>
+                    Tous les produits
+                </a>
             </li>
             <li class="hover:text-white relative h-14 pr-auto">
                 <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
@@ -91,7 +91,6 @@ import {cart, session} from "../stores/stores.js";
                 </Dropdown>
             </Dropdown>
         </ul>
-
 <!--        <form class="mt-6">-->
 <!--            <div class="relative">-->
 <!--                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">-->
@@ -101,19 +100,16 @@ import {cart, session} from "../stores/stores.js";
 <!--                <button type="submit" class="text-xs absolute right-2.5 bottom-1.5 bg-red-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-1 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">OK</button>-->
 <!--            </div>-->
 <!--        </form>-->
-
     </nav>
     <div class="right flex items-center space-x-4">
         <a href="/cart">
-            <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold"
-                    style="height: fit-content; top: 1em; color: white; background: #670302;">
+            <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
                 <!--on:click={() => cartModal = true}-->
                 <ShoppingCart/>{cart_sum}
             </Button>
         </a>
         {#if sessionValue === 'true' }
-            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9"
-                    style="height: fit-content; top: 1em; color: #670302; background:white;">
+            <Button class="relative right-6 mb-6 text-red-900 bg-black font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em; color: #670302; background:white;">
                 <User/>
                 <Chevron></Chevron>
             </Button>
@@ -126,8 +122,7 @@ import {cart, session} from "../stores/stores.js";
             </Dropdown>
         {:else}
 <!--            <Button on:click={() => loginModal = true}-->
-            <a href="/login"><Button  class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] "
-                    style="height: fit-content; top: 1em; color: #670302; background: white;">
+            <a href="/login"><Button  class="relative right-6 mb-6 text-red-900 bg-white font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9] " style="height: fit-content; top: 1em; color: #670302; background: white;">
                 <User/>
                 Connexion
             </Button></a>
@@ -140,8 +135,7 @@ import {cart, session} from "../stores/stores.js";
         <Modal autoclose={true} bind:open={cartModal} class="w-full" size="xs">
             <Cart/>
             <div class="mt-4 flex justify-center items-center">
-                <Button class="w-1/2 ml-auto mr-auto px-6 py-2 !text-white !bg-red-900 hover:!bg-black"
-                        on:click={cartModal === false}>
+                <Button class="w-1/2 ml-auto mr-auto px-6 py-2 !text-white !bg-red-900 hover:!bg-black" on:click={cartModal === false}>
                     <a href="/payment" on:click={cartModal === false}>Procéder au paiement</a>
                 </Button>
             </div>
