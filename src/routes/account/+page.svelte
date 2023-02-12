@@ -1,9 +1,18 @@
 <script>
     import {Button, TabItem, Tabs} from 'flowbite-svelte';
     import UserData from "../../lib/Forms/UserData.svelte";
+    import {session} from "../../stores/stores.js";
+    import {get} from "svelte/store";
+    import {goto} from "$app/navigation";
 
-    export let data;
     let orders = data.orders;
+    export let data;
+
+    let isConnected = get(session)
+    $: if (isConnected !== 'true') {
+        goto('/login')
+    }
+
 </script>
 
 <div class="content">

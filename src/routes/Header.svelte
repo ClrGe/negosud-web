@@ -5,6 +5,7 @@
     import Cart from "$lib/Cart/Cart.svelte";
     import {cart, session} from "../stores/stores.js";
     import Login from "$lib/Forms/Login.svelte";
+    import {goto} from "$app/navigation";
 
     let loginModal  = false,
             cartModal   = false,
@@ -27,6 +28,10 @@
 
     function disconnectUser() {
         session.set('false');
+    }
+
+    function redirect(path) {
+        goto(path);
     }
 </script>
 

@@ -2,10 +2,7 @@
     import ManageItems from "./ManageItems.svelte";
     import {cart, session} from "../../stores/stores.js";
     import {Button} from "flowbite-svelte";
-    import {ShoppingCart} from "svelte-heros-v2";
     import {env} from "$env/dynamic/public";
-    import {goto} from "$app/navigation";
-
     let checkedOut = false;
     let cartItems = [];
 
@@ -38,7 +35,6 @@
                 'Authorization': token,
                 'Content-Type': 'application/json'
             },
-
             body: JSON.stringify(
                 {
                     "id": 50,
@@ -50,7 +46,7 @@
         if (res.ok) {
             orderStatus = "Votre commandé a bien été prise en compte !"
         } else {
-            alert("Identifiants incorrects")
+            orderStatus = "La commande n'a pas pu être envoyée"
         }
     }
 </script>
@@ -74,7 +70,7 @@
             <h2 class="font-extrabold text-3xl text-red-900 pt-8 text-center">Total : {orderTotal}€</h2>
 
             <a href="/checkout">
-                <Button class="mt-6 w-full !bg-red-900 text-white hover:!bg-black" on:click={postOrder}>
+                <Button class="mt-6 w-full !bg-red-900 text-white hover:!bg-black">
                     Commander
                 </Button>
             </a>
