@@ -34,51 +34,133 @@
 
 </script>
 
-<select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
-    {#each options as option}
-        <option value={option}>
-            {option.label}
-        </option>
-    {/each}
-</select>
 
-{#if data.bottles }
+{#if $page.url.searchParams.get('type') === 'Rouge'}
+    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
+        {#each options as option}
+            <option value={option}>
+                {option.label}
+            </option>
+        {/each}
+    </select>
     <section class="products">
         <div class="product-list shadow-sm bg-red-900">
-            {#if selected && selected.value === '' && wineType === ''}
-                {#each filterByType(products, selected.value) as item}
-                    <ProductCard {item}/>
-                {/each}
-            {:else if selected && selected.value === 'Rouge' || wineType === 'Rouge'.toLowerCase()}
-                {#each filterByType(products, 'Rouge') as item}
-                    <ProductCard {item}/>
-                {/each}
-            {:else if selected && selected.value === 'Blanc' || wineType === 'Blanc' }
-                {#each filterByType(products, 'Blanc') as item}
-                    <ProductCard {item}/>
-                {/each}
-            {:else if selected && selected.value === 'Rose' || wineType === 'Rose'}
-                {#each filterByType(products, selected.value) as item}
-                    <ProductCard {item}/>
-                {/each}
-            {:else if selected && selected.value === 'Petillant' || wineType === 'Petillant'}
-                {#each filterByType(products, selected.value) as item}
-                    <ProductCard {item}/>
-                {/each}
-            {:else if selected && selected.value === 'Spirit' || wineType === 'Spirit'}
-                {#each filterByType(products, selected.value) as item}
-                    <ProductCard {item}/>
-                {/each}
-            {:else}
-                {#each products as item}
-                    <ProductCard {item}/>
-                {/each}
-            {/if}
+            {#each filterByType(products, 'Rouge') as item}
+                <ProductCard {item}/>
+            {/each}
         </div>
     </section>
-{:else}
-    <Error404/>
+{:else if $page.url.searchParams.get('type') === 'Blanc'}
+    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
+        {#each options as option}
+            <option value={option}>
+                {option.label}
+            </option>
+        {/each}
+    </select>
+    <section class="products">
+        <div class="product-list shadow-sm bg-red-900">
+            {#each filterByType(products, 'Blanc') as item}
+                <ProductCard {item}/>
+            {/each}
+        </div>
+    </section>
+{:else if $page.url.searchParams.get('type') === 'Rose'}
+    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
+        {#each options as option}
+            <option value={option}>
+                {option.label}
+            </option>
+        {/each}
+    </select>
+    <section class="products">
+        <div class="product-list shadow-sm bg-red-900">
+            {#each filterByType(products, 'Rose') as item}
+                <ProductCard {item}/>
+            {/each}
+        </div>
+    </section>
+{:else if $page.url.searchParams.get('type') === 'Petillant'}
+    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
+        {#each options as option}
+            <option value={option}>
+                {option.label}
+            </option>
+        {/each}
+    </select>
+    <section class="products">
+        <div class="product-list shadow-sm bg-red-900">
+            {#each filterByType(products, 'Petillant') as item}
+                <ProductCard {item}/>
+            {/each}
+        </div>
+    </section>
+{:else if $page.url.searchParams.get('type') === 'Spirit'}
+    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
+        {#each options as option}
+            <option value={option}>
+                {option.label}
+            </option>
+        {/each}
+    </select>
+    <section class="products">
+        <div class="product-list shadow-sm bg-red-900">
+            {#each filterByType(products, 'Spirit') as item}
+                <ProductCard {item}/>
+            {/each}
+        </div>
+    </section>
+{:else if $page.url.searchParams.get('type') === null}
+    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
+        {#each options as option}
+            <option value={option}>
+                {option.label}
+            </option>
+        {/each}
+    </select>
+
+    {#if data.bottles }
+        <section class="products">
+            <div class="product-list shadow-sm bg-red-900">
+                {#if selected && selected.value === '' && wineType === ''}
+                    {#each filterByType(products, selected.value) as item}
+                        <ProductCard {item}/>
+                    {/each}
+                {:else if selected && selected.value === 'Rouge' || wineType === 'Rouge'.toLowerCase()}
+                    {#each filterByType(products, 'Rouge') as item}
+                        <ProductCard {item}/>
+                    {/each}
+                {:else if selected && selected.value === 'Blanc' || wineType === 'Blanc' }
+                    {#each filterByType(products, 'Blanc') as item}
+                        <ProductCard {item}/>
+                    {/each}
+                {:else if selected && selected.value === 'Rose' || wineType === 'Rose'}
+                    {#each filterByType(products, selected.value) as item}
+                        <ProductCard {item}/>
+                    {/each}
+                {:else if selected && selected.value === 'Petillant' || wineType === 'Petillant'}
+                    {#each filterByType(products, selected.value) as item}
+                        <ProductCard {item}/>
+                    {/each}
+                {:else if selected && selected.value === 'Spirit' || wineType === 'Spirit'}
+                    {#each filterByType(products, selected.value) as item}
+                        <ProductCard {item}/>
+                    {/each}
+                {:else}
+                    {#each products as item}
+                        <ProductCard {item}/>
+                    {/each}
+                {/if}
+            </div>
+        </section>
+    {:else}
+        <Error404/>
+    {/if}
+
 {/if}
+
+
+
 
 <style>
     .product-list {

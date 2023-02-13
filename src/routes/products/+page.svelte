@@ -1,11 +1,10 @@
 <script>
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
 
-    import {Button, Card, CloseButton, Modal, TabItem, Tabs} from 'flowbite-svelte'
+    import {Button, Card, TabItem, Tabs} from 'flowbite-svelte'
     import Error404 from "$lib/Errors/Error404.svelte";
-    import addToCart from "$lib/Products/ProductsList.svelte";
     import ProductsList from "$lib/Products/ProductsList.svelte";
-    import {ArrowUturnRight, Document, MagnifyingGlass, ShoppingCart, ViewfinderCircle} from "svelte-heros-v2";
+    import { MagnifyingGlass } from "svelte-heros-v2";
     import ProductCard from "$lib/Products/ProductCard.svelte";
     import NoMatch from "$lib/Errors/NoMatch.svelte";
 

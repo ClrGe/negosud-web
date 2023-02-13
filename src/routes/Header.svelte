@@ -30,6 +30,10 @@
         session.set('false');
     }
 
+    function reloadComponent() {
+        goto($page.url.pathname);
+    }
+
 </script>
 
 <header class="flex justify-between">
@@ -66,11 +70,11 @@
                     <Star/>
                     Nouveautés</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a class="font-bold" href="/products?type=Red">Vins rouges</a></DropdownItem>
-                <DropdownItem><a class="font-bold" href="/products?type=White">Vins blancs</a></DropdownItem>
-                <DropdownItem><a class="font-bold" href="/products?type=sparkling">Vins Pétillants</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=Rouge">Vins rouges</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=Blanc">Vins blancs</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=Petillant">Vins Pétillants</a></DropdownItem>
                 <DropdownDivider/>
-                <DropdownItem><a class="font-bold" href="/products?type=spirits">Spiritueux</a></DropdownItem>
+                <DropdownItem><a class="font-bold" href="/products?type=spirit">Spiritueux</a></DropdownItem>
             </Dropdown>
             <li class="hover:text-white relative h-14 pr-8 ">
                 <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
