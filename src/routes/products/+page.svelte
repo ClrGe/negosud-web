@@ -1,31 +1,25 @@
 <script>
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
 
-    import {Button, Card, TabItem, Tabs} from 'flowbite-svelte'
+    import {Button, Card, CloseButton, Modal, TabItem, Tabs} from 'flowbite-svelte'
     import Error404 from "$lib/Errors/Error404.svelte";
     import addToCart from "$lib/Products/ProductsList.svelte";
-    import {Document, MagnifyingGlass, ShoppingCart} from "svelte-heros-v2";
     import ProductsList from "$lib/Products/ProductsList.svelte";
-
+    import {ArrowUturnRight, Document, MagnifyingGlass, ShoppingCart, ViewfinderCircle} from "svelte-heros-v2";
+    import ProductCard from "$lib/Products/ProductCard.svelte";
+    import NoMatch from "$lib/Errors/NoMatch.svelte";
 
     export let data;
+
     let products = data.bottles;
-
-    let searchWord = '';
-    let selected;
+    export  let searchWord = '';
     let searchParam = 'fullName';
-
-    let options = [
-        {value: 'fullName', label: 'Par nom'},
-        {value: 'yearProduced', label: 'Par année'},
-        {value: 'wineType', label: 'Par type de vin'},
-    ];
 
     function searchMultiParameters(products, searchWord) {
         if (searchWord || searchWord !== '') {
             return products.filter(product => {
                 return product.fullName.toLowerCase().includes(searchWord.toLowerCase()) ||
-                    product.yearProduced.toString().toLowerCase().includes(searchWord.toLowerCase()) ||
+                    product.yearProduced.toString().match(searchWord) ||
                     product.wineType.toLowerCase().includes(searchWord.toLowerCase());
             });
         } else {
@@ -33,50 +27,44 @@
             return products
         }
     }
+
 </script>
 
 <div class="content rounded-md shadow-md p-12 ">
     <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] w-1/2 ml-auto mr-auto "
           style="full">
-git p
         <TabItem class="w-full" open>
-            <span slot="title">Les vins</span>
-            <form on:submit={searchMultiParameters(products, searchWord)} class="flex justify-center" >
-            <input type="text" class="w-3/4 mt-4 h-12 rounded-r-none rounded-l shadow-sm focus:ring-red-900 focus:border-red-900 border-gray-300"
-                   placeholder='Rechercher un produit ' bind:value={searchWord}/>
-                <Button class="!w-1/2 h-12 !bg-red-900 hover:!bg-black border-red-900 focus:ring-red-900 focus:border-red-900 rounded-r rounded-l-none" style="width: fit-content; margin-top: 1rem; margin-bottom: 1rem;"
-                        on:click={() => products = searchMultiParameters(products, searchParam, searchWord)}><MagnifyingGlass />Rechercher</Button>
+            <span slot="title">Nos produits</span>
+            <form on:submit={searchMultiParameters(products, searchWord)} class="flex justify-center">
+                <input type="text"
+                       class="w-3/4 mt-4 h-12 rounded-r-none rounded-l shadow-sm focus:ring-red-900 focus:border-red-900 border-gray-300"
+                       placeholder='Rechercher un produit ' bind:value={searchWord}/>
+                <Button class="!w-1/2 h-12 !bg-red-900 hover:!bg-black border-red-900 focus:ring-red-900 focus:border-red-900 rounded-r rounded-l-none"
+                        style="width: fit-content; margin-top: 1rem; margin-bottom: 1rem;"
+                        on:click={() => products = searchMultiParameters(products, searchParam, searchWord)}>
+                    <MagnifyingGlass/>
+                    Rechercher
+                </Button>
             </form>
             {#if searchWord}
-                <h1>Recherche : {searchWord}</h1>
+                <h1>Résultats pour la recherche : {searchWord}</h1>
+                {#if searchMultiParameters(products, searchWord).length < 1 }
+                    <NoMatch  searchWord={searchWord}/>
+                    <ProductsList products={products} {data}/>
 
-                <div class="flex justify-center !w-full">
-                    {#each searchMultiParameters(products, searchWord) as product}
-                        <Card class="flex justify-center items-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 ">
-                            <img alt="pinard" class="image max-h-56 w-24" src="src/lib/img/pinard.png"/>
-                            <h4 class="font-extrabold uppercase p-6 ">{product.fullName}</h4>
-                            <div class="pb-8">
-                                <p>{product.wineType}</p>
-                                <p>{product.yearProduced}</p>
-                            </div>
-                            <div class=" !w-full text-black mb-6 !p-6 bg-gray-100 rounded-lg shadow-lg " id="price">
-                                <h2>{product.currentPrice}€</h2>
-                            </div>
-                            <div class="btn-group" role="group">
-                                <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white" on:click={addToCart}>
-                                    <ShoppingCart/>
-                                    Acheter
-                                </Button>
-                                <Button class="relative shadow-lg right-0 !bg-white !border-red-900 !text-red-900 border-black hover:!bg-red-900 hover:!text-white">
-                                    <Document/>
-                                    Détails
-                                </Button>
-                            </div>
-                        </Card>
+                {/if}
+                <div class="products ">
+                    <div class="product-list shadow-sm bg-gray-200">
+                    {#each searchMultiParameters(products, searchWord) as item}
+                        <ProductCard item={item} {data}/>
                     {/each}
-                </div>
-                {:else}
-                <ProductsList products={products} {data} />
+                        <div>
+                            <ProductsList products={products} {data}/>
+                        </div>
+                    </div>
+            </div>
+            {:else}
+                <ProductsList products={products} {data}/>
             {/if}
         </TabItem>
 
@@ -84,7 +72,7 @@ git p
             <span slot="title">Les producteurs</span>
             <section class="products">
                 {#if data.producers}
-                    <div class="product-list shadow-sm ">
+                    <div class="product-list bg-red-900 shadow-sm ">
                         {#each data.producers as producer}
                             <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
                                   style="width: fit-content;">
@@ -106,7 +94,7 @@ git p
         </TabItem>
 
         <TabItem class="w-full">
-            <span slot="title">Les cépages</span>
+            <span slot="title">Les régions</span>
             <section class="content">
                 <p class="text-sm text-gray-500 dark:text-gray-400"><b>Paramètres:</b>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
@@ -116,6 +104,8 @@ git p
         </TabItem>
     </Tabs>
 </div>
+
+
 <style>
     .content {
         margin: 0 auto;
@@ -129,33 +119,10 @@ git p
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        background: rgb(36 2 1 / 64%);
         box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
 
     }
 
-
-    #background {
-        display: var(--display);
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-    }
-
-    #details {
-        display: var(--display);
-        position: fixed;
-        z-index: 2;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #fff;
-        filter: drop-shadow(0 0 1px rgba(138, 138, 138, 0.53));
-
-    }
 
     .content {
         padding-left: 5rem;

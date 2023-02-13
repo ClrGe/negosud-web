@@ -28,7 +28,7 @@
         })
         if (res.ok) {
             session.set("true")
-            goto('/products')
+            goto('/welcome')
         } else {
             alert("Identifiants incorrects")
         }

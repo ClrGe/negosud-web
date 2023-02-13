@@ -1,0 +1,12 @@
+<script>
+    export  let searchWord;
+
+</script>
+<div class="bg-gray-200 w-full mb-4  md:px-0 py-24 flex items-center justify-center">
+    <div class="bg-white border border-gray-200 flex flex-col items-center justify-center px-4 md:px-8 lg:px-24 py-8 rounded-lg shadow-2xl">
+        <p class="text-6xl md:text-7xl lg:text-5xl font-bold tracking-wider text-gray-300">Pas de résultat</p>
+        <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">
+            Nous n'avons pas trouvé de produits pour la référence « {searchWord} » .<br />
+        </p>
+    </div>
+</div>
