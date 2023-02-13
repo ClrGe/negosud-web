@@ -5,7 +5,7 @@
             OUPS
         </p>
         <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">
-            Nous n'avons pas trouvé de résultats corresponds à la requête
+            Nous n'avons pas trouvé de résultats correspondant à la requête
         </p>
     </div>
 </div>

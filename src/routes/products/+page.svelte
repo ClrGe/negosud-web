@@ -7,11 +7,12 @@
     import ProductsList from "$lib/Products/ProductsList.svelte";
     import {ArrowUturnRight, Document, MagnifyingGlass, ShoppingCart, ViewfinderCircle} from "svelte-heros-v2";
     import ProductCard from "$lib/Products/ProductCard.svelte";
+    import NoMatch from "$lib/Errors/NoMatch.svelte";
 
     export let data;
 
     let products = data.bottles;
-    let searchWord = '';
+    export  let searchWord = '';
     let searchParam = 'fullName';
 
     function searchMultiParameters(products, searchWord) {
@@ -46,13 +47,21 @@
                 </Button>
             </form>
             {#if searchWord}
-                <h1>Recherche : {searchWord}</h1>
+                <h1>Résultats pour la recherche : {searchWord}</h1>
+                {#if searchMultiParameters(products, searchWord).length < 1 }
+                    <NoMatch  searchWord={searchWord}/>
+                    <ProductsList products={products} {data}/>
+
+                {/if}
                 <div class="products ">
-                    <div class="product-list shadow-sm bg-red-900">
+                    <div class="product-list shadow-sm bg-gray-200">
                     {#each searchMultiParameters(products, searchWord) as item}
                         <ProductCard item={item} {data}/>
                     {/each}
-                </div>
+                        <div>
+                            <ProductsList products={products} {data}/>
+                        </div>
+                    </div>
             </div>
             {:else}
                 <ProductsList products={products} {data}/>

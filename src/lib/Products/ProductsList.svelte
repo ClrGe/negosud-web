@@ -2,17 +2,13 @@
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
 
     import ProductCard from "$lib/Products/ProductCard.svelte";
-    import ProductDetails from "$lib/Products/ProductDetails.svelte";
     import Error404 from "$lib/Errors/Error404.svelte";
     import {page} from "$app/stores";
-    import {ArrowUturnRight, ShoppingCart} from "svelte-heros-v2";
-    import {Button, Modal} from "flowbite-svelte";
 
     export let data;
     let products = data.bottles;
     let selected;
     let wineType = $page.url.searchParams.get('type');
-    let isOpenModal = false;
 
     let options = [
         {value: '', label: 'Tous les produits'},
@@ -36,11 +32,6 @@
         }
     }
 
-
-
-    function closeModal() {
-        isOpenModal = false;
-    }
 </script>
 
 <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
@@ -81,11 +72,6 @@
             {:else}
                 {#each products as item}
                     <ProductCard {item}/>
-                    <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
-                         on:click={closeModal}></div>
-                    <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
-                        <ProductDetails {item}/>
-                    </div>
                 {/each}
             {/if}
         </div>
@@ -103,15 +89,7 @@
         box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
     }
 
-    #background {
-        display: var(--display);
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-    }
+
 
     #details {
         display: var(--display);

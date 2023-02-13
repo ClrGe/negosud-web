@@ -34,12 +34,12 @@
         });
     };
 </script>
-<Card class="item-meta-data">
+<Card class="item-meta-data h-56 !w-[5000px]">
 
 <div class="flex  justify-center items-center flex-rox">
         <img src="src/lib/img/pinard.jpg" alt="wine" class="h-24">
-        <h3 class="font-bold text-2xl text-black">{fullName}</h3>
-        <p class="font-bold ml-4">{currentPrice} € </p>
+        <h3 class="font-bold text-2xl text-left text-black w-56">{fullName}</h3>
+        <span class="font-bold ml-4">{currentPrice}€ </span>
     </div>
         <div class="col mt-4">
             <Button class="!bg-red-900 !text-white hover:!bg-black !pt-0.5 !pb-0.5 ml-1" on:click={countButtonHandler}>-

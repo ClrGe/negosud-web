@@ -27,14 +27,14 @@
 </script>
 
 
-<Card class="flex justify-center items-center text-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 w-80 max-h-3/4">
+<Card class="flex justify-center items-center text-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 w-80 max-h-full">
     <img alt="pinard" class="image max-h-56" src='{item.picture}'/>
     <Button class="!font-extrabold text-lg !bg-transparent text-red-900 hover:scale-110 uppercase !p-6 !text-center" isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>
         <h4>{item.fullName}</h4>
     </Button>
     <div class="pb-8">
         {#if wineType !== "Spirit"}
-            <p>Vin {item.wineType}</p>
+            <p>Vin {item.wineType.toLowerCase()}</p>
             <p>Millésime {item.yearProduced}</p>
         {:else}
             <p>Spiritueux</p>
@@ -56,8 +56,8 @@
         </Button>
     </div>
 </Card>
-<Modal autoclose={false} bind:open={isOpenModal} class="w-full bg-gray-100 !font-extrabold rounded-lg">
-    <div class="flex  justify-center items-center flex-rox bg-gray-200 border border-2 rounded-lg shadow-lg shadow-gray-400">
+<Modal autoclose={false} bind:open={isOpenModal} class="w-full !bg-black/90 !font-extrabold rounded-lg">
+    <div class="flex  justify-center items-center flex-rox bg-gray-100 border border-2 rounded-lg">
         <div class="col h-[500px]  !w-[800px] p-12">
             <img alt="pinard" width="300px" class="image h-full" src='{item.picture}'/>
         </div>
@@ -65,7 +65,7 @@
             <div class="bg-red-900 text-white"><p class="!font-extrabold text-center uppercase p-2 text-2xl">{item.fullName}</p></div>
             <p class="py-8 text-justify">Description :  {item.description} <br /></p>
             <p class="py-2">Producteur :  <a href="#" class="underline text-red-900 italic">{item.producer}</a> <br /></p>
-            <p class="py-2">Type de vin :  {item.wineType} <br /></p>
+            <p class="py-2">Catégorie :  {item.wineType} <br /></p>
             <p class="py-2">Volume :  {item.volume} cL <br /></p>
             <p class="py-2">Alcool :  {item.alcoholPercentage} ° <br /></p>
             <p class="py-2">Année :  {item.yearProduced}<br /></p>
@@ -87,3 +87,15 @@
         </Button>
     </div>
 </Modal>
+
+<style>
+    #background {
+        display: var(--display);
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+</style>
