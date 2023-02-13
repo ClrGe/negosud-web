@@ -16,10 +16,11 @@
 
     let options = [
         {value: '', label: 'Tous les produits'},
-        {value: 'Red', label: 'Vins rouges'},
-        {value: 'White', label: 'Vins blancs'},
-        {value: 'Sparkling', label: 'Pétillants'},
-        {value: 'Spirits', label: 'Spiritueux'}
+        {value: 'Rouge', label: 'Vins rouges'},
+        {value: 'Blanc', label: 'Vins blancs'},
+        {value: 'Rose', label: 'Vins rosé'},
+        {value: 'Petillant', label: 'Pétillants'},
+        {value: 'Spirit', label: 'Spiritueux'}
     ];
 
     export function filterByType(products, wineType) {
@@ -35,9 +36,7 @@
         }
     }
 
-    function openModal() {
-        isOpenModal = true;
-    }
+
 
     function closeModal() {
         isOpenModal = false;
@@ -54,24 +53,28 @@
 
 {#if data.bottles }
     <section class="products">
-        <div class="product-list shadow-sm ">
+        <div class="product-list shadow-sm bg-red-900">
             {#if selected && selected.value === '' && wineType === ''}
                 {#each filterByType(products, selected.value) as item}
                     <ProductCard {item}/>
                 {/each}
-            {:else if selected && selected.value === 'Red' || wineType === 'Red'.toLowerCase()}
-                {#each filterByType(products, 'Red') as item}
+            {:else if selected && selected.value === 'Rouge' || wineType === 'Rouge'.toLowerCase()}
+                {#each filterByType(products, 'Rouge') as item}
                     <ProductCard {item}/>
                 {/each}
-            {:else if selected && selected.value === 'White' || wineType === 'White' }
-                {#each filterByType(products, 'White') as item}
+            {:else if selected && selected.value === 'Blanc' || wineType === 'Blanc' }
+                {#each filterByType(products, 'Blanc') as item}
                     <ProductCard {item}/>
                 {/each}
-            {:else if selected && selected.value === 'Sparkling' || wineType === 'Sparkling'}
+            {:else if selected && selected.value === 'Rose' || wineType === 'Rose'}
                 {#each filterByType(products, selected.value) as item}
                     <ProductCard {item}/>
                 {/each}
-            {:else if selected && selected.value === 'Spirits' || wineType === 'Spirits'}
+            {:else if selected && selected.value === 'Petillant' || wineType === 'Petillant'}
+                {#each filterByType(products, selected.value) as item}
+                    <ProductCard {item}/>
+                {/each}
+            {:else if selected && selected.value === 'Spirit' || wineType === 'Spirit'}
                 {#each filterByType(products, selected.value) as item}
                     <ProductCard {item}/>
                 {/each}

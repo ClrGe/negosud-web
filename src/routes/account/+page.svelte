@@ -2,20 +2,26 @@
     import {Button, TabItem, Tabs} from 'flowbite-svelte';
     import UserData from "../../lib/Forms/UserData.svelte";
     import {session} from "../../stores/stores.js";
-    import {get} from "svelte/store";
     import {goto} from "$app/navigation";
-
-    let orders = data.orders;
+    import NeedAuth from "$lib/Errors/NeedAuth.svelte";
     export let data;
 
-    let isConnected = get(session)
-    $: if (isConnected !== 'true') {
-        goto('/login')
-    }
+    let orders = data.orders;
+    let isConnected;
+
+    const unsubscribe =
+        session.subscribe(value => {
+            isConnected = value;
+    });
+
 
 </script>
+{#if isConnected != 'true'}
+    <NeedAuth />
+{:else if  isConnected === 'true'}
+    <div class="content">
 
-<div class="content">
+    <h2 class="text-red-900 text-center font-extrabold text-2xl">Bonjour {data.user.firstname} {data.user.lastname}</h2>
     <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700" style="full">
         <TabItem class="w-full" open>
             <span slot="title">Profil</span>
@@ -49,7 +55,10 @@
             {/if}
         </TabItem>
     </Tabs>
-</div>
+    </div>
+{/if}
+
+
 
 <style>
     .content {

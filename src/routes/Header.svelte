@@ -30,9 +30,6 @@
         session.set('false');
     }
 
-    function redirect(path) {
-        goto(path);
-    }
 </script>
 
 <header class="flex justify-between">
