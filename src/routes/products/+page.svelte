@@ -29,8 +29,8 @@
 
 </script>
 
-<div class="content rounded-md shadow-md p-12 ">
-    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] w-1/2 ml-auto mr-auto "
+<div class=" rounded-md shadow-md p-12 ">
+    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] ml-auto mr-auto "
           style="full">
         <TabItem class="w-full" open>
             <span slot="title">Nos produits</span>
@@ -106,12 +106,7 @@
 
 
 <style>
-    .content {
-        margin: 0 auto;
-        max-width: 130rem;
-        min-width: 75vw;
-        border-radius: 1em;
-    }
+
 
     .product-list {
         padding: 2%;
