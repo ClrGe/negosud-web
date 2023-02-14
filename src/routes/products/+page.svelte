@@ -1,11 +1,10 @@
 <script>
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
 
-    import {Button, Card, CloseButton, Modal, TabItem, Tabs} from 'flowbite-svelte'
+    import {Button, Card, TabItem, Tabs} from 'flowbite-svelte'
     import Error404 from "$lib/Errors/Error404.svelte";
-    import addToCart from "$lib/Products/ProductsList.svelte";
     import ProductsList from "$lib/Products/ProductsList.svelte";
-    import {ArrowUturnRight, Document, MagnifyingGlass, ShoppingCart, ViewfinderCircle} from "svelte-heros-v2";
+    import { MagnifyingGlass } from "svelte-heros-v2";
     import ProductCard from "$lib/Products/ProductCard.svelte";
     import NoMatch from "$lib/Errors/NoMatch.svelte";
 
@@ -30,8 +29,8 @@
 
 </script>
 
-<div class="content rounded-md shadow-md p-12 ">
-    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] w-1/2 ml-auto mr-auto "
+<div class=" rounded-md shadow-md p-12 ">
+    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] ml-auto mr-auto "
           style="full">
         <TabItem class="w-full" open>
             <span slot="title">Nos produits</span>
@@ -107,12 +106,7 @@
 
 
 <style>
-    .content {
-        margin: 0 auto;
-        max-width: 130rem;
-        min-width: 75vw;
-        border-radius: 1em;
-    }
+
 
     .product-list {
         padding: 2%;
