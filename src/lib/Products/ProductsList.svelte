@@ -36,13 +36,6 @@
 
 
 {#if $page.url.searchParams.get('type') === 'Rouge'}
-    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
-        {#each options as option}
-            <option value={option}>
-                {option.label}
-            </option>
-        {/each}
-    </select>
     <section class="products">
         <div class="product-list shadow-sm bg-red-900">
             {#each filterByType(products, 'Rouge') as item}
@@ -51,13 +44,6 @@
         </div>
     </section>
 {:else if $page.url.searchParams.get('type') === 'Blanc'}
-    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
-        {#each options as option}
-            <option value={option}>
-                {option.label}
-            </option>
-        {/each}
-    </select>
     <section class="products">
         <div class="product-list shadow-sm bg-red-900">
             {#each filterByType(products, 'Blanc') as item}
@@ -66,13 +52,6 @@
         </div>
     </section>
 {:else if $page.url.searchParams.get('type') === 'Rose'}
-    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
-        {#each options as option}
-            <option value={option}>
-                {option.label}
-            </option>
-        {/each}
-    </select>
     <section class="products">
         <div class="product-list shadow-sm bg-red-900">
             {#each filterByType(products, 'Rose') as item}
@@ -81,13 +60,6 @@
         </div>
     </section>
 {:else if $page.url.searchParams.get('type') === 'Petillant'}
-    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
-        {#each options as option}
-            <option value={option}>
-                {option.label}
-            </option>
-        {/each}
-    </select>
     <section class="products">
         <div class="product-list shadow-sm bg-red-900">
             {#each filterByType(products, 'Petillant') as item}
@@ -96,13 +68,6 @@
         </div>
     </section>
 {:else if $page.url.searchParams.get('type') === 'Spirit'}
-    <select bind:value={selected} on:change="{() => wineType === selected.value}" placement="right-start">
-        {#each options as option}
-            <option value={option}>
-                {option.label}
-            </option>
-        {/each}
-    </select>
     <section class="products">
         <div class="product-list shadow-sm bg-red-900">
             {#each filterByType(products, 'Spirit') as item}
@@ -156,7 +121,6 @@
     {:else}
         <Error404/>
     {/if}
-
 {/if}
 
 

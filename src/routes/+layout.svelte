@@ -12,10 +12,12 @@
         <slot/>
     </main>
     <div class="flex justify-center items-center">
-        <a class="text-[#CAB089F9]" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006688014"
+        <a class="text-[#CAB089F9] text-center" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006688014"
            target="_blank">L'ABUS D'ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</a>
     </div>
-    <Footer/>
+    <div class="footer sm:!hidden md:!hidden">
+        <Footer/>
+    </div>
 </div>
 
 <style>
@@ -37,10 +39,21 @@
     footer {
         background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0));
     }
+    @media (max-width: 768px) {
+        .footer {
+            visibility: hidden;
+        }
+        
+    }
 
     @media (min-width: 480px) {
         footer {
             padding: 12px 0;
         }
+    }
+    @media (max-width: 800px) {
+          .app {
+                background: black;
+            }
     }
 </style>

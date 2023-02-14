@@ -26,8 +26,7 @@
     }
 </script>
 
-
-<Card class="flex justify-center items-center text-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 w-80 max-h-full">
+<Card class="flex justify-center items-center text-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 w-96 max-h-full">
     <img alt="pinard" class="image max-h-56" src='{item.picture}'/>
     <Button class="!font-extrabold text-lg !bg-transparent text-red-900 hover:scale-110 uppercase !p-6 !text-center" isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>
         <h4>{item.fullName}</h4>
@@ -41,8 +40,8 @@
             <p>Année {item.yearProduced}</p>
         {/if}
     </div>
-    <div class=" !w-full text-black mb-6 !p-6 bg-gray-100 rounded-lg shadow-lg text-center" id="price">
-        <h2>{currentPrice}€ TTC</h2>
+    <div class="flex p-4 text-gray-700">
+        <h2 class="font-extrabold text-5xl text-center">{item.currentPrice}€ </h2> <p class="!text-2xs"> TTC</p><br />
     </div>
     <div class="btn-group" role="group">
         <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white" on:click={addToCart}>

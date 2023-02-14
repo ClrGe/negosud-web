@@ -1,7 +1,17 @@
 <script>
     import {page} from '$app/stores';
-    import {ArrowRightCircle, Briefcase, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
-    import {Button, Chevron, Dropdown, DropdownDivider, DropdownItem, Modal} from 'flowbite-svelte'
+    import {ArrowRightCircle, Briefcase, Cog, HomeModern, ShoppingCart, Star, User} from 'svelte-heros-v2';
+    import {
+        Button,
+        Chevron,
+        Dropdown,
+        DropdownDivider,
+        DropdownItem,
+        Modal,
+        Navbar,
+        NavBrand, NavHamburger, NavLi,
+        NavUl
+    } from 'flowbite-svelte'
     import Cart from "$lib/Cart/Cart.svelte";
     import {cart, session} from "../stores/stores.js";
     import Login from "$lib/Forms/Login.svelte";
@@ -30,41 +40,39 @@
         session.set('false');
     }
 
-    function reloadComponent() {
-        goto($page.url.pathname);
-    }
 
 </script>
 
-<header class="flex justify-between">
-    <a class="corner flex " href="/">
-        <img {src} alt={appTitle} class="w-24 ml-6 hover:!scale-110"  width="300px"/>
-        <span class="text-white h-14 mt-8 font-serif italic">{appTitle.toUpperCase()}</span>
-    </a>
-    <nav class="text-white flex justify-center relative mt-1">
-        <ul class="relative flex justify-center items-center bg-contain list-none">
-            <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}
-                class="hover:text-white relative h-14 pr-auto  ">
-                <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/">
+<header class=" flex justify-between w-full">
+    <Navbar let:hidden let:toggle class="!text-white  !bg-transparent  px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+
+    <NavBrand class="corner flex left-0 ml-0 px-0 sm:mr-auto sm:ml-auto md:mr-auto md:ml-auto" href="/">
+        <img {src} alt={appTitle} class="w-24 hover:!scale-110 "  width="300px"/>
+        <span class="text-white h-14 mt-8 font-serif italic desktop ">{appTitle.toUpperCase()}</span>
+    </NavBrand>
+        <NavUl class=" desktop relative flex justify-center items-center bg-contain list-none">
+            <NavLi aria-current={$page.url.pathname === '/' ? 'page' : undefined}
+                class="  !text-white relative h-14 pr-auto  ">
+                <a class="desktop max-w-md sm:!hidden md:!hidden flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/">
                     <HomeModern/>
                     Accueil
                 </a>
-            </li>
-            <li aria-current={$page.url.pathname === '/products' ? 'page' : undefined}
-                class="hover:text-white relative h-14 pr-auto !text-[18px]">
-                <a class="flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/products">
+            </NavLi>
+            <NavLi aria-current={$page.url.pathname === '/products' ? 'page' : undefined}
+                class="!text-white relative h-14 pr-auto !text-[18px]">
+                <a class="desktop flex items-center font-black tracking-wider pl-6 pt-4 !text-[18px]" href="/products">
                     <Star/>
                     Tous les produits
                 </a>
-            </li>
-            <li class="hover:text-white relative h-14 pr-auto">
-                <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
+            </NavLi>
+            <NavLi class="!text-white relative h-14 pr-auto">
+                <div class="desktop"><Button class="!desktop !bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
                     <Chevron>
                         <ArrowRightCircle/>
                         Type de produits
                     </Chevron>
-                </Button>
-            </li>
+                </Button></div>
+            </NavLi>
             <Dropdown>
                 <DropdownItem><a class="font-bold text-red-900 inline" href="/products">
                     <Star/>
@@ -76,17 +84,18 @@
                 <DropdownDivider/>
                 <DropdownItem><a class="font-bold" href="/products?type=spirit">Spiritueux</a></DropdownItem>
             </Dropdown>
-            <li class="hover:text-white relative h-14 pr-8 ">
-                <Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
+            <NavLi class=" !md:hidden !sm:hidden min-w-56 hover:text-white relative h-14 pr-8 ">
+                <div class="desktop"><Button class="!bg-transparent !font-black !tracking-wider !pl-6 !pt-4 !text-[18px]">
                     <Chevron>
                         <Briefcase/>
                         Pour les professionnels
                     </Chevron>
-                </Button>
-            </li>
+                </Button></div>
+            </NavLi>
             <Dropdown>
                 <DropdownItem><a class="font-bold" href="/contact">Hotellerie</a></DropdownItem>
                 <DropdownDivider/>
+
                 <DropdownItem><a class="font-bold" href="/contact">Vente</a></DropdownItem>
                 <DropdownDivider/>
                 <DropdownItem class="flex items-center justify-between">
@@ -96,18 +105,9 @@
                     <DropdownItem><a class="font-bold" href="/contact">Vendre votre vin</a></DropdownItem>
                 </Dropdown>
             </Dropdown>
-        </ul>
-<!--        <form class="mt-6">-->
-<!--            <div class="relative">-->
-<!--                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">-->
-<!--                    <svg aria-hidden="true" class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>-->
-<!--                </div>-->
-<!--                <input type="search" id="search" class="block text-white w-full p-2 pl-10 text-sm border !border-gray-300 rounded-lg !bg-black/50 focus:!ring-red-980 focus:!border-red-980" placeholder="Rechercher" required>-->
-<!--                <button type="submit" class="text-xs absolute right-2.5 bottom-1.5 bg-red-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-1 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">OK</button>-->
-<!--            </div>-->
-<!--        </form>-->
-    </nav>
-    <div class="right flex items-center space-x-4">
+        </NavUl>
+        <div class="">
+    <div class="right flex items-center space-x-4 desktop ">
         <a href="/cart">
             <Button class="tracking-wider relative right-4 mb-6 hover:text-red-200 text-[#CAB089F9] bg-[#5C1427]/50 font-bold" style="height: fit-content; top: 1em; color: white; background: #670302;">
                 <!--on:click={() => cartModal = true}-->
@@ -141,20 +141,31 @@
         <Modal autoclose={true} bind:open={cartModal} class="w-full" size="xs">
             <Cart/>
             <div class="mt-4 flex justify-center items-center">
-                <Button class="w-1/2 ml-auto mr-auto px-6 py-2 !text-white !bg-red-900 hover:!bg-black" on:click={cartModal === false}>
+                <Button class="w-1/2 ml-auto mr-auto  !text-white !bg-red-900 hover:!bg-black" on:click={cartModal === false}>
                     <a href="/payment" on:click={cartModal === false}>Procéder au paiement</a>
                 </Button>
             </div>
         </Modal>
     </div>
+</div>
+            <NavHamburger class="!md:hidden !sm:hidden"/>
+    </Navbar>
+
 </header>
 
 <style>
+
      header {
         background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0%));
     }
 
-    li[aria-current='page']::before {
+     @media (max-width: 768px) {
+         .desktop {
+             visibility: hidden;
+         }
+     }
+
+         li[aria-current='page']::before {
         --size: 6px;
         content: '';
         width: 0;
