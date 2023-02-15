@@ -78,9 +78,9 @@
                     <DropdownItem><Button href="" class="font-bold text-red-900 !bg-transparent" on:click={disconnectUser}>Deconnexion</Button></DropdownItem>
                 </Dropdown>
             {:else}
-                <Button  class="!bg-red-900 text-white justify-end">
+                <a href="/login"><Button  class="!bg-red-900 text-white justify-end">
                     <User/>
-                </Button>
+                </Button></a>
             {/if}
         </div>
         <NavUl  {hidden}>
