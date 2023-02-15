@@ -52,8 +52,6 @@
 </script>
 
 <h1>{orderStatus}</h1>
-<div class="row">
-    <div class="col-sm">
         {#if cartItems.length === 0}
             {#if checkedOut}
                 <p class="empty-message">Merci de votre confiance !</p>
@@ -62,9 +60,11 @@
                 <a href="/products" class="font-bold text-red-900">Explorer nos produits</a>
             {/if}
         {:else}
-            <div class="row flex justify-center items-center">
+            <div class="w-full mr-auto ml-auto flex flex-col justify-center items-center">
                 {#each cartItems as item (item.fullName)}
+                    <div>
                     <ManageItems {item}/>
+                        </div>
                 {/each}
             </div>
             <h2 class="font-extrabold text-3xl text-red-900 pt-8 text-center">Total : {orderTotal}€</h2>
@@ -76,6 +76,6 @@
             </a>
             <br>
         {/if}
-    </div>
-</div>
+
+
 
