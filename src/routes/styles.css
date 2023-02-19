@@ -1,5 +1,23 @@
 @import '@fontsource/fira-mono';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
+@media(min-width: 768px) {
+    :root {
+        background-color: black;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/img/hero.png");
+
+
+    }
+
+}
+
+@media(max-width: 768px) {
+    :root {
+        background-color: black;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/img/mobile.webp");
+        background-attachment: fixed;
+    }
+}
 :root {
     --font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -11,8 +29,6 @@
     --column-margin-top: 4rem;
     font-family: var(--font-body);
     color: var(--color-text);
-    background-color: black;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/images/hero.png");
     background-size: cover;
     background-position: center;
 
@@ -105,4 +121,12 @@ button:focus:not(:focus-visible) {
     position: absolute;
     width: 1px;
     white-space: nowrap;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Saab, "DejaVu Serif", Serif;
+    font-weight: bold;
+}
+* {
+    font-family: "Poppins Light";
 }

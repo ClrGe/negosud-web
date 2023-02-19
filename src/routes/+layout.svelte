@@ -1,68 +1,83 @@
 <script>
-	import '../app.postcss';
-	import Header from './Header.svelte';
-	import './styles.css';
-	import {Envelope, QuestionMarkCircle} from "svelte-heros-v2";
-	import {page} from "$app/stores";
+    import '../app.postcss';
+    import './styles.css';
+    import Header from './Header.svelte';
+    import Footer from '$lib/Footer.svelte';
+
 </script>
 
-<div class="app flex flex-col bg-center repeat absolute top-0 w-full h-screen bg-black">
-	<div class="z-50">
-		<Header />
-	</div>
+<div class="app flex flex-col bg-center repeat absolute top-0 w-full bg-black !sm:!hidden">
+   <Header />
 
-	<main class="flex flex-col w-full">
-		<slot />
-	</main>
-	<div class="flex justify-center items-center">
-	<a target="_blank" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006688014" class="text-[#CAB089F9]">L'ABUS D'ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</a>
-</div>
-	<footer class="flex flex-col  text-white">
-		<ul class="relative  bg-contain list-none flex justify-center ">
-			<li class=" p-3 o" aria-current={$page.url.pathname.startsWith('/about') ? 'page' : undefined}>
-				<a href="/about" class="font-black tracking-wider">À propos de Negosud</a>
-			</li>
-			<li class="p-3">
-				<a href="/contact" class="font-black  tracking-wider ">Nous contacter</a>
-			</li>
-			<li class="p-3">
-				<a href="" class="font-black  tracking-wider ">Mentions légales</a>
-			</li>
-			<li class="p-3">
-				<a href="" class="font-black  tracking-wider ">FAQ</a>
-			</li>
-			<li class = "flex items-center justify-center">
-				<!--<img src="src/lib/images/bandeau_legal.jpg">-->
-			</li>
-		</ul>
+    <main class="flex flex-col w-full">
+        <slot/>33
+    </main>
+    <div class="flex justify-center items-center mt-56">
+        <a class="text-[#CAB089F9] text-center px-12" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006688014"
+           target="_blank">L'ABUS D'ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</a>
+    </div>
+    <div class="footer">
+        <Footer/>
+    </div>
+    <div class="mobile-footer bg-white/60">
+        <ul class="flex justify-center items-center text-white">
+            <li class="m-2 mr-4 text-black">
+                <a href="/contact"> Contact </a>
+            </li>
 
-	</footer>
+            <li class="m-2 ml-4 text-black ">
+                <a href="/about">À propos de nous</a>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <style>
-	html {
-		background: black;
-	}
-	.app {
-		background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/images/hero.png");
-		background-attachment: scroll;
-	}
+    html {
+        background: black;
+    }
 
-	main {
-		flex: 1;
-		margin: 0 auto;
-
-		box-sizing: border-box;
-
-	}
-footer {
-	background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0));
-
+.app {
+    background: transparent;
+    heught: 100vh;
 }
 
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
+    main {
+        flex: 1;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+    .mobile-footer {
+        visibility: visible;
+    font-size: small;
+    }
+
+    footer {
+        background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0));
+    }
+    @media (max-width: 768px) {
+        .footer {
+            visibility: hidden;
+        }
+        
+    }
+
+    @media (min-width: 480px) {
+        .footer {
+            padding: 12px 0;
+        }
+        .mobile-footer {
+            visibility: hidden;
+        }
+    }
+    @media (max-width: 800px) {
+      .app {
+          background-color: black;
+          background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/img/mobile.webp");
+          background-attachment: fixed;
+      }
+        .header {
+            visibility: hidden;
+        }
+    }
 </style>

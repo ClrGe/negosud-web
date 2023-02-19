@@ -1,292 +1,127 @@
 <script>
     /** @type {import('../../../../.svelte-kit/types/src/routes').PageData} */
 
-    import {Document, ShoppingCart} from "svelte-heros-v2";
-    import {Button, Card, Chevron, Dropdown, DropdownItem, TabItem, Tabs} from 'flowbite-svelte'
-
-    let isOpenModal = false;
-
-    function openModal() {
-        isOpenModal = true;
-    }
-
-    function closeModal() {
-        isOpenModal = false;
-    }
+    import {Button, Card, TabItem, Tabs} from 'flowbite-svelte'
+    import Error404 from "$lib/Errors/Error404.svelte";
+    import ProductsList from "$lib/Products/ProductsList.svelte";
+    import { MagnifyingGlass } from "svelte-heros-v2";
+    import ProductCard from "$lib/Products/ProductCard.svelte";
+    import NoMatch from "$lib/Errors/NoMatch.svelte";
 
     export let data;
 
-    let cart = [];
+    let products = data.bottles;
+    export  let searchWord = '';
+    let searchParam = 'fullName';
 
-    const addProductToCart = (product) => {
-        for (let item of cart) {
-            item.quantity = 1;
-            if (item.id === product.id) {
-                product.quantity += 1
-                cart = cart;
-                return;
-            }
-        }
-        cart = [...cart, product];
-    }
-
-    const removeFromCart = (product) => {
-        for (let item of cart) {
-            if (item.id === product.id) {
-                if (product.quantity > 1) {
-                    product.quantity -= 1
-                    cart = cart
-                } else {
-                    cart = cart.filter((cartItem) => cartItem != product)
-                }
-                return;
-            }
+    function searchMultiParameters(products, searchWord) {
+        if (searchWord || searchWord !== '') {
+            return products.filter(product => {
+                return product.fullName.toLowerCase().includes(searchWord.toLowerCase()) ||
+                    product.yearProduced.toString().match(searchWord) ||
+                    product.wineType.toLowerCase().includes(searchWord.toLowerCase());
+            });
+        } else {
+            console.log(searchWord);
+            return products
         }
     }
-
-    const incrementItem = (product) => {
-        for (let item of cart) {
-            if (item.id === product.id) {
-                item.quantity += 1
-                cart = cart;
-                return;
-            }
-        }
-    }
-    $: total = cart.reduce((sum, item) => sum + item.currentPrice * item.quantity, 0)
 
 </script>
 
-
-<div class="content rounded-md shadow-md p-12 ">
-    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] w-1/2 ml-auto mr-auto "  style="full">
+<div class=" rounded-md shadow-md p-12 ">
+    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] ml-auto mr-auto "
+          style="full">
         <TabItem class="w-full" open>
-            <div class="w-full flex justify-center mb-10 h-12 ">
-                <Button style="background :#670302">
-                    <Chevron>Afficher ...</Chevron>
+            <span slot="title">Nos produits</span>
+            <form on:submit={searchMultiParameters(products, searchWord)} class="flex justify-center">
+                <input type="text"
+                       class="w-3/4 mt-4 h-12 rounded-r-none rounded-l shadow-sm focus:ring-red-900 focus:border-red-900 border-gray-300"
+                       placeholder='Rechercher un produit ' bind:value={searchWord}/>
+                <Button class="!w-1/2 h-12 !bg-red-900 hover:!bg-black border-red-900 focus:ring-red-900 focus:border-red-900 rounded-r rounded-l-none"
+                        style="width: fit-content; margin-top: 1rem; margin-bottom: 1rem;"
+                        on:click={() => products = searchMultiParameters(products, searchParam, searchWord)}>
+                    <MagnifyingGlass/>
+                    Rechercher
                 </Button>
-                <Dropdown>
-                    <DropdownItem>Tous les produits</DropdownItem>
-                    <DropdownItem class="flex items-center justify-between">
-                        <Chevron placement="right">Type de produit</Chevron>
-                    </DropdownItem>
-                    <Dropdown placement="right-start">
-                        <DropdownItem>Vins rouges</DropdownItem>
-                        <DropdownItem>Vins blancs</DropdownItem>
-                        <DropdownItem>Pétillants</DropdownItem>
-                        <DropdownItem>Spiritueux</DropdownItem>
-                    </Dropdown>
-                    <DropdownItem>Nouveautés</DropdownItem>
-                </Dropdown>
-            </div>
-            <span slot="title">Les vins</span>
+            </form>
+            {#if searchWord}
+                <h1>Résultats pour la recherche : {searchWord}</h1>
+                {#if searchMultiParameters(products, searchWord).length < 1 }
+                    <NoMatch  searchWord={searchWord}/>
+                    <ProductsList products={products} {data}/>
 
-            {#if data.bottles}
-
-            <section class="products !bg-[#ededed]">
-                <div class="product-list shadow-sm ">
-
-                        {#each data.bottles as product}
-                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg  !bg-[#ededed] hover:!scale-110 ">
-
-                                <img class="image" src="src/lib/images/pinard.png" alt="pinard"/>
-                                <h4 class="font-extrabold uppercase p-6 ">{product.fullName}</h4>
-                                <div class="pb-8">
-                                    <div class="pb-8">
-                                        <p>{product.wineType}</p>
-                                        <p>{product.yearProduced}</p>
-                                    </div>
-
-                                    <div id="price" class="mb-5 text-black p-6 bg-gray-100 rounded-lg shadow-lg ">
-                                        <h2>{product.currentPrice}€</h2></div>
-                                    <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white"
-                                            on:click={() => addProductToCart(product)}>
-                                        <ShoppingCart/>
-                                        Acheter
-                                    </Button>
-                                    <Button class="relative shadow-lg right-0 !bg-white !border-red-900 !text-red-900 border-black hover:!bg-red-900 hover:!text-white"
-                                            on:click={openModal}
-                                            isOpenModal={isOpenModal} on:closeModal={closeModal}>
-                                        <Document/>
-                                        Détails
-                                    </Button>
-                                </div>
-
-                            </Card>
-                            <div id="background" style="--display: {isOpenModal ? 'block' : 'none'}"
-                                 on:click={closeModal}></div>
-                            <div id="details" style="--display: {isOpenModal ? 'block' : 'none'};">
-                                <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg hover:!scale-110 ">
-                                    <h2>Détails du produit</h2>
-                                    <div class="text">
-                                        <p>Appelation : {product.fullName}</p>
-                                        <p>Description :  {product.description}</p>
-                                        <p>Type de vin :  {product.wineType}</p>
-                                        <p>Cépage :</p>
-                                        <p>Volume :  {product.volume}</p>
-                                        <p>Année :  {product.yearProduced}</p>
-                                        <p>Prix :  {product.currentPrice}</p>
-                                    </div>
-                                    <Button class="relative right-0 btn" on:click={() => addProductToCart(product)}
-                                            style="background :#5C1427">
-                                        <ShoppingCart/>
-                                        Acheter
-                                    </Button>
-                                </Card>
-                            </div>
-
-                        {/each}
-                </div>
-            </section>
-                    {:else}
-                        <div class="bg-gray-200 w-full px-16 md:px-0 h-screen flex items-center justify-center">
-                            <div class="bg-white border border-gray-200 flex flex-col items-center justify-center px-4 md:px-8 lg:px-24 py-8 rounded-lg shadow-2xl">
-                                <p class="text-6xl md:text-7xl lg:text-9xl font-bold tracking-wider text-gray-300">404</p>
-                                <p class="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">OOOPS</p>
-                                <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">Nos services sont temporairement indisponibles</p>
-                            </div>
+                {/if}
+                <div class="products ">
+                    <div class="product-list shadow-sm bg-gray-200">
+                    {#each searchMultiParameters(products, searchWord) as item}
+                        <ProductCard item={item} {data}/>
+                    {/each}
+                        <div>
+                            <ProductsList products={products} {data}/>
                         </div>
-                    {/if}
+                    </div>
+            </div>
+            {:else}
+                <ProductsList products={products} {data}/>
+            {/if}
         </TabItem>
 
         <TabItem class="w-full">
             <span slot="title">Les producteurs</span>
             <section class="products">
-
                 {#if data.producers}
-                    <div class="product-list shadow-sm ">
-                    {#each data.producers as producer}
-                        <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
-                              style="width: fit-content;">
-                            <img src="src/lib/images/wineyard.jpeg" alt="pinard"/>
-                            <h4 class="font-extrabold uppercase p-6">{producer.name}</h4>
-                            <div class="pb-8">
-                                <p>{producer.details}</p>
-                            </div>
-                            <Button class="relative right-0 btn" style="background :#5C1427">
-                                Produits
-                            </Button>
-                        </Card>
-                    {/each}
-                </div>
-                {:else}
-                    <div class="bg-gray-200 w-full px-16 md:px-0 h-screen flex items-center justify-center">
-                        <div class="bg-white border border-gray-200 flex flex-col items-center justify-center px-4 md:px-8 lg:px-24 py-8 rounded-lg shadow-2xl">
-                            <p class="text-6xl md:text-7xl lg:text-9xl font-bold tracking-wider text-gray-300">404</p>
-                            <p class="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">OOOPS</p>
-                            <p class="text-gray-500 mt-8 py-2 border-y-2 text-center">Nos services sont temporairement indisponibles</p>
-                        </div>
+                    <div class="product-list bg-red-900 shadow-sm ">
+                        {#each data.producers as producer}
+                            <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
+                                  style="width: fit-content;">
+                                <img src="src/lib/img/wineyard.jpeg" alt="pinard"/>
+                                <h4 class="font-extrabold uppercase p-6">{producer.name}</h4>
+                                <div class="pb-8">
+                                    <p>{producer.details}</p>
+                                </div>
+                                <Button class="relative right-0 btn" style="background :#5C1427">
+                                    Produits
+                                </Button>
+                            </Card>
+                        {/each}
                     </div>
+                {:else}
+                    <Error404/>
                 {/if}
             </section>
         </TabItem>
-        <TabItem class="w-full">
-            <span slot="title">Les cépages</span>
-            <section class="content">
 
-                <p class="text-sm text-gray-500 dark:text-gray-400"><b>Paramètres:</b> Lorem ipsum dolor sit amet,
-                    consectetur
-                    adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <TabItem class="w-full">
+            <span slot="title">Les régions</span>
+            <section class="content">
+                <p class="text-sm text-gray-500 dark:text-gray-400"><b>Paramètres:</b>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                </p>
             </section>
         </TabItem>
     </Tabs>
 </div>
+
+
 <style>
-    .content {
-        margin: 0 auto;
-        max-width: 130rem;
-        min-width: 75vw;
-        border-radius: 1em;
-    }
 
-
-    .producer-list {
-        padding: 2%;
-        display: flex;
-        justify-content: space-around;
-    }
 
     .product-list {
         padding: 2%;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        background: rgb(36 2 1 / 64%);
-        box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.5);
-        box-shadow: inset 0px 0px 30px rgba(0, 0, 0, 0.5);
+        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
 
     }
 
-    .image {
-        padding-left: 1em;
-        width: 150px;
-    }
-
-
-    h2 {
-        text-align: center;
-        font-weight: bold;
-        font-size: large;
-        text-transform: uppercase;
-    }
-
-    #background {
-        display: var(--display);
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-    }
-
-    #details {
-        display: var(--display);
-        position: fixed;
-        z-index: 2;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #fff;
-        filter: drop-shadow(0 0 1px rgba(138, 138, 138, 0.53));
-
-    }
 
     .content {
         padding-left: 5rem;
         padding-right: 5rem;
     }
 
-    .content button, .buyBtn, .detailsBtn:hover {
-        padding: 1em;
-        color: white;
-        background: #670302;
-        border: none;
-        font-weight: bold;
-        margin-bottom: 5rem;
-    }
 
-    .content button:hover, .detailsBtn, .buyBtn:hover {
-        padding: 1em;
-        background: #bd9494;
-        color: #670302;
-        border: none;
-        font-weight: bold;
-    }
-
-    .cart-list {
-        border: 2px solid;
-        padding: 10px;
-    }
-
-    .cart-item {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
-
-    #price:hover, .btn:hover, h2 {
-        transform: scale(1.1);
-    }
 </style>
