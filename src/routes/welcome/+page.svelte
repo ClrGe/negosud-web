@@ -13,13 +13,8 @@
             <p class="italic text-2xl">Vous êtes maintenant connecté·e à votre espace Negosud</p>
         </div>
         <div class="mt-12 flex">
-            <div class="mr-12 flex hover:scale-125 text-white bg-red-900 rounded-lg px-8 py-2">
-                <Star />
-                <a class=" font-extrabold font-sans text-2xl " href="/products">PRODUITS</a>
-            </div>
-            <div class="flex hover:scale-125 text-white bg-red-900 rounded-lg px-8 py-2">
-                <ShoppingCart />
-                <a class=" font-extrabold text-2xl font-sans" href="/checkout">PANIER</a>
+            <div class="mr-12 hover:scale-125 text-white bg-red-900 rounded-lg px-8 py-2">
+                <a class="font-sans text-2xl flex flex-row" href="/products"> <Star />EXPLORER NOS PRODUITS</a>
             </div>
         </div>
     </div>
