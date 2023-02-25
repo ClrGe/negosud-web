@@ -3,6 +3,7 @@
     import {cart, session} from "../../stores/stores.js";
     import {Button} from "flowbite-svelte";
     import {env} from "$env/dynamic/public";
+    import {ArrowRight} from "svelte-heros-v2";
     let checkedOut = false;
     let cartItems = [];
 
@@ -56,8 +57,17 @@
             {#if checkedOut}
                 <p class="empty-message">Merci de votre confiance !</p>
             {:else}
-                <p class="empty-message">Votre panier est vide...</p>
-                <a href="/products" class="font-bold text-red-900">Explorer nos produits</a>
+                <div class="w-full mr-auto ml-auto flex flex-col justify-center items-center">
+                    <img src="/img/logo.png" alt="empty cart" class="w-32 pb-6"/>
+                    <p class="empty-message pb-6">Votre panier est vide...</p>
+                   <a href="/products" class="font-bold text-red-900 flex flex-row pb-12"> <ArrowRight/>  Explorer nos produits</a>
+                    <div class="flex flex-row">
+                        <img src="/img/rose.png" alt="empty cart" class="w-24 pr-2"/>
+                        <img src="/img/vin_blanc.png" alt="empty cart" class="w-24 pr-2"/>
+                        <img src="/img/spirit.webp" alt="empty cart" class="w-24 pr-2"/>
+                        <img src="/img/pinard.png" alt="empty cart" class="w-24 pr-2"/>
+                    </div>
+                </div>
             {/if}
         {:else}
             <div class="w-full mr-auto ml-auto flex flex-col justify-center items-center">

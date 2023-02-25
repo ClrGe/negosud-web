@@ -5,10 +5,7 @@
     :root {
         background-color: black;
         background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/hero.png");
-
-
     }
-
 }
 
 @media(max-width: 768px) {
@@ -31,7 +28,6 @@
     color: var(--color-text);
     background-size: cover;
     background-position: center;
-
 }
 
 body {
