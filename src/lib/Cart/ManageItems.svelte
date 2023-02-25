@@ -5,7 +5,7 @@
     export let item;
     let cart_sum = 0;
     let totalPrice = 0;
-    let {fullName, customerPricecurrentPrice, count} = item;
+    let {fullName, customerPrice, count} = item;
     export let orderTotal = 0;
 
     const unsubscribe = cart.subscribe(items => {
@@ -37,7 +37,7 @@
 <Card class="item-meta-data h-56">
 
 <div class="flex  justify-center items-center flex-rox w-full">
-        <img src="src/lib/img/pinard.jpg" alt="wine" class="h-24">
+        <img src="/img/pinard.jpg" alt="wine" class="h-24">
         <h3 class="font-bold text-2xl text-left text-black w-56">{fullName}</h3>
         <span class="font-bold ml-4">{customerPrice}€ </span>
     </div>

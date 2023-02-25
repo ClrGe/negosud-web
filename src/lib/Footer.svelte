@@ -43,7 +43,7 @@
             <a class="font-semibold  tracking-wider " href="">FAQ</a>
         </li>
         <li class="flex items-center justify-center">
-            <!--<img src="src/lib/img/bandeau_legal.jpg">-->
+            <!--<img src="/img/bandeau_legal.jpg">-->
         </li>
     </ul>
 </footer>

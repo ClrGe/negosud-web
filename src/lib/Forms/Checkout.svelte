@@ -126,7 +126,7 @@
 
                     </div>
 
-                <img alt="paiement" class="mr-auto ml-auto mt-10" src="src/lib/img/cb_logos.png" width="300px">
+                <img alt="paiement" class="mr-auto ml-auto mt-10" src="/img/cb_logos.png" width="300px">
                 <div class="mt-4 mb-4 flex justify-center items-center">
                     <Button class="w-1/2 ml-auto mr-auto px-6 py-2 text-white !bg-red-900 hover:!scale-110  shadow-lg" isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>
                         Procéder au paiement
