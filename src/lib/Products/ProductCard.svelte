@@ -6,7 +6,7 @@
 
     let isOpenModal = false;
     export let item;
-    let {fullName, currentPrice, yearProduced, wineType, picture} = item;
+    let {fullName, customerPrice, yearProduced, wineType, picture} = item;
     const cartItems = get(cart);
     let inCart = cartItems[fullName] ? cartItems[fullName].count : 0;
 
@@ -41,7 +41,7 @@
         {/if}
     </div>
     <div class="flex p-4 text-gray-700">
-        <h2 class="font-extrabold text-5xl text-center">{item.currentPrice}€ </h2> <p class="!text-2xs"> TTC</p><br />
+        <h2 class="font-extrabold text-5xl text-center">{item.customerPrice}€ </h2> <p class="!text-2xs"> TTC</p><br />
     </div>
     <div class="btn-group" role="group">
         <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white" on:click={addToCart}>
@@ -73,7 +73,7 @@
         </div>
     </div>
     <div class=" !w-full text-white p-4 pb-0 bg-red-900 flex justify-center  items-center">
-        <h2 class="!font-extrabold text-5xl text-center">{item.currentPrice}€ </h2> <p class="!text-2xs"> TTC</p><br />
+        <h2 class="!font-extrabold text-5xl text-center">{item.customerPrice}€ </h2> <p class="!text-2xs"> TTC</p><br />
     </div>
     <div class="btn-group pb-10 px-10 flex align-center justify-center" role="group">
         <Button class="!bg-red-900 hover:!bg-black shadow-lg m-1 !text-white font-extrabold"
