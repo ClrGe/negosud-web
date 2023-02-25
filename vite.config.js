@@ -6,12 +6,7 @@ const config = {
 	test: {
 		include: ['src/**/**/*.{test,spec}.{js,ts}']
 	},
-	hmr: {
-		protocol:'ws',
-		host:'localhost',
-		port: 5173,
-
-	}
+	hmr: false
 };
 
 export default config;
