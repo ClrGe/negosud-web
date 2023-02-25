@@ -21,7 +21,7 @@
                     country: document.querySelector("input[name='country']").value,
                     email: document.querySelector("input[name='email']").value,
                     password: document.querySelector("input[name='password']").value,
-                    role_id: 3
+                    roleId: 3
                 }
             )
         })
