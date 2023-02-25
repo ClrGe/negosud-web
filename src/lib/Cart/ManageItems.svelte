@@ -5,7 +5,7 @@
     export let item;
     let cart_sum = 0;
     let totalPrice = 0;
-    let {fullName, customerPricecurrentPrice, count} = item;
+    let {fullName, customerPrice, count} = item;
     export let orderTotal = 0;
 
     const unsubscribe = cart.subscribe(items => {
