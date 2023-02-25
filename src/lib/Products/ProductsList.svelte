@@ -31,9 +31,7 @@
             return products
         }
     }
-
 </script>
-
 
 {#if $page.url.searchParams.get('type') === 'Rouge'}
     <section class="products">
@@ -123,9 +121,6 @@
     {/if}
 {/if}
 
-
-
-
 <style>
     .product-list {
         padding: 2%;
@@ -133,18 +128,5 @@
         flex-wrap: wrap;
         justify-content: center;
         box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
-    }
-
-
-
-    #details {
-        display: var(--display);
-        position: fixed;
-        z-index: 2;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #fff;
-        filter: drop-shadow(0 0 1px rgba(138, 138, 138, 0.53));
     }
 </style>

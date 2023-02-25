@@ -13,14 +13,13 @@
         session.subscribe(value => {
             isConnected = value;
     });
-
-
 </script>
+
 {#if isConnected != 'true'}
     <NeedAuth />
 {:else if  isConnected === 'true'}
-    <div class="content">
 
+    <div class="content">
     <h2 class="text-red-900 text-center font-extrabold text-2xl">Bonjour {data.user.firstname} {data.user.lastname}</h2>
     <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700" style="full">
         <TabItem class="w-full" open>
@@ -57,8 +56,6 @@
     </Tabs>
     </div>
 {/if}
-
-
 
 <style>
     .content {

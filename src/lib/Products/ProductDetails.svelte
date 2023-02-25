@@ -1,9 +1,7 @@
 <script>
     import {Card} from "flowbite-svelte";
-
     export let item;
     let {fullName, currentPrice, yearProduced, wineType, description, volume, alcoholPercentage} = item;
-
 </script>
 
 <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg hover:!scale-110 ">
