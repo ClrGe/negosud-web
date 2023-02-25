@@ -119,10 +119,9 @@ button:focus:not(:focus-visible) {
     white-space: nowrap;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, a, ul  {
     font-family: Saab, "DejaVu Serif", Serif;
-    font-weight: bold;
 }
-* {
-    font-family: "Poppins Light";
+p {
+    font-family: "Poppins Light", "DejaVu Sans", Sans-Serif;
 }

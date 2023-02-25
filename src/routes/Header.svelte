@@ -44,9 +44,9 @@
     }
 
 </script>
-<div class="top-0 mt-0 !w-full !bg-transparent flex justify-between items-center">
-    <Navbar class="!bg-black/60 !text-white " let:hidden let:toggle>
-        <NavHamburger on:click={toggle} class1="w-full md:flex md:w-auto md:order-1 "/>
+<div class="!w-full !bg-transparent flex !justify-around items-start">
+    <Navbar class="!bg-black/60 !text-white !w-full " let:hidden let:toggle>
+        <NavHamburger on:click={toggle} class1="w-full !md:flex md:w-auto md:order-1 "/>
         <NavBrand href="/">
             <img {src} alt={appTitle} class="e mr-3 h-6"/>
             <span class="self-center whitespace-nowrap text-white text-xl font-semibold dark:text-white">Negosud</span>
@@ -58,7 +58,7 @@
                 </Button>
             </a>
             {#if sessionValue === 'true' }
-                <Button class="!bg-red-900 !list-none font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em; color: #670302; background:white;">
+                <Button class="!bg-red-900 !list-none font-bold tracking-wider hover:bg-red-900 hover:text-[#CAB089F9" style="height: fit-content; top: 1em;">
                     <Chevron>                    <User/>
                     </Chevron>
                 </Button>
