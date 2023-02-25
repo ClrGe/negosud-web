@@ -9,13 +9,11 @@
         sessionValue = value;
     });
     async function login() {
-        let token = `Bearer ` + env.PUBLIC_API_KEY
         let url = env.PUBLIC_API_URL + "/api/authentication/login"
         const res = await fetch(url, {
             credentials: 'include',
             method: 'post',
             headers: {
-                'Authorization': token,
                 'Content-Type': 'application/json'
             },
 
