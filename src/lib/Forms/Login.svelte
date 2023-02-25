@@ -36,7 +36,7 @@
 </script>
 
 <div class="!px-24 py-12 !bg-transparent">
-    <img class="!w-1/2 lg:!h-1/2 !ml-auto !mr-auto !w-32" src="src/lib/img/logo.png" alt="logo_negosud">
+    <img class="!w-1/2 lg:!h-1/2 !ml-auto !mr-auto !w-32" src="/img/logo.png" alt="logo_negosud">
     <Label class="!left-8 lg:py-4 !ml-auto mr-auto space-y-2">
         <span class="font-extrabold text-red-900 text-lg">Email</span>
         <Input class="!mb-4 py-4 " name="email" placeholder="exemple@negosud.fr" required type="email"/>

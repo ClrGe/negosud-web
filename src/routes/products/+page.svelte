@@ -119,7 +119,7 @@
                         {#each data.producers as producer}
                             <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
                                   style="width: fit-content;">
-                                <img src="src/lib/img/wineyard.jpeg" alt="pinard"/>
+                                <img src="/img/wineyard.jpeg" alt="pinard"/>
                                 <h4 class="font-extrabold uppercase p-6">{producer.name}</h4>
                                 <div class="pb-8">
                                     <p>{producer.details}</p>

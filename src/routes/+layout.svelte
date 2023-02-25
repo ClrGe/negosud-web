@@ -74,7 +74,6 @@
     @media (max-width: 800px) {
       .app {
           background-color: black;
-          background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/img/mobile.webp");
           background-attachment: fixed;
       }
     }

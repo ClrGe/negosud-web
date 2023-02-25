@@ -4,7 +4,7 @@
 @media(min-width: 768px) {
     :root {
         background-color: black;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/img/hero.png");
+        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/hero.png");
 
 
     }
@@ -14,7 +14,7 @@
 @media(max-width: 768px) {
     :root {
         background-color: black;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("src/lib/img/mobile.webp");
+        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/mobile.webp");
         background-attachment: fixed;
     }
 }
