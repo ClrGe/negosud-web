@@ -7,12 +7,27 @@
     import { MagnifyingGlass } from "svelte-heros-v2";
     import ProductCard from "$lib/Products/ProductCard.svelte";
     import NoMatch from "$lib/Errors/NoMatch.svelte";
+    import {env} from "$env/dynamic/public";
 
     export let data;
-    export  let searchWord = '';
+    export let searchWord = '';
+
+    let selectedProducer = null;
 
     let products = data.bottles;
     let searchParam = 'fullName';
+
+    async function selectProducer(producer){
+        let token = `Bearer ` + env.PUBLIC_API_KEY;
+        let url = env.PUBLIC_API_URL + "/api/Producer/" + producer.id;
+        const res = await fetch(url, {
+            method: 'get',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()).then(data => selectedProducer = data);
+    }
 
     function searchMultiParameters(products, searchWord) {
         if (searchWord || searchWord !== '') {
@@ -47,7 +62,6 @@
                 <h1>Résultats pour la recherche : {searchWord}</h1>
                 {#if searchMultiParameters(products, searchWord).length < 1 }
                     <NoMatch  searchWord={searchWord}/>
-                    <ProductsList products={products} {data}/>
                 {/if}
                 <div class="products ">
                     <div class="product-list shadow-sm bg-gray-200">
@@ -64,8 +78,41 @@
             {/if}
         </TabItem>
 
-        <TabItem class="w-full">
-            <span slot="title">Les producteurs</span>
+        <TabItem on:click={() => {selectedProducer = null}} class="w-full">
+            <span slot="title">Les producteurs</span>            
+            {#if data.producers}
+            {#if selectedProducer != null}
+                {#if selectedProducer.bottles != null && selectedProducer.bottles.lenght < 1}
+                    <NoMatch  searchWord={searchWord}/>
+                {/if}
+                <div class="products">
+                    <div class="shadow-sm bg-gray-200 flex flex-col">
+                        <div class="product-list">
+                            {#each selectedProducer.bottles as item}
+                                <ProductCard item={item} {data}/>
+                            {/each}
+                        </div>
+                        
+                        <section class="products">
+                            <div class="product-list bg-red-900 shadow-sm ">
+                                {#each data.producers as producer}
+                                    <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
+                                            style="width: fit-content;">
+                                        <img src="src/lib/img/wineyard.jpeg" alt="pinard"/>
+                                        <h4 class="font-extrabold uppercase p-6">{producer.name}</h4>
+                                        <div class="pb-8">
+                                            <p>{producer.details}</p>
+                                        </div>
+                                        <Button class="relative right-0 btn" style="background :#5C1427" on:click={() => selectProducer(producer)}>
+                                            Produits
+                                        </Button>
+                                    </Card>
+                                {/each}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            {:else}
             <section class="products">
                 {#if data.producers}
                     <div class="product-list bg-red-900 shadow-sm ">
@@ -77,7 +124,7 @@
                                 <div class="pb-8">
                                     <p>{producer.details}</p>
                                 </div>
-                                <Button class="relative right-0 btn" style="background :#5C1427">
+                                <Button class="relative right-0 btn" style="background :#5C1427" on:click={() => selectProducer(producer)}>
                                     Produits
                                 </Button>
                             </Card>
@@ -87,6 +134,11 @@
                     <Error404/>
                 {/if}
             </section>
+            {/if}            
+            {:else}
+            <Error404/>
+        {/if}
+            
         </TabItem>
 
         <TabItem class="w-full">
