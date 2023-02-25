@@ -25,7 +25,7 @@
 
     let cart_sum    = 0,
         appTitle    = "negosud",
-        src         = "src/lib/img/logo.png",
+        src         = "/img/logo.png",
         sessionValue;
 
     const unsubscribe = cart.subscribe(items => {
