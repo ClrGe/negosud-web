@@ -9,9 +9,9 @@
     import NoMatch from "$lib/Errors/NoMatch.svelte";
 
     export let data;
+    export  let searchWord = '';
 
     let products = data.bottles;
-    export  let searchWord = '';
     let searchParam = 'fullName';
 
     function searchMultiParameters(products, searchWord) {
@@ -26,12 +26,10 @@
             return products
         }
     }
-
 </script>
 
 <div class=" rounded-md shadow-md p-12 ">
-    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] ml-auto mr-auto "
-          style="full">
+    <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700 bg-[#CAB089F9] ml-auto mr-auto " style="full">
         <TabItem class="w-full" open>
             <span slot="title">Nos produits</span>
             <form on:submit={searchMultiParameters(products, searchWord)} class="flex justify-center">
@@ -50,7 +48,6 @@
                 {#if searchMultiParameters(products, searchWord).length < 1 }
                     <NoMatch  searchWord={searchWord}/>
                     <ProductsList products={products} {data}/>
-
                 {/if}
                 <div class="products ">
                     <div class="product-list shadow-sm bg-gray-200">
@@ -61,7 +58,7 @@
                             <ProductsList products={products} {data}/>
                         </div>
                     </div>
-            </div>
+                </div>
             {:else}
                 <ProductsList products={products} {data}/>
             {/if}
@@ -104,24 +101,17 @@
     </Tabs>
 </div>
 
-
 <style>
-
-
     .product-list {
         padding: 2%;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
-
     }
-
 
     .content {
         padding-left: 5rem;
         padding-right: 5rem;
     }
-
-
 </style>

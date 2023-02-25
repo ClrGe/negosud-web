@@ -11,7 +11,9 @@ const config = {
 		preprocess({
 			postcss: true
 		})
-	]
+	],
+
+	base : '/shop'
 };
 
 export default config;
