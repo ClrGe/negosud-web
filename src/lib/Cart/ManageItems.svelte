@@ -5,7 +5,7 @@
     export let item;
     let cart_sum = 0;
     let totalPrice = 0;
-    let {fullName, currentPrice, count} = item;
+    let {fullName, customerPricecurrentPrice, count} = item;
     export let orderTotal = 0;
 
     const unsubscribe = cart.subscribe(items => {
@@ -15,7 +15,7 @@
         cart_sum = 0;
         itemValues.forEach(item => {
             cart_sum += item.count;
-            totalPrice = item.count * item.currentPrice;
+            totalPrice = item.count * item.customerPrice;
             orderTotal += totalPrice;
         });
     });
@@ -39,7 +39,7 @@
 <div class="flex  justify-center items-center flex-rox w-full">
         <img src="src/lib/img/pinard.jpg" alt="wine" class="h-24">
         <h3 class="font-bold text-2xl text-left text-black w-56">{fullName}</h3>
-        <span class="font-bold ml-4">{currentPrice}€ </span>
+        <span class="font-bold ml-4">{customerPrice}€ </span>
     </div>
         <div class="col mt-4">
             <Button class="!bg-red-900 !text-white hover:!bg-black !pt-0.5 !pb-0.5 ml-1" on:click={countButtonHandler}>-

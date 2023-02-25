@@ -47,10 +47,6 @@
 </div>
 
 <style>
-    .cards {
-        max-width: 100rem;
-    }
-
     .item {
         background-color: #f1f1f1;
         border-radius: 10px;

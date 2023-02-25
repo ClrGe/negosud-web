@@ -1,39 +1,32 @@
 <script>
     import {page} from '$app/stores';
+    import {cart, session} from "../stores/stores.js";
+
     import {
         ArrowRightCircle,
         Briefcase,
-        Envelope,
         HomeModern,
         ShoppingCart,
         Star,
         User,
-        UserCircle
     } from 'svelte-heros-v2';
+
     import {
-        Avatar,
         Button,
         Chevron,
         Dropdown,
-        DropdownDivider, DropdownHeader,
+        DropdownDivider,
         DropdownItem,
-        Modal, Navbar,
+        Navbar,
         NavBrand, NavHamburger,
         NavLi,
         NavUl
     } from 'flowbite-svelte'
-    import Cart from "$lib/Cart/Cart.svelte";
-    import {cart, session} from "../stores/stores.js";
-    import Login from "$lib/Forms/Login.svelte";
-    import {goto} from "$app/navigation";
 
-    let loginModal  = false,
-        cartModal   = false,
-        cart_sum    = 0,
+    let cart_sum    = 0,
         appTitle    = "negosud",
-        src         = "src/lib/img/logo.png";
-
-    let sessionValue;
+        src         = "src/lib/img/logo.png",
+        sessionValue;
 
     const unsubscribe = cart.subscribe(items => {
         const itemValues = Object.values(items);
@@ -52,9 +45,8 @@
 
 </script>
 <div class="top-0 mt-0 !w-full !bg-transparent flex justify-between items-center">
-    <Navbar class="!bg-white/60 " let:hidden let:toggle>
+    <Navbar class="!bg-black/60 !text-white " let:hidden let:toggle>
         <NavHamburger on:click={toggle} class1="w-full md:flex md:w-auto md:order-1 "/>
-
         <NavBrand href="/">
             <img {src} alt={appTitle} class="e mr-3 h-6"/>
             <span class="self-center whitespace-nowrap text-white text-xl font-semibold dark:text-white">Negosud</span>
@@ -71,9 +63,9 @@
                     </Chevron>
                 </Button>
                 <Dropdown>
-                    <DropdownItem><a href="/account"> Mon compte</a></DropdownItem>
-                    <DropdownItem><a href="/cart">Mon panier</a></DropdownItem>
-                    <DropdownItem><a href="/account">Commandes</a></DropdownItem>
+                    <DropdownItem><a href="/account" class="text-black"> Mon compte</a></DropdownItem>
+                    <DropdownItem><a href="/cart" class="text-black">>Mon panier</a></DropdownItem>
+                    <DropdownItem><a href="/account" class="text-black">>Commandes</a></DropdownItem>
                     <DropdownDivider/>
                     <DropdownItem><Button href="" class="font-bold text-red-900 !bg-transparent" on:click={disconnectUser}>Deconnexion</Button></DropdownItem>
                 </Dropdown>
@@ -83,11 +75,10 @@
                 </Button></a>
             {/if}
         </div>
-        <NavUl  {hidden}>
-
-            <NavLi href="/"  class="flex"><HomeModern /> Accueil</NavLi>
-            <NavLi href="/products"  class="flex"><Star /> Produits</NavLi>
-               <NavLi class="flex"> <Chevron>
+        <NavUl  {hidden} class="!text-white">
+            <NavLi href="/"  class="flex !text-white"><HomeModern /> Accueil</NavLi>
+            <NavLi href="/products"  class="flex !text-white"><Star /> Produits</NavLi>
+               <NavLi class="flex !text-white"> <Chevron>
                     <ArrowRightCircle/>
                     Type de produits
                </Chevron></NavLi>
@@ -102,7 +93,7 @@
                 <DropdownDivider/>
                 <DropdownItem><a class="font-bold" href="/products?type=spirit">Spiritueux</a></DropdownItem>
             </Dropdown>
-            <NavLi class="flex"><Chevron><Briefcase /> Pour les professionnels</Chevron></NavLi>
+            <NavLi class="flex !text-white"><Chevron><Briefcase /> Pour les professionnels</Chevron></NavLi>
             <Dropdown>
                 <DropdownItem><a class="font-bold" href="/contact">Hotellerie</a></DropdownItem>
                 <DropdownDivider/>
@@ -116,26 +107,12 @@
                 </Dropdown>
             </Dropdown>
         </NavUl>
-
-
     </Navbar>
 </div>
-
-
-
-
 
 <style>
     header {
         background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0%));
-    }
-    @media (max-width: 800px) {
-        .app {
-            background: black;
-        }
-        .header {
-            visibility: hidden;
-        }
     }
 
     li[aria-current='page']::before {

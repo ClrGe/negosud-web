@@ -26,7 +26,7 @@
         cart_sum = 0;
         itemValues.forEach(item => {
             cart_sum += item.count;
-            totalPrice = item.count * item.currentPrice;
+            totalPrice = item.count * item.customerPrice;
             orderTotal += totalPrice;
         });
     });
