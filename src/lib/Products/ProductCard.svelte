@@ -64,7 +64,7 @@
         </div>
         <div class="pr-12 text-black text-lg">
             <p class="py-8 text-justify italic"> {item.description} <br /></p>
-            <p class="py-2">Producteur :  <a href="#" class="underline text-red-900 italic">{item.producer}</a> <br /></p>
+            <p class="py-2">Producteur :  <a href="#" class="underline text-red-900 italic">{item.producer == null ? "Inconnu" : item.producer.name}</a> <br /></p>
             <p class="py-2">Catégorie :  {item.wineType} <br /></p>
             <p class="py-2">Volume :  {item.volume} cL <br /></p>
             <p class="py-2">Alcool :  {item.alcoholPercentage} ° <br /></p>
