@@ -5,6 +5,12 @@ const config = {
 	plugins: [sveltekit()],
 	test: {
 		include: ['src/**/**/*.{test,spec}.{js,ts}']
+	},
+	hmr: {
+		protocol:'ws',
+		host:'localhost',
+		port: 5173,
+
 	}
 };
 
