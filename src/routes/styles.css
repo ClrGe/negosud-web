@@ -5,10 +5,7 @@
     :root {
         background-color: black;
         background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/img/hero.png");
-
-
     }
-
 }
 
 @media(max-width: 768px) {
@@ -31,7 +28,6 @@
     color: var(--color-text);
     background-size: cover;
     background-position: center;
-
 }
 
 body {
@@ -123,10 +119,9 @@ button:focus:not(:focus-visible) {
     white-space: nowrap;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, a, ul  {
     font-family: Saab, "DejaVu Serif", Serif;
-    font-weight: bold;
 }
-* {
-    font-family: "Poppins Light";
+p {
+    font-family: "Poppins Light", "DejaVu Sans", Sans-Serif;
 }

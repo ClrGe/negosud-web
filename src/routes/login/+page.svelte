@@ -3,8 +3,8 @@
 </script>
 
 
-<div class="log mt-12 flex justify-center">
-    <div class="top-12 mt-0  p-4 rounded-lg shadow-lg bg-black/80">
+<div class="log mt-12 flex flex-col justify-center items-center mt-auto mb-auto ">
+    <div class="top-12  rounded-lg shadow-lg bg-white/80 w-1/2">
        <Login />
     </div>
 </div>
