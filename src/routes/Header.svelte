@@ -41,6 +41,7 @@
 
     function disconnectUser() {
         session.set('false');
+        localStorage.removeItem("token")
     }
 
 </script>

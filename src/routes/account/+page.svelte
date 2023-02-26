@@ -2,11 +2,26 @@
     import {Button, TabItem, Tabs} from 'flowbite-svelte';
     import UserData from "../../lib/Forms/UserData.svelte";
     import {session} from "../../stores/stores.js";
-    import {goto} from "$app/navigation";
+    import {goto} from "$app/navigation";    
+    import {env} from "$env/dynamic/public";
     import NeedAuth from "$lib/Errors/NeedAuth.svelte";
     export let data;
 
-    let orders = data.orders;
+    let orders = [];
+
+    getOwnOrders();
+
+    async function getOwnOrders(){
+        orders = await fetch(env.PUBLIC_API_URL + "/api/CustomerOrder/Own/" + localStorage.getItem("user_Id"), {
+            method: 'get',
+            headers: {
+                'Authorization': `Bearer ` + localStorage.getItem("token"),
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()).then(data => data);
+        console.log(orders);
+    }
+
     let isConnected;
 
     const unsubscribe =
@@ -20,7 +35,7 @@
 {:else if  isConnected === 'true'}
 
     <div class="content">
-    <h2 class="text-red-900 text-center font-extrabold text-2xl">Bonjour {data.user.firstname} {data.user.lastname}</h2>
+    <!-- <h2 class="text-red-900 text-center font-extrabold text-2xl">Bonjour {data.user.firstname} {data.user.lastname}</h2> -->
     <Tabs defaultClass="flex rounded-lg divide-x divide-gray-200 shadow dark:divide-gray-700" style="full">
         <TabItem class="w-full" open>
             <span slot="title">Profil</span>
@@ -28,7 +43,7 @@
             <UserData/>
             <div class="mt-4">
                 <Button class="w-full px-6 py-2 text-white !bg-red-900 hover:!bg-black">
-                    Mettre les infomations à jour
+                    Mettre les informations à jour
                 </Button>
             </div>
         </TabItem>
