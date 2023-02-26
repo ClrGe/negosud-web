@@ -32,7 +32,7 @@
         <h4>{item.fullName}</h4>
     </Button>
     <div class="pb-8">
-        {#if wineType !== "Spirit"}
+        {#if wineType != "Spirit"}
             <p>Vin {item.wineType.toLowerCase()}</p>
             <p>Millésime {item.yearProduced}</p>
         {:else}

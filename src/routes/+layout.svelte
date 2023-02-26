@@ -3,6 +3,7 @@
     import './styles.css';
     import Header from './Header.svelte';
     import Footer from '$lib/Footer.svelte';
+
 </script>
 
 <div class="app flex flex-col bg-center repeat absolute top-0 w-full bg-black !sm:!hidden">
