@@ -134,13 +134,7 @@
                                 {#each data.producers as producer}
                                     <Card class="p-16 m-8 w-full flex justify-center items-center shadow-lg"
                                           style="width: fit-content;">
-                                        {#if oddOrEven(producer.id) == "odd"}
-                                            <img src="/img/oenologue.jpg" alt="pinard"/>
-
-                                        {:else}
                                             <img src="/img/wineyard.jpeg" alt="pinard"/>
-
-                                        {/if}
                                         <h4 class="font-extrabold uppercase p-6">{producer.name}</h4>
                                         <div class="pb-8">
                                             <p>{producer.details}</p>
