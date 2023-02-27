@@ -1,6 +1,6 @@
 <script>
     import {page} from '$app/stores';
-    import {cart, session} from "../stores/stores.js";
+    import {cart, session, user} from "../stores/stores.js";
 
     import {
         ArrowRightCircle,
@@ -41,6 +41,9 @@
 
     function disconnectUser() {
         session.set('false');
+        localStorage.removeItem("token")
+        localStorage.removeItem("user_Id")
+        user.update(user => {})
     }
 
 </script>

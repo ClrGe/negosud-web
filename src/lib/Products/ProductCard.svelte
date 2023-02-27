@@ -2,7 +2,7 @@
     import {get} from "svelte/store";
     import {cart} from "../../stores/stores.js";
     import {Button, Card, Modal} from "flowbite-svelte";
-    import {ArrowUturnRight, Document, ShoppingCart} from "svelte-heros-v2";
+    import {ArrowUturnRight, Document, ShoppingCart, ArchiveBox} from "svelte-heros-v2";
 
     let isOpenModal = false;
     export let item;
@@ -18,8 +18,8 @@
         isOpenModal = false;
     }
 
-    export function addToCart() {
-        inCart++;
+    export function addToCart(unit) {
+        inCart += unit;
         cart.update(n => {
             return {...n, [fullName]: {...item, count: inCart}};
         });
@@ -43,10 +43,14 @@
     <div class="flex p-4 text-gray-700">
         <h2 class="font-extrabold text-5xl text-center">{item.customerPrice}€ </h2> <p class="!text-2xs"> TTC</p><br />
     </div>
-    <div class="btn-group" role="group">
-        <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white" on:click={addToCart}>
+    <div class="btn-group flex flex-col" role="group">
+        <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white" on:click={() => addToCart(1)}>
             <ShoppingCart/>
             Acheter
+        </Button>
+        <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white !my-2" on:click={() => addToCart(6)}>
+            <ArchiveBox/>
+            Acheter un carton
         </Button>
         <Button class="relative shadow-lg right-0 !bg-white !border-red-900 !text-red-900 border-black hover:!bg-red-900 hover:!text-white"
                 isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>
