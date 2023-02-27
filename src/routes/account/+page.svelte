@@ -1,13 +1,13 @@
 <script>
     import {Button, TabItem, Tabs} from 'flowbite-svelte';
     import UserData from "../../lib/Forms/UserData.svelte";
-    import {session} from "../../stores/stores.js";
+    import {session, user} from "../../stores/stores.js";
     import {goto} from "$app/navigation";    
     import {env} from "$env/dynamic/public";
     import NeedAuth from "$lib/Errors/NeedAuth.svelte";
     export let data;
 
-    let orders = [];
+    let orders = [];    
 
     getOwnOrders();
 

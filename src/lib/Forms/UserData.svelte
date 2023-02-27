@@ -1,22 +1,30 @@
+<script>
+	import { user } from "../../stores/stores";
+
+    let userInfo =  null ;
+    user.subscribe((value) => userInfo = value)
+
+</script>
+
 <div class="container p-12 mx-auto  text-red-900">
     <div class="flex flex-col w-full px-0 mx-auto md:flex-row">
         <div class="flex flex-col md:w-full">
-            <form action class="justify-center w-full mx-auto" method="post">
+            <form class="justify-center w-full mx-auto" method="post">
                 <div class="">
                     <div class="space-x-0 lg:flex lg:space-x-4">
                         <div class="w-full lg:w-1/2">
                             <label class="block mb-3 text-sm font-semibold" for="firstName">Prénom</label>
-                            <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900" name="firstName" placeholder="Prénom" type="text">
+                            <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900" name="firstName" placeholder="Prénom" type="text" value="{userInfo.firstName}">
                         </div>
                         <div class="w-full lg:w-1/2 ">
                             <label class="block mb-3 text-sm font-semibold" for="firstName">Nom</label>
-                            <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900" name="Last Name" placeholder="Nom" type="text">
+                            <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900" name="Last Name" placeholder="Nom" type="text" value="{userInfo.lastName}">
                         </div>
                     </div>
                     <div class="mt-4">
                         <div class="w-full">
                             <label class="block mb-3 text-sm font-semibold" for="Email">Email</label>
-                            <input required class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900" name="Last Name" placeholder="Email" type="text" >
+                            <input required class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900" name="Email" placeholder="Email" type="text" value="{userInfo.email}">
                         </div>
                     </div>
                     <div class="mt-4">

@@ -47,7 +47,6 @@
         let lines = [];
 
         cartItems.forEach(element => {
-            console.log(element)
             let line = {
                 "quantity": element.count,
                 "bottle": {
@@ -93,12 +92,11 @@
             )
         })
         if (res.ok) {
-            orderStatus = "Votre commandé a bien été prise en compte !"                       
-            cartItems = [];
+            orderStatus = "Votre commandé a bien été prise en compte !"               
+            cart.update(cart => {});
         } else {
             orderStatus = "La commande n'a pas pu être envoyée"
         }
-        console.log(res) 
         closeModal()
     }
 </script>
