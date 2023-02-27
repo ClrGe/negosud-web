@@ -22,6 +22,19 @@
         console.log(orders);
     }
 
+    function orderTotal(order){
+        let total = 0;
+        order.lines.forEach(element => {
+            total += element.bottle.customerPrice * element.quantity;
+        });
+        return total;
+    }
+
+    function formatDate (date){
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', };
+        return date.toLocaleDateString("fr-FR", options);
+    }
+
     let isConnected;
 
     const unsubscribe =
@@ -56,10 +69,10 @@
                         <div class="flex flex-row justify-between items-center p-2 border-b border-gray-200">
                             <div class="flex flex-col">
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Commande n°{order.id}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Date: {order.createdAt}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Date: {formatDate(new Date(order.date_Order))}</p>
                             </div>
                             <div class="flex flex-col">
-                                <p class="text-sm text-gray-500 dark:text-gray-400 font-bold">Total: {order.reference}€</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 font-bold">Total: {orderTotal(order)}€</p>
                             </div>
                         </div>
                     {/each}

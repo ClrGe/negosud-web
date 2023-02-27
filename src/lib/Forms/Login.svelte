@@ -1,6 +1,6 @@
 <script>
     import {Button, Checkbox, Input, Label} from "flowbite-svelte";
-    import {session} from "../../stores/stores.js";
+    import {session, user} from "../../stores/stores.js";
     import {env} from "$env/dynamic/public";
     import { goto } from '$app/navigation';
 	import { browser } from "$app/environment";
@@ -35,19 +35,20 @@
         localStorage.setItem("user_Id", userID);
 
         console.log(token);
-        console.log(userID);
-
-        // if (cookies.session_id) {
-        //     if (session) {
-        //         request.locals.user = { email: session.email };
-        //         return resolve(request);
-        //     }
-        // }
-
-        //res.locals.user = null;
+        console.log(userID);   
+        
+        
 
         if (res.ok) {
             session.set("true")
+            user.set(await fetch(env.PUBLIC_API_URL + "/api/user/" + userID, {
+                credentials: 'include',
+                method: 'get',
+                headers: {
+                    'Authorization': `Bearer ` + token,
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json()).then(data => data));            
             goto('/welcome')
         } else {
             alert("Identifiants incorrects")

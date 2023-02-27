@@ -14,14 +14,16 @@
                 {
                     firstName: document.querySelector("input[name='firstName']").value,
                     lastName: document.querySelector("input[name='name']").value,
-                    phone: document.querySelector("input[name='phone']").value,
-                    address: document.querySelector("input[name='address']").value,
-                    postal_code: document.querySelector("input[name='postal_code']").value,
-                    city: document.querySelector("input[name='city']").value,
-                    country: document.querySelector("input[name='country']").value,
+                    //phone: document.querySelector("input[name='phone']").value,
+                    //address: document.querySelector("input[name='address']").value,
+                    //postal_code: document.querySelector("input[name='postal_code']").value,
+                    //city: document.querySelector("input[name='city']").value,
+                    //country: document.querySelector("input[name='country']").value,
                     email: document.querySelector("input[name='email']").value,
                     password: document.querySelector("input[name='password']").value,
-                    roleId: 3
+                    role: {
+                        "id": 3
+                    }
                 }
             )
         })

@@ -27,7 +27,7 @@
     let orderStatus ='';
 
     async function postOrder() {
-        let token = `Bearer ` + env.PUBLIC_API_KEY
+        let token = `Bearer ` + localStorage.getItem("token");
         let url = env.PUBLIC_API_URL + "/api/customerorder/addcustomerorder"
         const res = await fetch(url, {
             credentials: 'include',
@@ -72,9 +72,9 @@
         {:else}
             <div class="w-full mr-auto ml-auto flex flex-col justify-center items-center">
                 {#each cartItems as item (item.fullName)}
-                    <div>
-                    <ManageItems {item}/>
-                        </div>
+                    <div class="my-1">
+                        <ManageItems {item}/>
+                    </div>
                 {/each}
             </div>
             <h2 class="font-extrabold text-3xl text-red-900 pt-8 text-center">Total : {orderTotal}€</h2>

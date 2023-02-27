@@ -1,6 +1,6 @@
 <script>
     import {Button, Modal} from "flowbite-svelte";
-    import {cart} from "../../stores/stores.js";
+    import {cart, user} from "../../stores/stores.js";
     import {env} from "$env/dynamic/public";
 
     let cartItems = [];
@@ -9,6 +9,9 @@
     let orderTotal = 0;
     let isOpenModal = false;
     let orderStatus ='';
+
+    let userInfo =  null ;
+    user.subscribe((value) => userInfo = value)
 
     function openModal() {
         isOpenModal = true;
@@ -59,7 +62,7 @@
         dateDelivery.setDate(dateOrder.getDate() + 2);
 
         let deliveryAddress = {
-            "address_line1": document.getElementById("addressInput").value,
+            "addressLine1": document.getElementById("addressInput").value,
             "city": {
                 "name": document.getElementById("cityInput").value,
                 "zipCode": document.getElementById("zipCodeInput").value,
@@ -68,6 +71,8 @@
                 }
             }
         }
+
+        let reference = "#" + String(dateOrder.getFullYear()) + String(dateOrder.getMonth()) + String(dateOrder.getDay());
 
         let url = env.PUBLIC_API_URL + "/api/CustomerOrder/AddCustomerOrder"
         const res = await fetch(url, {
@@ -78,6 +83,7 @@
             },
             body: JSON.stringify(
                 {
+                    "reference": reference,
                     "date_Order": dateOrder ,
                     "date_Delivery": dateDelivery,
                     "customer": customer,
@@ -87,11 +93,12 @@
             )
         })
         if (res.ok) {
-            orderStatus = "Votre commandé a bien été prise en compte !"            
+            orderStatus = "Votre commandé a bien été prise en compte !"                       
             cartItems = [];
         } else {
             orderStatus = "La commande n'a pas pu être envoyée"
         }
+        console.log(res) 
         closeModal()
     }
 </script>
@@ -107,13 +114,17 @@
                             <label class="block mb-3 text-sm font-semibold" for="firstName">Prénom</label>
                             <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
                                    name="firstName" placeholder="Prénom"
-                                   type="text">
+                                   type="text"
+                                   value="{userInfo.firstName}"
+                                   disabled>
                         </div>
                         <div class="w-full lg:w-1/2 ">
                             <label class="block mb-3 text-sm font-semibold" for="firstName">Nom</label>
                             <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
                                    name="lastName" placeholder="Nom"
-                                   type="text">
+                                   type="text"
+                                   value="{userInfo.lastName}"
+                                   disabled>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -122,7 +133,9 @@
                                    for="email">Email</label>
                             <input required class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
                                    name="lastName" placeholder="Email"
-                                   type="text" >
+                                   type="text"
+                                   value="{userInfo.email}"
+                                   disabled>
                         </div>
                     </div>
                     <div class="mt-4">
