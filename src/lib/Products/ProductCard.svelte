@@ -2,7 +2,7 @@
     import {get} from "svelte/store";
     import {cart} from "../../stores/stores.js";
     import {Button, Card, Modal} from "flowbite-svelte";
-    import {ArrowUturnRight, Document, ShoppingCart, ArchiveBox, Star} from "svelte-heros-v2";
+    import {ArrowUturnRight, Document, ShoppingCart, ArchiveBox, Star, Link} from "svelte-heros-v2";
 
     let isOpenModal = false;
     export let item;
@@ -31,29 +31,32 @@
     }
 </script>
 
-<Card class="flex justify-center items-center text-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 w-96 max-h-full">
-    <img alt="pinard" class="image max-h-56" src='{item.picture}'/>
+<Card class="flex justify-center items-center text-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 w-96 max-h-full" isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>
+
+    <div class="rounded-lg flex flex-col px-12 py-2 items-center justify-center bg-white">
+
+    <img alt="pinard" class="image max-h-56" src='{item.picture}' isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}/>
     <Button class="!font-extrabold text-lg !bg-transparent text-red-900 hover:scale-110 uppercase !p-6 !text-center" isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>
-        <h4>{item.fullName}</h4>
+       <h4>{item.fullName}</h4>
     </Button>
-    <div class="pb-8">
+    <div class="pb-4">
         {#if wineType != "Spirit"}
-            <p>Vin {item.wineType.toLowerCase()}</p>
-            <p>Millésime {item.yearProduced}</p>
+            <p>Vin {item.wineType.toLowerCase()} - Millésime {item.yearProduced}</p>
         {:else}
-            <p>Spiritueux</p>
-            <p>Année {item.yearProduced}</p>
+            <p>Spiritueux - Année {item.yearProduced}</p>
         {/if}
-        <Button class="relative pt-2 shadow-lg right-0 !bg-white !border-red-900 !text-red-900 border-black"
-                isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>
-            <Document/>
-            Détails
-        </Button>
+        <p>{item.volume} cL - {item.alcoholPercentage}°</p>
+
+    </div>
     </div>
 
-    <div class="flex text-gray-700">
+    <!--    <Button class=" mb-12 shadow-lg  !bg-white !border-red-900 !text-red-900 border-black"-->
+<!--            isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>-->
+<!--        <Document/>-->
+<!--        Détails-->
+<!--    </Button>-->
+    <div class="flex text-gray-700 mt-6">
         <h2 class="font-extrabold text-5xl text-center">{item.customerPrice}€ </h2> <p class="!text-2xs"> TTC</p><br />
-        <p class="pl-2 text-gray-600">( {substractPercentage(item.customerPrice, 20)} HT )</p>
     </div>
 
     <div class="btn-group flex flex-col" role="group">
