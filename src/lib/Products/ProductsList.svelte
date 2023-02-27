@@ -111,7 +111,9 @@
                     {/each}
                 {:else}
                     {#each products as item}
+                        {#if item.wineType != 'Spirit'}
                         <ProductCard {item}/>
+                        {/if}
                     {/each}
                 {/if}
             </div>
