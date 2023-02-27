@@ -34,11 +34,6 @@
         localStorage.setItem("token", token);
         localStorage.setItem("user_Id", userID);
 
-        console.log(token);
-        console.log(userID);   
-        
-        
-
         if (res.ok) {
             session.set("true")
             user.set(await fetch(env.PUBLIC_API_URL + "/api/user/" + userID, {

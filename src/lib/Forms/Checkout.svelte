@@ -35,7 +35,7 @@
     });
 
     async function postOrder() {        
-        let token = `Bearer ` + localStorage.getItem("token"); //`Bearer ` + env.PUBLIC_API_KEY
+        let token = `Bearer ` + localStorage.getItem("token");
         let customer = await fetch(env.PUBLIC_API_URL + "/api/User/" + localStorage.getItem("user_Id"), {
             method: 'get',
             headers: {
