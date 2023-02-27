@@ -2,7 +2,7 @@
     import {get} from "svelte/store";
     import {cart} from "../../stores/stores.js";
     import {Button, Card, Modal} from "flowbite-svelte";
-    import {ArrowUturnRight, Document, ShoppingCart, ArchiveBox} from "svelte-heros-v2";
+    import {ArrowUturnRight, Document, ShoppingCart, ArchiveBox, Star} from "svelte-heros-v2";
 
     let isOpenModal = false;
     export let item;
@@ -24,6 +24,11 @@
             return {...n, [fullName]: {...item, count: inCart}};
         });
     }
+
+    //function to substract a percentage of a number
+    function substractPercentage(number, percentage) {
+        return number - (number * percentage / 100);
+    }
 </script>
 
 <Card class="flex justify-center items-center text-center shadow-lg m-8 !bg-[#ededed] hover:!scale-110 w-96 max-h-full">
@@ -39,23 +44,27 @@
             <p>Spiritueux</p>
             <p>Année {item.yearProduced}</p>
         {/if}
-    </div>
-    <div class="flex p-4 text-gray-700">
-        <h2 class="font-extrabold text-5xl text-center">{item.customerPrice}€ </h2> <p class="!text-2xs"> TTC</p><br />
-    </div>
-    <div class="btn-group flex flex-col" role="group">
-        <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white" on:click={() => addToCart(1)}>
-            <ShoppingCart/>
-            Acheter
-        </Button>
-        <Button class="!bg-red-900 hover:!bg-white shadow-lg hover:!text-red-900 !text-white !my-2" on:click={() => addToCart(6)}>
-            <ArchiveBox/>
-            Acheter un carton
-        </Button>
-        <Button class="relative shadow-lg right-0 !bg-white !border-red-900 !text-red-900 border-black hover:!bg-red-900 hover:!text-white"
+        <Button class="relative pt-2 shadow-lg right-0 !bg-white !border-red-900 !text-red-900 border-black"
                 isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>
             <Document/>
             Détails
+        </Button>
+    </div>
+
+    <div class="flex text-gray-700">
+        <h2 class="font-extrabold text-5xl text-center">{item.customerPrice}€ </h2> <p class="!text-2xs"> TTC</p><br />
+        <p class="pl-2 text-gray-600">( {substractPercentage(item.customerPrice, 20)} HT )</p>
+    </div>
+
+    <div class="btn-group flex flex-col" role="group">
+        <Button class=" !text-white shadow-lg !bg-red-900" on:click={() => addToCart(1)}>
+            <ShoppingCart/>
+            Acheter
+        </Button>
+        <h2 class="text-center text-red-900 pt-4 font-sans font-extrabold">Lot de 6 pour {(substractPercentage(item.customerPrice, 5) *6)} € (<span class="text-lg">-5%</span>)</h2>
+        <Button class="!my-2 !text-red-900 !font-extrabold !bg-white shadow-lg " on:click={() => addToCart(6)}>
+            <Star/>
+            En profiter
         </Button>
     </div>
 </Card>
