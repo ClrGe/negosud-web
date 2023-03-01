@@ -1,6 +1,6 @@
 <script>
     import {Button, Modal} from "flowbite-svelte";
-    import {cart} from "../../stores/stores.js";
+    import {cart, user} from "../../stores/stores.js";
     import {env} from "$env/dynamic/public";
 
     let cartItems = [];
@@ -9,6 +9,9 @@
     let orderTotal = 0;
     let isOpenModal = false;
     let orderStatus ='';
+
+    let userInfo =  null ;
+    user.subscribe((value) => userInfo = value)
 
     function openModal() {
         isOpenModal = true;
@@ -31,26 +34,47 @@
         });
     });
 
-    let order = {
-        "reference": "toto",
-        "description": "toto",
-    }
+    async function postOrder() {        
+        let token = `Bearer ` + localStorage.getItem("token");
+        let customer = await fetch(env.PUBLIC_API_URL + "/api/User/" + localStorage.getItem("user_Id"), {
+            method: 'get',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()).then(data => data)
+        
+        let lines = [];
 
-    // let customer = {
-    //     "firstName": document.getElementById("firstName").value,
-    //     "lastName": document.getElementById("lastName").value,
-    //     "email": document.getElementById("email").value,
-    //     "address": document.getElementById("address").value,
-    //     "city": document.getElementById("city").value,
-    //     "postcode": document.getElementById("postcode").value,
-    //     "country": document.getElementById("country").value,
-    // }
+        cartItems.forEach(element => {
+            let line = {
+                "quantity": element.count,
+                "bottle": {
+                    "id": element.id
+                }
+            };
+            lines.push(line)
+        });
 
-    async function postOrder() {
-        let token = `Bearer ` + env.PUBLIC_API_KEY
-        let url = env.PUBLIC_API_URL + "/api/customerorder/addcustomerorder"
+        let dateOrder = new Date(Date.now()); 
+        let dateDelivery = new Date();
+        dateDelivery.setDate(dateOrder.getDate() + 2);
+
+        let deliveryAddress = {
+            "addressLine1": document.getElementById("addressInput").value,
+            "city": {
+                "name": document.getElementById("cityInput").value,
+                "zipCode": document.getElementById("zipCodeInput").value,
+                "country": {
+                    "name": document.getElementById("countryInput").value,
+                }
+            }
+        }
+
+        let reference = "#" + String(dateOrder.getFullYear()) + String(dateOrder.getMonth()) + String(dateOrder.getDay());
+
+        let url = env.PUBLIC_API_URL + "/api/CustomerOrder/AddCustomerOrder"
         const res = await fetch(url, {
-            credentials: 'include',
             method: 'post',
             headers: {
                 'Authorization': token,
@@ -58,16 +82,22 @@
             },
             body: JSON.stringify(
                 {
-                    "order": order,
-                    "user": customer
+                    "reference": reference,
+                    "date_Order": dateOrder ,
+                    "date_Delivery": dateDelivery,
+                    "customer": customer,
+                    "lines": lines,
+                    "deliveryAddress": deliveryAddress,
                 }
             )
         })
         if (res.ok) {
-            orderStatus = "Votre commandé a bien été prise en compte !"
+            orderStatus = "Votre commandé a bien été prise en compte !"               
+            cart.update(cart => {});
         } else {
             orderStatus = "La commande n'a pas pu être envoyée"
         }
+        closeModal()
     }
 </script>
 
@@ -76,19 +106,23 @@
     <div class="flex flex-col w-full px-0 mx-auto md:flex-row">
         <div class="flex flex-col md:w-full">
             <span class="text-center font-extrabold text-3xl bg-white rounded-lg shadow-md py-5 mb-10 font-sans  ">Finaliser la commande</span>
-            <form action class="justify-center w-full mx-auto" method="post">
+            <form class="justify-center w-full mx-auto" method="post">
                     <div class="space-x-0 lg:flex lg:space-x-4">
                         <div class="w-full lg:w-1/2">
                             <label class="block mb-3 text-sm font-semibold" for="firstName">Prénom</label>
                             <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
                                    name="firstName" placeholder="Prénom"
-                                   type="text">
+                                   type="text"
+                                   value="{userInfo.firstName}"
+                                   disabled>
                         </div>
                         <div class="w-full lg:w-1/2 ">
                             <label class="block mb-3 text-sm font-semibold" for="firstName">Nom</label>
                             <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
                                    name="lastName" placeholder="Nom"
-                                   type="text">
+                                   type="text"
+                                   value="{userInfo.lastName}"
+                                   disabled>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -97,36 +131,38 @@
                                    for="email">Email</label>
                             <input required class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
                                    name="lastName" placeholder="Email"
-                                   type="text" >
+                                   type="text"
+                                   value="{userInfo.email}"
+                                   disabled>
                         </div>
                     </div>
                     <div class="mt-4">
                         <div class="w-full">
-                            <label class="block mb-3 text-sm font-semibold" for="adress">Adresse postale</label>
-                            <input class="w-full px-4 py-3 text-xs border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
-                                   name="adress" placeholder="Addresse postale" rows="4">
+                            <label class="block mb-3 text-sm font-semibold" for="address">Adresse postale</label>
+                            <input id="addressInput" class="w-full px-4 py-3 text-xs border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
+                                   name="address" placeholder="Addresse postale" rows="4">
                         </div>
                     </div>
                     <div class="mt-4 space-x-0 lg:flex lg:space-x-4">
                         <div class="w-full lg:w-1/3">
                             <label class="block mb-3 text-sm font-semibold" for="city">Ville</label>
-                            <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
+                            <input id="cityInput" class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
                                    name="city" placeholder="Ville" type="text">
                         </div>
                         <div class="w-full lg:w-1/3 ">
-                            <label class="block mb-3 text-sm font-semibold" for="postcode">Code postal</label>
-                            <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
-                                   name="postcode" placeholder="Code postal" type="text">
+                            <label class="block mb-3 text-sm font-semibold" for="zipCode">Code postal</label>
+                            <input id="zipCodeInput" class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
+                                   name="zipCode" placeholder="Code postal" type="text">
                         </div>
                         <div class="w-full lg:w-1/3 ">
                             <label class="block mb-3 text-sm font-semibold" for="country">Pays</label>
-                            <input class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
+                            <input id="countryInput" class="w-full px-4 py-3 text-sm border !border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-red-900"
                                    name="country" placeholder="Pays" type="text">
                         </div>
 
                     </div>
 
-                <img alt="paiement" class="mr-auto ml-auto mt-10" src="src/lib/img/cb_logos.png" width="300px">
+                <img alt="paiement" class="mr-auto ml-auto mt-10" src="/img/cb_logos.png" width="300px">
                 <div class="mt-4 mb-4 flex justify-center items-center">
                     <Button class="w-1/2 ml-auto mr-auto px-6 py-2 text-white !bg-red-900 hover:!scale-110  shadow-lg" isOpenModal={isOpenModal} on:click={openModal} on:closeModal={closeModal}>
                         Procéder au paiement

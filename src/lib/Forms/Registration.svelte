@@ -4,20 +4,26 @@
     import {goto} from "$app/navigation";
 
     async function register() {
-        let token = `Bearer ` + env.PUBLIC_API_KEY
         let url = env.PUBLIC_API_URL + "/api/authentication/register"
         const res = await fetch(url, {
-            credentials: 'include',
             method: 'post',
             headers: {
-                'Authorization': token,
                 'Content-Type': 'application/json'
             },
-
             body: JSON.stringify(
                 {
+                    firstName: document.querySelector("input[name='firstName']").value,
+                    lastName: document.querySelector("input[name='name']").value,
+                    //phone: document.querySelector("input[name='phone']").value,
+                    //address: document.querySelector("input[name='address']").value,
+                    //postal_code: document.querySelector("input[name='postal_code']").value,
+                    //city: document.querySelector("input[name='city']").value,
+                    //country: document.querySelector("input[name='country']").value,
                     email: document.querySelector("input[name='email']").value,
-                    password: document.querySelector("input[name='password']").value
+                    password: document.querySelector("input[name='password']").value,
+                    role: {
+                        "id": 3
+                    }
                 }
             )
         })
@@ -29,14 +35,14 @@
     }
 </script>
 
-<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Inscription</h3>
+<h3 class="text-4xl uppercase font-sans font-extrabold text-center dark:text-white p-0">Inscription</h3>
 <Label class="space-y-2">
     <span>Nom</span>
     <Input name="name" placeholder="Nom" required type="text"/>
 </Label>
 <Label class="space-y-2">
     <span>Prénom</span>
-    <Input name="firstname" placeholder="Prénom" required type="text"/>
+    <Input name="firstName" placeholder="Prénom" required type="text"/>
 </Label>
 <div class="flex">
     <Label class="space-y-2 w-1/2">
@@ -84,4 +90,4 @@
     Déjà inscrit ?
     <a class="hover:underline dark:text-red-500" href="/registration" style="color :#670302">Se connecter</a>
 </div>
-<Button class="w-full1" style="background :#670302" type="submit" on:click={register}>S'inscrire</Button>
+<Button class="w-full" style="background :#670302" type="submit" on:click={register}>S'inscrire</Button>

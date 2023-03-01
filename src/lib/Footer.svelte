@@ -1,4 +1,4 @@
-<footer class="flex flex-col text-white pt-4">
+<footer class="flex flex-col text-white !bg-transparent pt-4">
     <ul class="flex justify-center">
         <li class="px-5">
             <a  href="#instagram">
@@ -39,11 +39,8 @@
         <li class="p-3">
             <a class="font-semibold  tracking-wider " href="">Mentions légales</a>
         </li>
-        <li class="p-3">
-            <a class="font-semibold  tracking-wider " href="">FAQ</a>
-        </li>
         <li class="flex items-center justify-center">
-            <!--<img src="src/lib/img/bandeau_legal.jpg">-->
+            <!--<img src="/img/bandeau_legal.jpg">-->
         </li>
     </ul>
 </footer>
